@@ -27,65 +27,74 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
-db.articles = require("../models/article.model.js")(sequelize, Sequelize);
-db.comments = require("../models/comment.model.js")(sequelize, Sequelize);
-db.followers = require("../models/follower.model.js")(sequelize, Sequelize);
+db.article = require("../models/article.model.js")(sequelize, Sequelize);
+db.comment = require("../models/comment.model.js")(sequelize, Sequelize);
+db.images = require("./image.model.js")(sequelize, Sequelize);
 
 
 
 // liaison User_Role
 db.role.belongsToMany(db.user, {
   through: "user_roles",
-  foreignKey: "roleId",
-  otherKey: "userId"
+  foreignKey: "role_id",
+  // otherKey: "user_id"
 });
 db.user.belongsToMany(db.role, {
   through: "user_roles",
-  foreignKey: "userId",
-  otherKey: "roleId"
+  foreignKey: "user_id",
+  // otherKey: "role_id"
 });
 
-//liaison User_Article ::::::::::::::::::::
+// Liaison User_Article:::::::::::::::::::
+db.article.belongsTo(db.user, { foreignKey: 'user_id' });
+
+
+// liaison User_Comments  ::::::::::::::::::::
+db.comment.belongsTo(db.user, { foreignKey: "user_id" });
+
+// db.user.belongsToMany(db.article, {
+//   through: "user_article",
+//   as: "articles",
+//   foreignKey: "user_id",
+//   // otherKey: "article_id"
+// });
+// db.article.belongsToMany(db.user, {
+//   through: "user_article",
+//   as: "users",
+//   foreignKey: "article_id",
+//   // otherKey: "user_id"
+// });
+
+
+
+
+
+
 // db.comment.belongsToMany(db.user, {
-//   through: "user_comments",
-//   as: "user",
-//   foreignKey: "commentId",
+//   through: "user_comment",
+//   as: "users",
+//   foreignKey: "comment_id",
 //   // otherKey: "userId"
 // });
 // db.user.belongsToMany(db.comment, {
-//   through: "user_comments",
-//   as: "comment",
-//   foreignKey: "userId",
+//   through: "user_comment",
+//   as: "comments",
+//   foreignKey: "user_id",
 //   // otherKey: "commentId"
 // });
 
-// // liaison User_follower ::::::::::::::::
-// db.follower.belongsToMany(db.user, {
-//   through: "user_followers",
-//   as: "user",
-//   foreignKey: "followerId",
-//   // otherKey: "userId"
+// liaison Comment_Article    ::::::::::::::::
+// db.article.belongsToMany(db.comment, {
+//   through: "comment_article",
+//   as: "comments",
+//   foreignKey: "article_id",
+//   otherKey: "comment_id"
 // });
-// db.user.belongsToMany(db.follower, {
-//   through: "user_followers",
-//   as: "follower",
-//   foreignKey: "userId",
-//   // otherKey: "followerId"
-// });
-
-// // Liaison User_Article :::::::::::::::::::
-
-// db.article.belongsToMany(db.user, {
-//   through: "user_articles",
-//   as: "user",
-//   foreignKey: "articleId",
-//   // otherKey: "userId"
-// });
-// db.user.belongsToMany(db.article, {
-//   through: "user_articles",
-//   as: "article",
-//   foreignKey: "userId",
-//   // otherKey: "articleId"
+// db.comment.belongsToMany(db.article, {
+//   through: "comment_article",
+//   as: "articles",
+//   foreignKey: "comment_id",
+//   otherKey: "article_id"
 // });
 
 

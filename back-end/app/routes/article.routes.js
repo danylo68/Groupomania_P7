@@ -1,19 +1,16 @@
 
-const { authJwt } = require("../middleware");
-
-
-
 
 
 module.exports = app => {
-  var router = require("express").Router();
+  const { authJwt } = require("../middleware");
+  const router = require("express").Router();
   const multer = require('../middleware/multer.config');
   const articleCtrl = require("../controllers/article.controller.js");
 
 
 
   // Create a new Articles   
-  router.post("/", multer, articleCtrl.create);
+  router.post("/", [authJwt.verifyToken, multer], articleCtrl.create);
 
   // Retrieve all Articles
   router.get("/", articleCtrl.findAll);
@@ -25,7 +22,7 @@ module.exports = app => {
   router.get("/:id", articleCtrl.findOne);
 
   // Update a Article with id
-  router.put("/:id", articleCtrl.update);
+  router.put("/:id", [authJwt.verifyToken, multer], articleCtrl.update);
 
   // Delete a Article with id
   router.delete("/:id", articleCtrl.delete);

@@ -1,26 +1,30 @@
-
+const config = require('../config/auth.config');
 const db = require("../models");
-
 const Op = db.Sequelize.Op;
+const Article = db.article;
+const Comment = db.comment;
+const User = db.user;
+const jwt = require("jsonwebtoken");
 
-const Comment = db.comments;
 
-// Create and Save a new comment
+
+// Create and Save a new comment :::::::::::::::::::::::::::::::::
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.name) {
+    if (!req.body.title) {
         res.status(400).send({
             message: "Autre champs exigé !",
         });
         return;
     }
-    // Create a Comment
+    const token = req.headers['x-access-token'];
+    const decoded = jwt.decode(token);
+    console.log(req.userId)
     const comment = {
-        name: req.body.name,
-        description: req.body.description,
-
+        title: req.body.title,
+        content: req.body.content,
+        user_id: decoded.id,
     };
-
     // Save Comment in the database
     Comment.create(comment)
         .then(data => {
@@ -32,49 +36,87 @@ exports.create = (req, res) => {
                     err.message || "Some error occurred while creating the Comment."
             });
         });
-}
+};
 
-// Retrieve all comments from the database.
+// // Retrieve all comments from the database.::::::::::::::::::::::::::::::::::::::
 exports.findAll = (req, res) => {
     const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-    Comment.findAll({ where: condition })
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving comment.",
-            });
-        });
-};
-
-// Find a single comment with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-
-    Comment.findByPk(id)
-        .then((data) => {
-            if (data) {
-                res.send(data);
+    return Comment.findAll({
+        where: condition,
+        include: {
+            model: User,
+            attributes: ["user_id", "username", "last_name"],
+        }
+    })
+        .then((comment) => {
+            if (comment) {
+                res.send(comment);
             } else {
-                res.status(404).send({
-                    message: `Cannot find comment with id=${id}.`,
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while retrieving comment.",
                 });
             }
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: "Error retrieving comment with id=" + id,
-            });
         });
 };
-// Update a comment by the id in the request
+
+// // Find a single comment with an id ::::::::::::::::::::::::::::::::::::::::
+exports.findOne = (req, res) => {
+    const comment_id = req.params.id;
+    Comment.findByPk(comment_id, {
+        include: [
+            {
+                model: User,
+                attributes: ["user_id", "username", "last_name"],
+
+            },
+            // {
+            //     model: Article,
+            //     attributes: ["article_id", "title"],
+            // }
+        ],
+    })
+        .then((comments) => {
+            if (comments) {
+                res.send(comments);
+            } else {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while retrieving articles.",
+                });
+            }
+        });
+};
 
 
-exports.update = (req, res) => {
+// exports.addComment = async (commentId, articleId) => {
+//     return Article.findByPk(articleId)
+//         .then((article) => {
+//             if (!article) {
+//                 console.log("Article not found!");
+//                 return null;
+//             }
+//             return Comment.findByPk(commentId).then((comment) => {
+//                 if (!comment) {
+//                     console.log("Comment not found!");
+//                     return null;
+//                 }
+//                 article.addComment(comment);
+//                 console.log(`>> added Comment id=${comment.id} to Tag id=${comment.id}`);
+//                 return comment;
+//             });
+//         })
+//         .catch((err) => {
+//             console.log(">> Error while adding Comment to Article: ", err);
+//         });
+// };
+
+
+// // Update a comment by the id in the request   ::::::::::::::::::::::::::::
+
+exports.update = async (req, res) => {
     const id = req.params.id;
 
     Comment.update(req.body, {
@@ -98,7 +140,7 @@ exports.update = (req, res) => {
         });
 };
 
-// Delete a comment with the specified id in the request
+// Delete a comment with the specified id in the request :::::::::::::::::::::::::::::
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -123,7 +165,7 @@ exports.delete = (req, res) => {
         });
 };
 
-// Delete all comments from the database.
+// Delete all comments from the database. ::::::::::::::::::::::::::::::::::::::::::
 exports.deleteAll = (req, res) => {
     Comment.destroy({
         where: {},
@@ -140,7 +182,7 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-// Find all published comments
+// Find all published comments ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 exports.findAllPublished = (req, res) => {
     Comment.findAll({ where: { published: true } })
         .then((data) => {

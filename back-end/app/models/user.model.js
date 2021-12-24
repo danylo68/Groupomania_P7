@@ -1,17 +1,17 @@
 "use strict";
 
 module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define('users', {
-
-        id: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.UUIDV4,
+    const User = sequelize.define("users", {
+        user_id: {
+            type: Sequelize.INTEGER,
+            // defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
             primaryKey: true,
-
+            autoIncrement: true
         },
 
         email: {
-            type: Sequelize.STRING(100),
+            type: Sequelize.STRING(255),
             unique: true,
             allowNull: false
         },
@@ -21,19 +21,25 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
 
-        first_name: {
+        username: {
             type: Sequelize.STRING(100),
-            // allowNull: false,
+            allowNull: false,
         },
 
         last_name: {
             type: Sequelize.STRING(100),
             // allowNull: false,
         },
+        birth_date: {
+            type: Sequelize.DATEONLY,
+            // allowNull: true
+        },
 
         phone: {
             type: Sequelize.STRING(50),
-            // allowNull: false,
+            validate: {
+                not: ['[a-z]', 'i']
+            }
         },
 
         organization: {
@@ -54,7 +60,8 @@ module.exports = (sequelize, Sequelize) => {
         img: {
             type: Sequelize.STRING,
             // allowNull: false,
-        }
+        },
+
     },
         {
             // Options
@@ -62,10 +69,12 @@ module.exports = (sequelize, Sequelize) => {
             underscrored: true,
             createdAt: "created_at",
             updatedAt: "updated_at"
-
-            // USERTableName: true
         });
+
     return User;
 };
+
+
+
 
 

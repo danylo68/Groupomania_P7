@@ -1,22 +1,23 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const User = db.user;
 const Role = db.role;
 const Op = db.Sequelize.Op;
 
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
-    // username: req.body.username,
+    username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
+
   })
+
     .then(user => {
       if (req.body.roles) {
         Role.findAll({
@@ -25,11 +26,12 @@ exports.signup = (req, res) => {
               [Op.or]: req.body.roles
             }
           }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "User registered successfully!" });
+        })
+          .then(roles => {
+            user.setRoles(roles).then(() => {
+              res.send({ message: "I,  ${req.body.email} registered successfully!" });
+            });
           });
-        });
       } else {
         // user role = 1
         user.setRoles([1]).then(() => {
@@ -45,7 +47,7 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   User.findOne({
     where: {
-      email: req.body.email
+      username: req.body.username,
     }
   })
     .then(user => {
@@ -65,7 +67,10 @@ exports.signin = (req, res) => {
         });
       }
 
-      var token = jwt.sign({ id: user.id }, config.secret, {
+      var token = jwt.sign({
+        id: user.user_id,
+        username: user.username,
+      }, config.secret, {
         expiresIn: 86400 // 24 hours
       });
 
@@ -76,7 +81,7 @@ exports.signin = (req, res) => {
         }
         res.status(200).send({
           id: user.id,
-          // username: user.username,
+          username: user.username,
           email: user.email,
           roles: authorities,
           accessToken: token

@@ -1,11 +1,14 @@
-
+const config = require('../config/auth.config');
 const db = require("../models");
-
 const Op = db.Sequelize.Op;
+const Article = db.article;
+const Comment = db.comment;
+const User = db.user;
+const jwt = require("jsonwebtoken");
 
-const Article = db.articles;
 
-// Create and Save a new Article
+
+// Create and Save a new Article  ::::::::::::::::::::::::::::
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -14,14 +17,14 @@ exports.create = (req, res) => {
     });
     return;
   }
-  // Create a Article
+  const token = req.headers['x-access-token'];
+  const decoded = jwt.decode(token);
+  console.log(req.userId)
   const article = {
     title: req.body.title,
-    description: req.body.description,
-    author: req.body.author,
-    published: req.body.published ? req.body.published : false
+    content: req.body.content,
+    user_id: decoded.id,
   };
-
   // Save Article in the database
   Article.create(article)
     .then(data => {
@@ -33,47 +36,56 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the Article."
       });
     });
-}
+};
 
-// Retrieve all Articles from the database.
+// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 exports.findAll = (req, res) => {
   const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Article.findAll({ where: condition })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving articles.",
-      });
-    });
-};
-
-// Find a single Article with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  Article.findByPk(id)
-    .then((data) => {
-      if (data) {
-        res.send(data);
+  return Article.findAll({
+    where: condition,
+    include: {
+      model: User,
+      attributes: ["user_id", "username", "last_name"],
+    }
+  })
+    .then((article) => {
+      if (article) {
+        res.send(article);
       } else {
-        res.status(404).send({
-          message: `Cannot find Article with id=${id}.`,
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving article.",
         });
       }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error retrieving Article with id=" + id,
-      });
     });
 };
-// Update a Article by the id in the request
+//// Find a single comment with an id  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+exports.findOne = (req, res) => {
+  const article_id = req.params.id
+  Article.findByPk(article_id, {
+    include: [
+      {
+        model: User,
+        attributes: ["user_id", "username", "last_name"],
+
+      },
+    ],
+  })
+    .then((articles) => {
+      if (articles) {
+        res.send(articles);
+      } else {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving articles.",
+        });
+      }
+    });
+};
+// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -98,6 +110,30 @@ exports.update = (req, res) => {
       });
     });
 };
+
+exports.addArticle = (userId, articleId) => {
+  return User.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        console.log("User not found!");
+        return null;
+      }
+      return Article.findByPk(articleId).then((article) => {
+        if (!article) {
+          console.log("Article not found!");
+          return null;
+        }
+
+        user.addArticle(article);
+        console.log(`>> added Article id=${article.id} to User id=${user.id}`);
+        return user;
+      });
+    })
+    .catch((err) => {
+      console.log(">> Error while adding Article to User: ", err);
+    });
+};
+
 
 // Delete a Article with the specified id in the request
 exports.delete = (req, res) => {

@@ -1,35 +1,33 @@
-const { authJwt } = require("../middleware");
-
-
 
 
 
 module.exports = app => {
-    var router = require("express").Router();
-
+    const { authJwt } = require("../middleware");
+    const router = require("express").Router();
+    const multer = require('../middleware/multer.config');
     const commentCtrl = require("../controllers/comment.controller.js");
 
     // Create a new Comments
 
-    router.post("/", commentCtrl.create);
+    router.post("/", [authJwt.verifyToken, multer], commentCtrl.create);
 
     // Retrieve all Comments
-    router.get("api/comments/all", commentCtrl.findAll);
+    router.get("/", commentCtrl.findAll);
 
     // Retrieve all published Comments
-    router.get("api/comments/published", commentCtrl.findAllPublished);
+    router.get("/published", commentCtrl.findAllPublished);
 
     // Retrieve a single Comment with id
-    router.get("api/comments/:id", commentCtrl.findOne);
+    router.get("/:id", commentCtrl.findOne);
 
     // Update a Comment with id
-    router.put("api/comments/:id", commentCtrl.update);
+    router.put("/:id", [authJwt.verifyToken, multer], commentCtrl.update);
 
     // Delete a Comment with id
-    router.delete("api/comments/:id", commentCtrl.delete);
+    router.delete("/:id", commentCtrl.delete);
 
     // Delete all Comment
-    router.delete("api/comments", commentCtrl.deleteAll);
+    router.delete("/", commentCtrl.deleteAll);
 
     app.use('/api/comments', router);
 

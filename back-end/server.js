@@ -4,6 +4,11 @@ const cors = require("cors");
 const path = require('path');
 const config = require("./app/config/db.config.js");
 const app = express();
+const initRoutes = require("./app/routes/web");
+
+global.__basedir = __dirname;
+
+initRoutes(app);
 
 var corsOptions = {
   origin: "http://localhost:8080"
@@ -26,11 +31,15 @@ const Role = db.role;
 // db.sequelize.sync();
 
 // ATTENTION  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// force: true will drop the table if it already exists:::::::::::::::::
+//force: true will drop the table if it already exists:::::::::::::::::
+
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log('Drop and Resync Database with { force: true }');
 //   initial();
 // });
+
+
+
 
 // simple route
 app.get("/", (req, res) => {
@@ -40,7 +49,7 @@ app.get("/", (req, res) => {
 
 
 // routes
-// require('./app/routes/follower.routes')(app);
+
 require('./app/routes/comment.routes')(app);
 require('./app/routes/article.routes')(app);
 require('./app/routes/auth.routes')(app);
