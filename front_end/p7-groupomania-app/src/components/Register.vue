@@ -1,10 +1,36 @@
+
+<style scoped>
+.card {
+display: flex;
+
+height: 190px;
+width: 200px;
+};
+.btn signup{
+width: 15px;
+};
+
+.container{
+display: flex;
+width: auto;
+justify-content: center;
+
+}
+</style>
+
+
+
+
+
+
+
 <template>
-  <div class="col-md-12">
-    <div class="card card-container">
+  <div class="container col-md-12">
+    <div class="card shadow mt-5 card-container">
       <img
         id="profile-img"
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
+        class="profile-img-card rounded"
       />
       <Form @submit="handleRegister" :validation-schema="schema">
         <div v-if="!successful">
@@ -24,7 +50,8 @@
             <ErrorMessage name="password" class="error-feedback" />
           </div>
 
-          <div class="form-group">
+          <div class="btn signup">
+          
             <button class="btn btn-primary btn-block" :disabled="loading">
               <span
                 v-show="loading"
@@ -46,6 +73,10 @@
     </div>
   </div>
 </template>
+
+
+
+
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
@@ -122,6 +153,3 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>

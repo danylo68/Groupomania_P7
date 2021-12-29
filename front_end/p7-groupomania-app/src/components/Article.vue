@@ -126,7 +126,7 @@ export default {
 
 <style>
 .edit-form {
-  max-width: 300px;
+  max-width: 1300px;
   margin: auto;
 }
 </style>

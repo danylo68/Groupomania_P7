@@ -24,19 +24,6 @@
         />
       </div>
       
-       <!-- <div id="app">
-    <div class="container" style="width:600px">
-      <div class="my-4">
-        <h3>bezkoder.com</h3>
-        <h4>Vue.js upload Image with Preview</h4>
-      </div>
-
-      <upload-image></upload-image>
-    </div>
-  </div> -->
-      
-      
-
       <button @click="saveArticle" class="btn btn-success">Submit</button>
     </div>
 
@@ -45,6 +32,20 @@
       <button class="btn btn-success" @click="newArticle">Add</button>
     </div>
   </div>
+  
+  
+    <!-- <div id="app"></div>
+    <div class="container" style="width:600px">
+      <div class="my-4">
+        <h3>bezkoder.com</h3>
+        <h4>Vue.js upload Image with Preview</h4>
+      </div>
+      <upload-image></upload-image>
+    </div>
+  </div>
+   -->
+  
+  
 </template>
 
 <script>
@@ -102,8 +103,12 @@ export default {
 </script>
 
 <style>
-.submit-form {
-  max-width: 300px;
+.form-group {
+  max-width: 1300px;
   margin: auto;
-}
+};
+
+
+
+
 </style>

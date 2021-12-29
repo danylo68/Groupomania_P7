@@ -10,7 +10,7 @@ global.__basedir = __dirname;
 
 initRoutes(app);
 
-var corsOptions = {
+const corsOptions = {
   origin: "http://localhost:8080"
 };
 
@@ -19,10 +19,8 @@ app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 app.use(express.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-
 
 // database
 const db = require("./app/models");
@@ -38,22 +36,17 @@ const Role = db.role;
 //   initial();
 // });
 
-
-
-
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "find the CythR application." });
 });
 
-
-
 // routes
-
 require('./app/routes/comment.routes')(app);
 require('./app/routes/article.routes')(app);
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+require('./app/routes/web')(app);
 
 app.use(express.static(path.join(__dirname, '/public')));
 

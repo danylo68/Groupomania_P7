@@ -1,6 +1,25 @@
+
+
+<style scoped>
+.card {
+display: flex;
+flex-direction: start;
+
+height: 190px;
+width: 200px;
+};
+
+.btn {
+width: 15px;
+}
+</style>
+
+
+
+
 <template>
   <div class="col-md-12">
-    <div class="card card-container">
+    <div class="card shadow mt-5 card-container">
       <img
         id="profile-img"
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -18,7 +37,7 @@
           <ErrorMessage name="password" class="error-feedback" />
         </div>
 
-        <div class="form-group">
+        <div class="btn login">
           <button class="btn btn-primary btn-block" :disabled="loading">
             <span
               v-show="loading"

@@ -123,5 +123,11 @@ export default {
   text-align: left;
   max-width: 750px;
   margin: auto;
+};
+.list-group {
+max-width: 550px;
+
+
+
 }
 </style>

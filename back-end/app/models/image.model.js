@@ -1,15 +1,15 @@
 
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, DataTypes) => {
     const Image = sequelize.define("image", {
         type: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
         },
         name: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
         },
         data: {
-            type: Sequelize.BLOB("long"),
+            type: DataTypes.BLOB("long"),
         },
     });
 

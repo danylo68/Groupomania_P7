@@ -1,12 +1,7 @@
-
-    <!-- <b-card>
-    <img src="@/assets/iconGroupomania.png" fluid alt="Responsive image" width="156"/>
-    
-    </b-card>  -->
 <template>
   <div id="app">
+  
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-    
       <a href="/" class="navbar-brand">Groupomania</a>
       <div class="navbar-nav mr-auto">
       
@@ -60,10 +55,14 @@
         </li>
       </div>
     </nav>
+    
+    
+       
+    
 <!-- contnainer for uploading image -->
     <div class="container">
       
-   <div id="app">
+   <!-- <div id="app">
     <div class="container" style="width:400px">
       <div class="my-4">
         <h5>Upload Image</h5>
@@ -71,28 +70,22 @@
 
       <upload-image></upload-image>
     </div>
-  </div>
-    <!--  -->
+  </div> -->
+  
+
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
-
-import UploadImage from "./components/UploadImage";
-
-
+// import UploadImage from "./components/UploadImage";
 export default {
-
  name: "App",
-  components: {
-    UploadImage
-  },
-
-
-
-
+  // components: {
+  //   UploadImage
+  // },
+  
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -101,14 +94,12 @@ export default {
       if (this.currentUser && this.currentUser['roles']) {
         return this.currentUser['roles'].includes('ROLE_ADMIN');
       }
-
       return false;
     },
     showModeratorBoard() {
       if (this.currentUser && this.currentUser['roles']) {
         return this.currentUser['roles'].includes('ROLE_MODERATOR');
       }
-
       return false;
     }
   },
