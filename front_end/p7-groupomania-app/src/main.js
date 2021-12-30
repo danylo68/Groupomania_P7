@@ -1,12 +1,19 @@
+
 import { createApp } from "vue";
+
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from './plugins/font-awesome'
+import { FontAwesomeIcon } from './plugins/font-awesome';
+
+
+import { VuesticPlugin } from 'vuestic-ui'
+import 'vuestic-ui/dist/vuestic-ui.css'
+
+
 
 createApp(App)
+    .use(VuesticPlugin)
     .use(router)
     .use(store)
     .component("font-awesome-icon", FontAwesomeIcon)
