@@ -25,7 +25,7 @@ module.exports = app => {
   router.put("/:id", [authJwt.verifyToken, multer], articleCtrl.update);
 
   // Delete a Article with id
-  router.delete("/:id", articleCtrl.delete);
+  router.delete("/:id", authJwt.verifyToken, articleCtrl.delete);
 
   // Delete all Articles
   router.delete("/", articleCtrl.deleteAll);

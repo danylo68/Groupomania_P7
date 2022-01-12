@@ -7,11 +7,12 @@ const app = express();
 const initRoutes = require("./app/routes/web");
 
 global.__basedir = __dirname;
+app.use(express.static(path.join(__dirname, '/public')));
 
 initRoutes(app);
 
 const corsOptions = {
-  origin: "http://localhost:8080"
+  origin: "http://localhost:8081"
 };
 
 app.use(cors(corsOptions));
@@ -48,10 +49,10 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/web')(app);
 
-app.use(express.static(path.join(__dirname, '/public')));
+
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
