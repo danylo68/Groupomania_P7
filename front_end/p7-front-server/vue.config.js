@@ -1,8 +1,24 @@
 module.exports = {
     devServer: {
-        port: 8081
+        proxy: 'http://localhost:8081'
     }
 }
+
+
+
+// module.exports = { devServer: { port: 8081, proxy: "http://localhost/api" } }
+
+
+// // vue.config.js
+// module.exports = {
+//     configureWebpack: {
+//         plugins: [
+//             new MyAwesomeWebpackPlugin()
+//         ]
+//     }
+
+
+
 
 
 // for show image on app.vue

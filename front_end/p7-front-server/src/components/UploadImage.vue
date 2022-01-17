@@ -4,7 +4,7 @@
       <div class="col-8">
         <label class="btn btn-default p-0">
           <input
-            type="file"
+            type="file"  
             accept="image/*"
             ref="file"
             @change="selectImage"
@@ -64,6 +64,7 @@
 
 <script>
 import UploadService from "../services/UploadFilesService";
+
 export default {
   name: "upload-image",
   data() {
@@ -88,12 +89,10 @@ export default {
         this.progress = Math.round((100 * event.loaded) / event.total);
       })
         .then((response) => {
-          this.message = response.data.message;
-          return UploadService.getFiles();
+        console.log(response)
+          this.message = "Photo Post";
         })
-        .then((images) => {
-          this.imageInfos = images.data;
-        })
+        
         .catch((err) => {
           this.progress = 0;
           this.message = "Could not upload the image! " + err;
@@ -103,6 +102,7 @@ export default {
   },
   mounted() {
     UploadService.getFiles().then((response) => {
+     console.log(response)
       this.imageInfos = response.data;
     });
   },

@@ -15,13 +15,18 @@ margin-top: 6em;
 background-color:rgba(245, 245, 245, 0.993);
 }
 
+.img
+{
+height: 30px;
+}
 </style>
 
 
 <template>
   <div id='app'>
- 
+
   <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
+  <!-- <b-img :src="require(`@/assets/icon-left.png`)" alt="Responsive image"></b-img> -->
     <b-navbar-brand href="#">Groupomania</b-navbar-brand>
     
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -37,16 +42,19 @@ background-color:rgba(245, 245, 245, 0.993);
   <b-navbar-nav class="ml-auto">
     <!-- <b-navbar class="navbar-nav mr-auto"> -->
     <b-navbar-nav>
+    
    <b-nav-item class="nav-item">
-          <router-link to="/article" class="nav-link">Article</router-link>
-        </b-nav-item>
-        <b-nav-item class="nav-item">
-          <router-link to="/add" class="nav-link">
-       Add</router-link>
+          <router-link to="/articles" class="nav-link">Articles</router-link>
+        </b-nav-item> 
+        
+        
+        
+       <b-nav-item class="nav-item">
+          <router-link to="/add" class="nav-link">Post</router-link>
         </b-nav-item>
         </b-navbar-nav>
         
-      <!-- </b-navbar> -->
+   <!-- </b-navbar> -->
   
         <b-nav-item v-if="showAdminBoard">
           <router-link to="/admin" class="nav-link">Admin Board</router-link>
@@ -58,9 +66,7 @@ background-color:rgba(245, 245, 245, 0.993);
         
         <b-nav-item>
           <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
-        </b-nav-item>
-    
-    
+        </b-nav-item> 
 
       <b-navbar-nav v-if="!currentUser" class="navbar-nav ml-auto">
         <b-nav-item>
@@ -99,46 +105,31 @@ background-color:rgba(245, 245, 245, 0.993);
   </b-navbar>
   
   
-  <div class="img-nav">
-  <b-img src="https://picsum.photos/1824/300/?image=318" fluid alt="Responsive image"></b-img>
+  <!-- <div class="img-nav"> -->
+  <!-- <b-img src="https://picsum.photos/1824/300/?image=318" fluid alt="Responsive image"></b-img> -->
   <!-- <b-img src="https://picsum.photos/1824/300/?image=378"  class="shadow" fluid alt="Responsive image"></b-img> -->
-</div>
-
+<!-- </div> -->
 
 
 <!-- <b-container class="upload" style="width:600px">
       <div class="my-4">
-       
       </div>
       <upload-image></upload-image>
     </b-container>
    -->
-
-
   
-  <router-view />
-
+<router-view />
   </div>
 </template>
-
-
-
-
-
 
 <script>
 
 // import UploadImage from "./components/UploadImage";
 
-
 export default {
-// name: "App",
-//   components: {
-//     UploadImage
-//   },
-
+name: "app",
+  
 data() {
-
     return {
       logo: '/assets/icon.png'
     }

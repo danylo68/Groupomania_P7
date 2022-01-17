@@ -52,13 +52,8 @@ export const router = new Router({
             // lazy-loaded
             component: () => import('./views/BoardUser.vue')
         },
-        // probleme component 
-        {
-            path: "/add",
-            name: "add",
-            component: () => import("./components/AddArticle.vue")
-        },
 
+        //////////////////// Article /////////////////////////
         {
             path: "/",
             alias: "/articles",
@@ -69,6 +64,28 @@ export const router = new Router({
             path: "/articles/:id",
             name: "article-details",
             component: () => import("./components/Article.vue")
+        },
+        {
+            path: "/add",
+            name: "add",
+            component: () => import("./components/AddArticle.vue")
+        },
+        /////////////////////   Comment /////////////////////////////
+        {
+            path: "/",
+            alias: "/comments",
+            name: "comments",
+            component: () => import("./components/CommentsList.vue")
+        },
+        {
+            path: "/comments/:id",
+            name: "comment-details",
+            component: () => import("./components/Comment.vue")
+        },
+        {
+            path: "/add",
+            name: "add",
+            component: () => import("./components/AddComment.vue")
         }
 
     ]

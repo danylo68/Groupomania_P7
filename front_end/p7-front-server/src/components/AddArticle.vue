@@ -30,7 +30,9 @@ margin-left: 108px;
 }
 .b-container{
 width: 300px;
+
 }
+
 </style>
 
 
@@ -76,7 +78,9 @@ width: 300px;
     </b-form>
     </b-container>
   </div>
+  
   </div>
+  
 </template>
 
 
@@ -97,16 +101,19 @@ export default {
     };
   },
   
+
   methods: {
     saveArticle() {
       var data = {
         title: this.article.title,
         description: this.article.description
       };
-
+      console.log("toto")
       ArticleDataService.create(data)
         .then(response => {
           this.article.id = response.data.id;
+          // Upload image
+          // url/artciles/ this.article.id  / uploa
           console.log(response.data);
           this.submitted = true;
         })

@@ -2,6 +2,7 @@
 
 
 module.exports = app => {
+  const express = require('express');
   const { authJwt } = require("../middleware");
   const router = require("express").Router();
   const multer = require('../middleware/multer.config');

@@ -16,13 +16,9 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
 
-    content: {
+    description: {
       type: Sequelize.STRING(255),
       allowNull: false
-    },
-
-    img: {
-      type: Sequelize.STRING,
     },
 
     likedislike: {

@@ -22,7 +22,7 @@ exports.create = (req, res) => {
   console.log(req.userId)
   const article = {
     title: req.body.title,
-    content: req.body.content,
+    description: req.body.description,
     user_id: decoded.id,
   };
   // Save Article in the database

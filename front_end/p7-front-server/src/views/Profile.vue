@@ -1,15 +1,18 @@
 
 <style lang="css">
- .profile{
+ .profile-container{
  width:
  280px;
- 
+     margin-top: 173px;
  } 
+ 
+ 
+ 
 </style>
 
 <template>
 <div class="mt-3">
-  <b-container class="profile">
+  <b-container class="profile-container">
   
    
     <b-card-group deck class="mb-3">

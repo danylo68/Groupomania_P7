@@ -1,13 +1,14 @@
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require('path');
 const config = require("./app/config/db.config.js");
-const app = express();
+
 const initRoutes = require("./app/routes/web");
 
 global.__basedir = __dirname;
-app.use(express.static(path.join(__dirname, '/public')));
+
 
 initRoutes(app);
 
@@ -15,13 +16,20 @@ const corsOptions = {
   origin: "http://localhost:8081"
 };
 
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
 
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content, Accept, Content-Type, Authorization, x-access-token');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
+
+app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '/public')));
 
 // database
 const db = require("./app/models");

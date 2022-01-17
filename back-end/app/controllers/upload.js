@@ -6,8 +6,6 @@ const db = require("../models");
 const Image = db.images;
 
 
-
-
 const uploadFiles = async (req, res) => {
     try {
         console.log(req.file);

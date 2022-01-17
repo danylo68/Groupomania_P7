@@ -14,7 +14,7 @@ margin-top: 21px;
 
 .card-container.card {
 z-index: 10;
-    bottom: 58em;
+    bottom: 50em;
   max-width: 373px !important;
   padding: 35px 35px;
 
@@ -41,12 +41,8 @@ z-index: 10;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-   
-  
 }
 </style>
-
-
 
 
 

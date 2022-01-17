@@ -43,11 +43,9 @@
           <label><strong>Status:</strong></label> {{ currentArticle.published ? "Published" : "Pending" }}
         </div>
 
-        <a class="badge badge-warning"
-          :href="'/articles/' + currentArticle.id"
-        >
-          Edit
-        </a>
+        
+          <router-link :to="'/articles/' + currentArticle.id" class="badge badge-warning">Edit</router-link>
+  
       </div>
       <div v-else>
         <br />
@@ -56,12 +54,6 @@
     </div>
   </div>
 </template>
-
-
-
-
-
-
 
 <script>
 import ArticleDataService from "../services/ArticleDataService";

@@ -14,8 +14,8 @@ margin-top: 21px;
 
 .card-container.card {
 z-index: 10;
-    bottom: 65em;
-  max-width: 380px !important;
+    bottom: 55em;
+  max-width: 373px !important;
   padding: 35px 35px;
 }
 
@@ -23,10 +23,10 @@ z-index: 10;
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
-  margin-top: 100px;
+
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
-  border-radius: 2px;
+  border-radius: 18px;
   -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 13px 34px rgba(0, 0, 0, 0.3);
@@ -40,8 +40,6 @@ z-index: 10;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  
-  
 }
 </style>
 
@@ -60,11 +58,15 @@ z-index: 10;
       /> -->
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
+        
           <label for="username">Username</label>
+            <!-- <b-icon icon="person-fill"></b-icon> -->
           <input
+        
             v-model="user.username"
             v-validate="'required'"
             type="text"
+            
             class="form-control"
             name="username"
           />

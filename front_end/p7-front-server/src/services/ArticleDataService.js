@@ -1,33 +1,43 @@
-import http from "../http-common";
+
+import axios from 'axios'
 import authHeader from './auth-header';
+
+
+let config = {
+    headers: authHeader()
+
+}
+let baseUrl = "http://localhost:3000/api"
+
 
 class ArticleDataService {
     getAll() {
-        return http.get(`/articles`);
+        return axios.get(`${baseUrl}/articles`);
     }
 
     get(id) {
-        return http.get(`/articles/${id}`, { headers: authHeader() });
+        return axios.get(`${baseUrl}/articles/${id}`, config);
     }
 
+
     create(data) {
-        return http.post("/articles", { headers: authHeader() }, data);
+        return axios.post(`${baseUrl}/articles`, data, config);
     }
 
     update(id, data) {
-        return http.put(`/articles/${id}`, { headers: authHeader() }, data);
+        return axios.put(`${baseUrl}/articles/${id}`, data, config);
     }
 
     delete(id) {
-        return http.delete(`/articles/${id}`, { headers: authHeader() });
+        return axios.delete(`${baseUrl}/articles/${id}`, config);
     }
 
     deleteAll() {
-        return http.delete(`/articles`, { headers: authHeader() });
+        return axios.delete(`${baseUrl}/articles/`, config);
     }
 
     findByTitle(title) {
-        return http.get(`/articles?title=${title}`, { headers: authHeader() });
+        return axios.get(`${baseUrl}/articles/?title=${title}`, config);
     }
 }
 

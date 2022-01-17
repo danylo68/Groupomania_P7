@@ -1,6 +1,5 @@
 <template>
   <div v-if="currentArticle" class="edit-form">
-  
     <h4>Article</h4>
     <form>
       <div class="form-group">
@@ -52,9 +51,6 @@
     <br />
     <p>Please click on a Article...</p>
   </div>
-  
-  
- 
 </template>
 
 <script>
@@ -102,7 +98,7 @@ export default {
       ArticleDataService.update(this.currentArticle.id, this.currentArticle)
         .then(response => {
           console.log(response.data);
-          this.message = 'The article was updated successfully!';
+          this.message = 'The Article was updated successfully!';
         })
         .catch(e => {
           console.log(e);
@@ -131,14 +127,5 @@ export default {
 .edit-form {
   max-width: 300px;
   margin: auto;
-  z-index: 10;
-    bottom: 50em;
-     box-shadow: 0px 13px 34px rgba(0, 0, 0, 0.3);
-}
-
-.form-group
-{
-z-index: 10;
-    bottom: 50em;
 }
 </style>
