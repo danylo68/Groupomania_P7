@@ -12,13 +12,15 @@ let baseUrl = "http://localhost:3000/api"
 
 class ArticleDataService {
     getAll() {
-        return axios.get(`${baseUrl}/articles`);
+        return axios.get(`${baseUrl}/articles`)
+            .catch(function (error) {
+                console.log(error.toJSON());
+            });
     }
 
     get(id) {
         return axios.get(`${baseUrl}/articles/${id}`, config);
     }
-
 
     create(data) {
         return axios.post(`${baseUrl}/articles`, data, config);

@@ -51,6 +51,8 @@
     <br />
     <p>Please click on a Article...</p>
   </div>
+  
+  
 </template>
 
 <script>
@@ -67,8 +69,10 @@ export default {
   methods: {
     getArticle(id) {
       ArticleDataService.get(id)
+       console.log("toto")
         .then(response => {
           this.currentArticle = response.data;
+          
           console.log(response.data);
         })
         .catch(e => {

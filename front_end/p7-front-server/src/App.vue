@@ -1,30 +1,17 @@
 <style lang="css" scoped>
-.b-img{
-z-index: 1;
-position:relative;
-max-width: 1824px;
-}
-.container
-{
-margin-top: 6em;
-/* background-color: rgb(218, 216, 210); */
-}
 
 #app
 {
 background-color:rgba(245, 245, 245, 0.993);
 }
 
-.img
-{
-height: 30px;
-}
 </style>
 
 
 <template>
-  <div id='app'>
 
+  <div id='app'>
+  
   <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
   <!-- <b-img :src="require(`@/assets/icon-left.png`)" alt="Responsive image"></b-img> -->
     <b-navbar-brand href="#">Groupomania</b-navbar-brand>
@@ -50,7 +37,7 @@ height: 30px;
         
         
        <b-nav-item class="nav-item">
-          <router-link to="/add" class="nav-link">Post</router-link>
+          <router-link to="/add" class="nav-link">add</router-link>
         </b-nav-item>
         </b-navbar-nav>
         

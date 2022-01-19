@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+// import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
+import ArticlesList from './components/ArticlesList.vue';
 
 Vue.use(Router);
 
@@ -11,15 +12,10 @@ Vue.use(Router);
 export const router = new Router({
     mode: 'history',
     routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home
-        },
-        {
-            path: '/home',
-            component: Home
-        },
+        // {
+        //     path: '/home',
+        //     component: Home
+        // },
         {
             path: '/login',
             component: Login
@@ -58,7 +54,7 @@ export const router = new Router({
             path: "/",
             alias: "/articles",
             name: "articles",
-            component: () => import("./components/ArticlesList.vue")
+            component: ArticlesList
         },
         {
             path: "/articles/:id",
@@ -82,11 +78,11 @@ export const router = new Router({
             name: "comment-details",
             component: () => import("./components/Comment.vue")
         },
-        {
-            path: "/add",
-            name: "add",
-            component: () => import("./components/AddComment.vue")
-        }
+        // {
+        //     path: "/add",
+        //     name: "add",
+        //     component: () => import("./components/AddComment.vue")
+        // }
 
     ]
 
