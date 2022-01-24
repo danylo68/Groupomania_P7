@@ -11,17 +11,12 @@ const jwt = require("jsonwebtoken");
 // Create and Save a new comment :::::::::::::::::::::::::::::::::
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.title) {
-        res.status(400).send({
-            message: "Autre champs exigé !",
-        });
-        return;
-    }
+
     const token = req.headers['x-access-token'];
     const decoded = jwt.decode(token);
     console.log(req.userId)
     const comment = {
-        title: req.body.title,
+
         content: req.body.content,
         user_id: decoded.id,
     };
@@ -40,14 +35,14 @@ exports.create = (req, res) => {
 
 // // Retrieve all comments from the database.::::::::::::::::::::::::::::::::::::::
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const content = req.query.content;
+    const condition = content ? { content: { [Op.like]: `%${content}%` } } : null;
 
     return Comment.findAll({
         where: condition,
         include: {
             model: User,
-            attributes: ["user_id", "username", "last_name"],
+            attributes: ["user_id", "username"],
         }
     })
         .then((comment) => {
@@ -69,13 +64,10 @@ exports.findOne = (req, res) => {
         include: [
             {
                 model: User,
-                attributes: ["user_id", "username", "last_name"],
+                attributes: ["user_id", "username"],
 
             },
-            // {
-            //     model: Article,
-            //     attributes: ["article_id", "title"],
-            // }
+
         ],
     })
         .then((comments) => {
@@ -90,28 +82,6 @@ exports.findOne = (req, res) => {
         });
 };
 
-
-// exports.addComment = async (commentId, articleId) => {
-//     return Article.findByPk(articleId)
-//         .then((article) => {
-//             if (!article) {
-//                 console.log("Article not found!");
-//                 return null;
-//             }
-//             return Comment.findByPk(commentId).then((comment) => {
-//                 if (!comment) {
-//                     console.log("Comment not found!");
-//                     return null;
-//                 }
-//                 article.addComment(comment);
-//                 console.log(`>> added Comment id=${comment.id} to Tag id=${comment.id}`);
-//                 return comment;
-//             });
-//         })
-//         .catch((err) => {
-//             console.log(">> Error while adding Comment to Article: ", err);
-//         });
-// };
 
 
 // // Update a comment by the id in the request   ::::::::::::::::::::::::::::

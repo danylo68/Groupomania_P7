@@ -1,32 +1,44 @@
-import http from "../http-common";
+import axios from 'axios'
+import authHeader from './auth-header';
+
+
+let config = {
+    headers: authHeader()
+
+}
+let baseUrl = "http://localhost:3000/api"
+
 
 class CommentDataService {
     getAll() {
-        return http.get("/comments");
+        return axios.get(`${baseUrl}/comments`)
+            .catch(function (error) {
+                console.log(error.toJSON());
+            });
     }
 
     get(id) {
-        return http.get(`/comments/${id}`);
+        return axios.get(`${baseUrl}/comments/${id}`, config);
     }
 
     create(data) {
-        return http.post("/comments", data);
+        return axios.post(`${baseUrl}/comments`, data, config);
     }
 
     update(id, data) {
-        return http.put(`/comments/${id}`, data);
+        return axios.put(`${baseUrl}/comments/${id}`, data, config);
     }
 
     delete(id) {
-        return http.delete(`/comments/${id}`);
+        return axios.delete(`${baseUrl}/comments/${id}`, config);
     }
 
     deleteAll() {
-        return http.delete(`/comments`);
+        return axios.delete(`${baseUrl}/comments/`, config);
     }
 
     findByTitle(title) {
-        return http.get(`/comments?title=${title}`);
+        return axios.get(`${baseUrl}/comments/?title=${title}`, config);
     }
 }
 

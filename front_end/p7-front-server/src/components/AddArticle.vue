@@ -38,9 +38,9 @@ width: 300px;
 
 
 <template>
- <div class="col-md-12">
- <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img>
-  <div class="submit-form rounded ">
+ <div class="col-md-12"> 
+ <!-- <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img> --> 
+  <!-- <div class="submit-form rounded "> -->
   <b-container class="p-3" >
   <h4>Post d'Article</h4>
     <b-form-group v-if="!submitted">
@@ -79,7 +79,7 @@ width: 300px;
     </b-container>
   </div>
   
-  </div>
+  <!-- </div> -->
   
 </template>
 

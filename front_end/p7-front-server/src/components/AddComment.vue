@@ -1,38 +1,76 @@
+<style>
+.submit-form {
+  margin-bottom: 10em;
+  margin: auto;
+   z-index: 10;
+     box-shadow: 0px 13px 34px rgba(0, 0, 0, 0.3);
+     border: 1px solid rgb(196, 189, 189);
+     height: 350px;
+     bottom: 55em;
+     width: 350px;
+     display: flex;
+     justify-content: center;
+     align-content: center;
+     position: relative;
+}
+
+.form-control
+{
+display: flex;
+justify-content: center;
+width: 300px;
+}
+
+.img {
+height: 50px;
+width: auto;
+}
+.btn-success{
+margin-left: 108px;
+}
+.b-container{
+width: 300px;
+
+}
+
+</style>
+
+
+
 <template>
-  <div class="submit-form">
-    <div v-if="!submitted">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
+ <div class="col-md-12">
+ <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img>
+  <div class="submit-form rounded ">
+  <b-container class="p-3" >
+  <h4>Create Comment</h4>
+    <b-form-group v-if="!submitted">
+    
+      <div class="form-group p-3">
+        <label for="content">Content</label>
+        <b-form-input p-3
           class="form-control"
-          id="title"
+          id="content"
           required
-          v-model="comment.title"
-          name="title"
+          v-model="comment.content"
+          name="content"
         />
+        
       </div>
-
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input
-          class="form-control"
-          id="description"
-          required
-          v-model="comment.description"
-          name="description"
-        />
-      </div>
-
+      
       <button @click="saveComment" class="btn btn-success">Submit</button>
-    </div>
+    </b-form-group>
 
-    <div v-else>
+    <b-form v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newComment">Add</button>
-    </div>
+      <button p-3 class="btn btn-success" @click="newComment">Add</button>
+    </b-form>
+    </b-container>
   </div>
+  
+  </div>
+  
 </template>
+
 
 <script>
 import CommentDataService from "../services/CommentDataService";
@@ -41,25 +79,28 @@ export default {
   name: "add-comment",
   data() {
     return {
-     comment: {
+      comment: {
         id: null,
-        title: "",
-        description: "",
+        content: "",
         published: false
       },
       submitted: false
     };
   },
-  methods: {
-    saveComment() {
-      var data = {
-        title: this.comment.title,
-        description: this.comment.description
-      };
+  
 
-     CommentDataService.create(data)
+  methods: {
+    savecomment() {
+      var data = {
+       
+        content: this.comment.content
+      };
+      console.log("toto")
+      CommentDataService.create(data)
         .then(response => {
           this.comment.id = response.data.id;
+          // Upload image
+          // url/artciles/ this.comment.id  / uploa
           console.log(response.data);
           this.submitted = true;
         })
@@ -75,10 +116,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.submit-form {
-  max-width: 300px;
-  margin: auto;
-}
-</style>

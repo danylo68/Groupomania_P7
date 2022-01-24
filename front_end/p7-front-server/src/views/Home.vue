@@ -45,19 +45,12 @@ justify-content: center;
 
 </style>
 
-
-
-
 <template>
 
-  <div class="post-container">
-  
- 
 
-         <b-container class="contain-cards mx-md ">
-         
-         
-         
+ <div>
+  
+         <b-container class="contain-cards mx-md ">     
      <b-row class="sec-nav p-1 rounded shadow">
 
             <b-nav fixed="top" >

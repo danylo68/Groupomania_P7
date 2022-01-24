@@ -3,8 +3,15 @@
 #app
 {
 background-color:rgba(245, 245, 245, 0.993);
-}
+height: 100%;
 
+}
+.content-vue
+{
+height: 100%;
+    margin-top: 4em;
+    display: flex;
+}
 </style>
 
 
@@ -12,7 +19,7 @@ background-color:rgba(245, 245, 245, 0.993);
 
   <div id='app'>
   
-  <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
+  <b-navbar class="Regular shadow" fixed="top" toggleable="lg" type="dark" variant="secondary" >
   <!-- <b-img :src="require(`@/assets/icon-left.png`)" alt="Responsive image"></b-img> -->
     <b-navbar-brand href="#">Groupomania</b-navbar-brand>
     
@@ -22,7 +29,7 @@ background-color:rgba(245, 245, 245, 0.993);
     
      <b-navbar-nav>
        <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home"/>Home</router-link>
+            <font-awesome-icon icon="home"/></router-link>
       </b-navbar-nav>
     
       <!-- Right aligned nav items -->
@@ -37,7 +44,7 @@ background-color:rgba(245, 245, 245, 0.993);
         
         
        <b-nav-item class="nav-item">
-          <router-link to="/add" class="nav-link">add</router-link>
+          <!-- <router-link to="/add" class="nav-link">add</router-link> -->
         </b-nav-item>
         </b-navbar-nav>
         
@@ -90,7 +97,7 @@ background-color:rgba(245, 245, 245, 0.993);
     </b-collapse>
     
   </b-navbar>
-  
+  <b-container class="content-vue">
   
   <!-- <div class="img-nav"> -->
   <!-- <b-img src="https://picsum.photos/1824/300/?image=318" fluid alt="Responsive image"></b-img> -->
@@ -106,6 +113,7 @@ background-color:rgba(245, 245, 245, 0.993);
    -->
   
 <router-view />
+</b-container>
   </div>
 </template>
 

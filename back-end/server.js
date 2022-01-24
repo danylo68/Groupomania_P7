@@ -15,7 +15,7 @@ initRoutes(app);
 const corsOptions = {
   origin: "http://localhost:8081"
 };
-
+app.use(cors(corsOptions));
 app.use((req, res, next) => {
 
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content, Accept, Content-Type, Authorization, x-access-token');
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors(corsOptions));
+
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 app.use(express.json());

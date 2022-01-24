@@ -9,10 +9,7 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true
         },
 
-        title: {
-            type: Sequelize.STRING(255),
-            allowNull: false
-        },
+
         content: {
             type: Sequelize.STRING(255),
             allowNull: false

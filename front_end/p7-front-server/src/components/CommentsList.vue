@@ -1,6 +1,6 @@
 <template>
   <div class="list row">
-    <div class="col-md-8">
+    <!-- <div class="col-md-8">
       <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Search by title"
           v-model="title"/>
@@ -12,11 +12,13 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="col-md-6">
       <h4>Comments List</h4>
       <ul class="list-group">
         <li class="list-group-item"
+        
+        
           :class="{ active: index == currentIndex }"
           v-for="(comment, index) in comments"
           :key="index"
@@ -26,16 +28,14 @@
         </li>
       </ul>
 
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllComments">
+      <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllComments">
         Remove All
-      </button>
+      </button> -->
     </div>
     <div class="col-md-6">
       <div v-if="currentComment">
         <h4>Comment</h4>
-        <div>
-          <label><strong>Title:</strong></label> {{ currentComment.title }}
-        </div>
+    
         <div>
           <label><strong>Description:</strong></label> {{ currentComment.description }}
         </div>
