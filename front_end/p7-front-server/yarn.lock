@@ -3526,7 +3526,7 @@
     "lazy-debug-legacy" "0.0.X"
     "object-assign" "4.1.0"
 
-"debug@*", "debug@^4.0.1", "debug@^4.1.0", "debug@^4.1.1":
+"debug@*", "debug@^4.0.1", "debug@^4.1.0", "debug@^4.1.1", "debug@^4.3.3":
   "integrity" "sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.3.tgz"
   "version" "4.3.3"

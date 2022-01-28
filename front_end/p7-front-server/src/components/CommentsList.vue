@@ -18,42 +18,39 @@
       <ul class="list-group">
         <li class="list-group-item"
         
-        
           :class="{ active: index == currentIndex }"
           v-for="(comment, index) in comments"
           :key="index"
           @click="setActiveComment(comment, index)"
         >
-          {{ comment.title }}
+          {{ comment.content }}
         </li>
       </ul>
 
-      <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllComments">
+    <button class="m-3 btn btn-sm btn-danger" @click="removeAllComments">
         Remove All
-      </button> -->
+      </button>
     </div>
-    <div class="col-md-6">
-      <div v-if="currentComment">
+   
+       <b-card bg-variant="light" header="Light" class="text-center">
         <h4>Comment</h4>
     
-        <div>
-          <label><strong>Description:</strong></label> {{ currentComment.description }}
-        </div>
-        <div>
+       <b-card-text>
+          <label><strong>Content:</strong></label>
+        </b-card-text>
+        
+         <!-- <b-card>
           <label><strong>Status:</strong></label> {{ currentComment.published ? "Published" : "Pending" }}
-        </div>
+         </b-card> -->
 
-        <a class="badge badge-warning"
+        <!-- <a class="badge badge-warning"
           :href="'/comments/' + currentComment.id"
         >
           Edit
-        </a>
-      </div>
-      <div v-else>
-        <br />
-        <p>Please click on a Comment...</p>
-      </div>
-    </div>
+        </a>  -->
+      
+    
+  </b-card>
   </div>
 </template>
 

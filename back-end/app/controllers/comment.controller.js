@@ -76,7 +76,7 @@ exports.findOne = (req, res) => {
             } else {
                 res.status(500).send({
                     message:
-                        err.message || "Some error occurred while retrieving articles.",
+                        err.message || "Une erreur s'est produite lors de la récupération des articles.",
                 });
             }
         });

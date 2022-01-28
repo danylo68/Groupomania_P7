@@ -8,9 +8,9 @@
 }
 .list-group-item {
 background-color:white;
-  
+  /* display: flex; */
     border-radius: 10px;
-    margin-top: 7px;
+    margin-top: 144px;
 height: auto;
 /* padding: 1rem 1rem; */
 max-width: 1250px;
@@ -56,7 +56,12 @@ height: 50px;
     justify-content: flex-start;
     padding: 10px;
 }
-
+.nav-post{
+margin-top: 45px;
+background-color:white ;
+display: flex;
+height: 300px;
+}
 
 </style>
 
@@ -65,165 +70,182 @@ height: 50px;
 
    <div class="post-container">
   <b-container class="contain-cards mx-md ">
-  
-  <!-- search bar :::::::::::::: -->
-   <!-- <b-row class="sec-nav p-1 rounded shadow"> -->
-     <b-nav fixed="top w-500" >
-            
-    <!-- <b-nav-item active>Active</b-nav-item> -->
+     <b-nav class="nav-post" fixed="top w-500" >     
     <b-nav-item>
     
-    <!--tm <b-button pill variant="outline-secondary"><router-link to="/add" class="nav-link"><h6>Post Article</h6></router-link></b-button> -->
-    </b-nav-item>
-    <b-nav-item>
+    <AddArticle></AddArticle>
     
-    <!-- <b-button pill variant="outline-secondary"><router-link to="/article" class="nav-link"><h6>Article</h6></router-link></b-button> -->
     </b-nav-item>
-    <!-- <b-nav-item disabled>Disabled</b-nav-item> -->
   </b-nav>
   
-  <AddArticle></AddArticle>
-  
-       
-       
-       
+     
     <b-row class="row mx-md p-1">
-       
-  
     <b-col  class="mt-2 p-0 rounded ">
-  <!------------ --------------------------- -->
-  
+  <!--::::::: container article :::::::::::::::::::::::::::: -->
+  <!--::::::: container article :::::::::::::::::::::::::::: -->
     <b-card-group class="list-group-item"
       v-for="article in articles"
-                :key="article.id">
+                :key="article.id">   
                 
-    <h5>{{article.title}}</h5>
+    <h5>{{ article.title }}</h5>
     
      <b-card
       img-src="https://picsum.photos/id/948/1200/200"
      rounded alt="Rounded image"
-      img-top>
-      <b-card-text>
+      img-top> 
       
-       {{ article.description}}
-       <hr>
-       <!-- btn fot call modal window -->
-         <b-button v-b-modal.modal-com>
-       <b-icon icon="chat-right-quote" aria-hidden="true"></b-icon>
-      </b-button>
-      <!-- --------------------------- -->
+      <b-card-text>
+       {{ article.description }}
       </b-card-text>
       </b-card>
+      
      <b-card-footer class="footer-card">
-    Commentaire contenus
+    
+      <b-button v-b-modal.addComment>
+       <b-icon icon="chat-right-quote" aria-hidden="true">Commentaire</b-icon>
+      </b-button>
+      <hr>
+      <br>
+      
+        <b-card-text class="reaction"
+        v-for="commentlist in commentsList"
+        :key="commentlist.id">
+        <span>{{ commentlist.comments }}</span>fdghgf
+       
+     
+       </b-card-text>
+    
      </b-card-footer>
+  <CommentsList></CommentsList>
     </b-card-group>
-  
-      <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllArticles">
+     <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllArticles">
         Remove All
-      </button> -->     
+      </button>  -->
+      
+        <b-card>
+  <CommentsList></CommentsList>
+  </b-card>
+  
     </b-col>
-    <!-- container article :::::::::::::::::::::::::::: -->
+
     </b-row>
     </b-container> 
+  <!--:::::::::: container Article :::::::::::::::::::::::::::: -->
+  <!--:::::::::: container Comment :::::::::::::::::::::::::::: -->
+  
    
-    <b-modal  id="modal-com" title="Post Comment">
-    <b-form-group>
-  <h4>Create Comment</h4>
-    <b-form v-if="!submitted">  
-      
-    <b-form-group
-      :state="nameState"
-      label="content"
-      label-for="content">
-      
+    <b-modal  id="addComment" title="Post-Comment">
+    <!-- <b-form-group>
+  
+    <b-form  @submit="saveComments"
+     
+      label-for="saveComments">
+    
         <b-form-input p-3
           class="form-control"
-          id="content"
-          required
+          
           v-model="comment"
-          name="content"/>
-           </b-form-group> 
-     
-      <!-- btn submit for create Comment in modal -->
-    <button v-on@click="saveComment" id="button" class="btn btn-success">Submit</button> 
-    </b-form>
-<!-- 
-    <b-form v-else>
-      <h4>You submitted successfully!</h4>
-      <button p-3 class="btn btn-success" @click="newComment">Add</button>
+          name="comment"></b-form-input>
+         
+     <b-button type="submit" variant="primary">Submit</b-button>
+  
     </b-form> -->
-</b-form-group>
+
+  <!-- <b-form v-else>
+      <h4>You submitted successfully!</h4>
+      <b-button p-3 class="btn btn-success" @click="newComment">Add</b-button>
+    </b-form> -->
+<!-- </b-form-group> -->
+
+  <b-form @submit="saveComments">
+      <b-form-group
+        id="input-comment"
+        label="Comment:"
+        label-for="Comment-input"
+        description="We wait your reaction at every post "
+      >
+        <b-form-input
+          id="input-comment"
+          v-model="reaction"
+          type="text"
+          placeholder="Enter Comment"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+
+      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
+    </b-form>
 
   </b-modal>  
   
+    <!-- <div class="mt-2">Value: {{ comment }}</div> -->
     
   </div>
 </template>
 
 
 <script>
+// import CommentDataService from "../services/CommentDataService";
 import ArticleDataService from "../services/ArticleDataService";
 import AddArticle from "../components/AddArticle.vue";
-// import AddComment from "../components/AddComment.vue";
+// import { mapState } from 'vuex'
+// import Comment from "../components/Comment.vue";
+// import CommentsList from "../components/CommentsList.vue";
+
+import axios from 'axios';
+
+import authHeader from "../services/auth-header";
+import CommentsList from "./CommentsList.vue";
+
+const apiUrl = "http://localhost:3000/api";
+
+let config = {
+headers: authHeader()
+};
+
 
 export default {
 name: "articles-list",
  components: {
-   AddArticle,
-  //  AddComment
-  },
+    AddArticle,
+    CommentsList
+},
 
 
   data() {
     return {
-    // content: '',
-    //    contentState: null,
-    //     submittedContent: [],
-    
-      articles: [],
-      comments:  [],
-      currentArticle: null,
-      currentIndex: 0,
+  
+  
+   articles: [],
+    // commentslist: [],
+      // articles: [
+      // { title: ""},
+      // {  description: ""},
+      // {  id:""},
+      // { user:""},
+        // { comment:""],
+    //    addcomments:  [],
+      // submitted: false,
+      // currentArticle: null,
+      // currentIndex: 0,
+    // ],
       title: "",
       description: "",
       id:"",
       user:"",
-      
+     comment:"",
+     reaction:"",
     };
   },
+  
+  
   methods: {
   
-  // checkFormValidity() {
-  //       const valid = this.$refs.form.checkValidity()
-  //       this.nameState = valid
-  //       return valid
-  //     },
-  //     resetModal() {
-  //       this.content = ''
-  //       this.cotnentState = null
-  //     },
-  //     handleOk(bvModalEvt) {
-  //       // Prevent modal from closing
-  //       bvModalEvt.preventDefault()
-  //       // Trigger submit handler
-  //       this.handleSubmit()
-  //     },
-  //     handleSubmit() {
-  //       // Exit when the form isn't valid
-  //       if (!this.checkFormValidity()) {
-  //         return
-  //       }
-  //       // Push the name to submitted names
-  //       this.submittedContent.push(this.content)
-  //       // Hide the modal manually
-  //       this.$nextTick(() => {
-  //         this.$bvModal.hide('modal-prevent-closing')
-  //       })
-  //     },
-  
-  
-  
+  //  submit : function(){
+  //     this.$refs.form.$el.submit()
+  //   },
   
   
     retrieveArticles() {
@@ -268,11 +290,60 @@ name: "articles-list",
         .catch(e => {
           console.log(e);
         });
-    }
+    },
+    
+     saveComments(event) {
+        event.preventDefault() 
+        //  alert(JSON.parse(this.comment))
+         {
+  if(this.label === "") {
+    return;
+  }
+  this.$emit('comment', this.label);
+  this.label = "";
+}
+        
+        
+    console.log("toto")
+      var data = {
+        content: this.comment
+      };
+      
+      // CommentDataService.create(data) 
+      
+       console.log(data)
+       axios
+        .post(`${apiUrl}/comments`, data, config)
+    
+        .then(response => {
+          this.comment.id = response.data.id;
+     
+           console.log("toto")
+          console.log("comments")
+          // Upload image
+          // url/artciles/ this.comment.id  / upload
+         
+          this.submitted = true;
+         console.log(response)
+           console.log("toto")
+        })
+        
+        .catch(e => {
+          console.log(e);
+        });
+        
+    
+     },
+    newComment() {
+      this.submitted = false;
+      this.comment = {};
+    },
+    
   },
   mounted() {
     this.retrieveArticles();
-  }
+  },
+  
 };
 </script>
 

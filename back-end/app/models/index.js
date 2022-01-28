@@ -52,6 +52,12 @@ db.article.belongsTo(db.user, { foreignKey: 'user_id' });
 // liaison User_Comments  ::::::::::::::::::::
 db.comment.belongsTo(db.user, { foreignKey: "user_id" });
 
+
+
+
+
+
+
 // db.user.belongsToMany(db.article, {
 //   through: "user_article",
 //   as: "articles",

@@ -2,16 +2,11 @@
   <div v-if="currentComment" class="edit-form">
     <h4>Comment</h4>
     <form>
+   
       <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title"
-          v-model="currentComment.title"
-        />
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description"
-          v-model="currentComment.description"
+        <label for="content">Content</label>
+        <input type="text" class="form-control" id="content"
+          v-model="currentComment.content"
         />
       </div>
 
