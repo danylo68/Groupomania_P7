@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .submit-form {
   margin-bottom: 10em;
   margin: auto;
@@ -26,10 +26,16 @@ height: 50px;
 width: auto;
 }
 .btn-success{
-margin-left: 108px;
+margin-left: 10px;
 }
-.b-container{
-width: 300px;
+.form-group {
+max-width:750px;
+display: flex;
+justify-content: center;
+}
+.post_article{
+display: flex;
+
 
 }
 
@@ -41,7 +47,7 @@ width: 300px;
  <div class="col-md-12"> 
  <!-- <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img> --> 
   <!-- <div class="submit-form rounded "> -->
-  <b-container class="p-3" >
+  <b-container class="post_article" >
   <h4>Post d'Article</h4>
     <b-form-group v-if="!submitted">
     
@@ -60,7 +66,7 @@ width: 300px;
 
       <div class="form-group p-3">
         <label for="description">Description</label>
-        <b-form-input p-3
+        <b-form-textarea p-3
           class="form-control"
           id="description"
           required

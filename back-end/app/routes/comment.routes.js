@@ -24,7 +24,7 @@ module.exports = app => {
     router.put("/:id", [authJwt.verifyToken, multer], commentCtrl.update);
 
     // Delete a Comment with id
-    router.delete("/:id", commentCtrl.delete);
+    router.delete("/:id", [authJwt.verifyToken, multer], commentCtrl.delete);
 
     // Delete all Comment
     router.delete("/", commentCtrl.deleteAll);

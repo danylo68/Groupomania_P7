@@ -19,6 +19,7 @@ exports.create = (req, res) => {
 
         content: req.body.content,
         user_id: decoded.id,
+        article_id: req.body.article_id
     };
     // Save Comment in the database
     Comment.create(comment)
@@ -65,9 +66,7 @@ exports.findOne = (req, res) => {
             {
                 model: User,
                 attributes: ["user_id", "username"],
-
             },
-
         ],
     })
         .then((comments) => {
@@ -76,7 +75,7 @@ exports.findOne = (req, res) => {
             } else {
                 res.status(500).send({
                     message:
-                        err.message || "Une erreur s'est produite lors de la récupération des articles.",
+                        err.message || "Une erreur s'est produite lors de la récupération des commentaire :id.",
                 });
             }
         });
@@ -113,6 +112,9 @@ exports.update = async (req, res) => {
 // Delete a comment with the specified id in the request :::::::::::::::::::::::::::::
 exports.delete = (req, res) => {
     const id = req.params.id;
+    // const token = req.headers['x-access-token'];
+    // const decoded = jwt.decode(token);
+    // console.log(req.userId)
 
     Comment.destroy({
         where: { id: id },

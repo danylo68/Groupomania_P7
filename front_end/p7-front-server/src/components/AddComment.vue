@@ -39,12 +39,12 @@ width: 300px;
 
 <template>
  <div class="col-md-12">
- <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img>
-  <div class="submit-form rounded ">
-  <b-container class="p-3" >
+ <!-- <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img> -->
+  <!-- <div class="submit-form rounded ">
+  <b-container class="p-3" > -->
   <h4>Create Comment</h4>
-    <b-form-group v-if="!submitted">
-    
+    <b-form-group 
+      @submit="saveComments">
       <div class="form-group p-3">
         <label for="content">Content</label>
         <b-form-input p-3
@@ -52,20 +52,18 @@ width: 300px;
           id="content"
           required
           v-model="comment.content"
-          name="content"
-        />
-        
+          name="content"/>
       </div>
       
       <button @click="saveComment" class="btn btn-success">Submit</button>
     </b-form-group>
 
-    <b-form v-else>
+    <!-- <b-form v-else>
       <h4>You submitted successfully!</h4>
       <button p-3 class="btn btn-success" @click="newComment">Add</button>
-    </b-form>
-    </b-container>
-  </div>
+    </b-form> -->
+    <!-- </b-container> -->
+  <!-- </div> -->
   
   </div>
   
@@ -73,7 +71,17 @@ width: 300px;
 
 
 <script>
-import CommentDataService from "../services/CommentDataService";
+// import CommentDataService from "../services/CommentDataService";
+
+import axios from 'axios';
+
+import authHeader from "../services/auth-header";
+
+const apiUrl = "http://localhost:3000/api";
+
+let config = {
+headers: authHeader()
+};
 
 export default {
   name: "add-comment",
@@ -96,7 +104,9 @@ export default {
         content: this.comment.content
       };
       console.log("toto")
-      CommentDataService.create(data)
+     
+     
+    //  axios.post(`${apiUrl}/comments`, data, config)
         .then(response => {
           this.comment.id = response.data.id;
           // Upload image

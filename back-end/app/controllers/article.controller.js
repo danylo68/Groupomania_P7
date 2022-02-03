@@ -80,7 +80,7 @@ exports.findOne = (req, res) => {
       } else {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving articles.",
+            err.message || "Some error occurred while retrieving articles with id.",
         });
       }
     });

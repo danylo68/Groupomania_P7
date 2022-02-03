@@ -56,6 +56,11 @@ db.comment.belongsTo(db.user, { foreignKey: "user_id" });
 
 
 
+db.comment.belongsTo(db.article, { foreignKey: 'article_id' });
+
+
+
+
 
 
 // db.user.belongsToMany(db.article, {
