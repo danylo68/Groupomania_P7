@@ -43,6 +43,8 @@ exports.findAll = (req, res) => {
         where: condition,
         include: {
             model: User,
+            model: Article,
+            attributes: ["article_id"],
             attributes: ["user_id", "username"],
         }
     })

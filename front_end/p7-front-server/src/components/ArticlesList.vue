@@ -78,19 +78,25 @@ box-shadow: 0px 2px 11px 1px grey;
     <b-row class="row mx-md p-1">
     <b-col  class="mt-2 p-0 rounded ">
     <!--   Card Article  ---------------------------->
-    <b-container class="card-content">     
+    <b-container class="card-content"> 
+    
+    
     <b-card-group class="list-group-item"
-      v-for="article in articles"
-                :key="article.id"> 
+        id="myCard"
+        ref="myCard"
+        v-for="(article, index)  in articles"
+        :key="article.id"> 
           
-       from: {{ article.user.username }}
-     <b-card
-      img-src="https://picsum.photos/id/948/1200/200"
-     rounded alt="Rounded image"
-      img-top>  
-      <b-card-text>
+      from index: {{ index}},
+      <br>{{ article.user.username }}
+      <br> id article:{{ article.article_id }} 
+    <b-card
+        img-src="https://picsum.photos/id/948/1200/200"
+        rounded alt="Rounded image"
+        img-top>  
+    <b-card-text>
       
-       <h5>{{ article.title }}</h5>
+    <h5>{{ article.title }}</h5>
        
        <hr>
        {{ article.description }}
@@ -98,18 +104,19 @@ box-shadow: 0px 2px 11px 1px grey;
       </b-card>
       
      <b-card-footer class="footer-card">
-    
-      <b-button  variant="light" v-b-modal.addComment>
+  
+      <b-button id="show-btn" @click="showModal(article.article_id)">
+      
        <b-icon icon="chat-right-quote" aria-hidden="true"></b-icon>
        Comment
       </b-button> 
       
      </b-card-footer>
       <hr>
-       <!-- reply: <b> {{ valueComment }}</b> -->
-     <ul>
-     <li is="CommentsList"></li>
-    </ul>
+        <b> reply: </b>
+        
+     <CommentsList :article_id="article.article_id" />
+     
     </b-card-group>
     <!-- <Comment></Comment> -->
      
@@ -123,9 +130,9 @@ box-shadow: 0px 2px 11px 1px grey;
     </b-row>
     </b-container> 
    
-    <b-modal  id="addComment" title="Post-Comment">
+    <b-modal ref="my-modal"  title="Post-Comment">
     
-  <b-form @submit="saveComments">
+  <b-form v-on:submit="saveComments">
   
       <b-form-group
       id="reply-comment"
@@ -138,11 +145,12 @@ box-shadow: 0px 2px 11px 1px grey;
        placeholder="Enter comment"   
        required
        ></b-form-input>  
+       
       </b-form-group>
       
-      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button  type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
-    
+      {{ article.article_id }}
     </b-form>
    <!-- <AddComment></AddComment> -->
   </b-modal>  
@@ -152,59 +160,65 @@ box-shadow: 0px 2px 11px 1px grey;
 
 
 <script>
-// import CommentDataService from "../services/CommentDataService";
 import ArticleDataService from "../services/ArticleDataService";
 import AddArticle from "../components/AddArticle.vue";
-// import AddComment from "../components/AddComment.vue";
-
-// import { mapState } from 'vuex'
-// import Comment from "../components/Comment.vue";
 import CommentsList from "../components/CommentsList.vue";
-
 import axios from 'axios';
-
 import authHeader from "../services/auth-header";
 
 const apiUrl = "http://localhost:3000/api";
-
-let config = {
+const config = {
 headers: authHeader()
 };
 
 
 export default {
+
 name: "articles-list",
- components:
- {
+
+  props: {
+        articles: {
+            article_id:"",
+            default: () => [],
+            required: true,
+            type: Number, 
+        },
+                
+        },    
+   
+  //::::::::::::::::::::::::::::
+  // ::::::::::::::::::::::::::
+  
+  components:
+  {
     AddArticle,
     CommentsList, 
-},
+  
+  },
 
   data() {
     return {
-
-    reaction: "",
-    profile: "",
-    articles: "",
-    formComment: "",  
-   
-    user:"",
-    submitted:"",
-   content: "",
+      reaction: "",
+      profile: "",
+      // articles: "",
+      article_id:"",
+      actualArticle:"",
+      // article_id: "",
+      article:"",
+      formComment: "",  
+      comment: "",
+      user:"",
+      index:"",
+      content: "",
     };
   
   }, 
   
+  // ::::::::::::::::::::::::::::::::::::::::
+  // ::::::::::::::::::::::::::::::::::::::::
+  
   methods: {
   
-  
-  //  submit : function(){
-  //     this.$refs.form.$el.submit()
-  //   },
-    
-    
-    
-    
     retrieveArticles() {
       ArticleDataService.getAll()
         .then(response => {
@@ -249,20 +263,29 @@ name: "articles-list",
         });
     },
     
-       saveComments(event) {
+    
+      submit : function(){
+      this.$refs.form.$el.submit()
+    },
+    
+      showModal(articleId) {
+      this.$refs['my-modal'].show()
+      this.actualArticle = articleId
+    }, 
+ 
+      saveComments(event) { 
       event.preventDefault() 
-      console.log((this.formComment))
-       console.log(this.comment)
-          console.log("toto")
-          
-      var data = {
-        content: this.formComment,
-        
-        // id : this.article_id
-      };
      
+          
+      //  console.log(this.articles.filter(({article_id}) => article_id))
+      //   console.log(this.articles.length)
+      const data = {
+      content: this.formComment,
+      article_id: this.actualArticle
+      }; 
+      console.log(data)
       
-     axios.post(`${apiUrl}/comments`, data, config)
+      axios.post(`${apiUrl}/comments`, data, config)
      
           .then(response => {
           this.comment = response.data.id;
@@ -280,10 +303,10 @@ name: "articles-list",
       this.comment = {};
     },
     
-  },
-  mounted() {
+    },
+    mounted() {
     this.retrieveArticles();
-  },
+    },
   
 };
 </script>

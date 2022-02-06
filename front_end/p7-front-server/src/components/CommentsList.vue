@@ -13,7 +13,11 @@
         
          <span>{{ comment.user.username }}: </span>
             <h5>{{ comment.content }}</h5>
+            <p>{{ comment.comment_id }}</p>
+           
+            
             <button class="m-3 btn btn-sm btn-danger" @click="removeAllComments">
+            
         Remove
       </button>
         </li>
@@ -53,6 +57,9 @@ import CommentDataService from "../services/CommentDataService";
 
 export default {
   name: "comments-list",
+  props: {
+    article_id: Number,
+  },
   data() {
     return {
       comments: [],
@@ -63,6 +70,8 @@ export default {
   },
   methods: {
     retrieveComments() {
+    
+    // Il faut changer cette méthode pour qu'elle envoit articl_id à l'API pour pouvoir filtrer
      CommentDataService.getAll()
         .then(response => {
           this.comments = response.data;
@@ -108,6 +117,8 @@ export default {
   },
   mounted() {
     this.retrieveComments();
+    console.log("COMMENTS")
+    console.log(this.article_id)
   }
 };
 </script>
