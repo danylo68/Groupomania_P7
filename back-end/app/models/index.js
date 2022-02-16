@@ -8,8 +8,9 @@ const sequelize = new Sequelize(
   {
     host: config.HOST,
     dialect: config.dialect,
-    operatorsAliases: 0,
     // operatorsAliases: evite erreur dans nodeJS attention à false,
+    operatorsAliases: 0,
+
 
     pool: {
       max: config.pool.max,
@@ -49,13 +50,11 @@ db.user.belongsToMany(db.role, {
 db.article.belongsTo(db.user, { foreignKey: 'user_id' });
 
 
-// liaison User_Comments  ::::::::::::::::::::
+// liaison User_Comment  ::::::::::::::::::::
 db.comment.belongsTo(db.user, { foreignKey: "user_id" });
 
 
-
-
-
+// liaison Article_Comment  ::::::::::::::::::::
 db.comment.belongsTo(db.article, { foreignKey: 'article_id' });
 
 

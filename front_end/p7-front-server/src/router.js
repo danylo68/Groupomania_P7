@@ -68,13 +68,13 @@ export const router = new Router({
         },
         /////////////////////   Comment /////////////////////////////
         {
-            path: "/",
+            path: "/:article_id",
             alias: "/comments",
             name: "comments",
             component: () => import("./components/CommentsList.vue")
         },
         {
-            path: "/comments/:id",
+            path: "/comments/",
             name: "comment-details",
             component: () => import("./components/Comment.vue")
         },

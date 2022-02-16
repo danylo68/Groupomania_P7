@@ -64,7 +64,7 @@ exports.findAll = (req, res) => {
 //// Find a single comment with an id  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 exports.findOne = (req, res) => {
-  const article_id = req.params.id
+  const article_id = req.params.article_id
   Article.findByPk(article_id, {
     include: [
       {

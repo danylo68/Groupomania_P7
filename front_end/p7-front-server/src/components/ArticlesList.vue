@@ -200,10 +200,9 @@ name: "articles-list",
     return {
       reaction: "",
       profile: "",
-      // articles: "",
+     
       article_id:"",
       actualArticle:"",
-      // article_id: "",
       article:"",
       formComment: "",  
       comment: "",
@@ -217,13 +216,16 @@ name: "articles-list",
   // ::::::::::::::::::::::::::::::::::::::::
   // ::::::::::::::::::::::::::::::::::::::::
   
+  computed:{
+  },
+  
   methods: {
   
     retrieveArticles() {
       ArticleDataService.getAll()
         .then(response => {
           this.articles = response.data;
-          console.log(response.data);
+          console.log( this.articles);
         })
         .catch(e => {
           console.log(e);
@@ -276,16 +278,14 @@ name: "articles-list",
       saveComments(event) { 
       event.preventDefault() 
      
-          
-      //  console.log(this.articles.filter(({article_id}) => article_id))
-      //   console.log(this.articles.length)
+     
       const data = {
       content: this.formComment,
       article_id: this.actualArticle
       }; 
       console.log(data)
       
-      axios.post(`${apiUrl}/comments`, data, config)
+      axios.post(`${apiUrl}/comments/:article_id`, data, config)
      
           .then(response => {
           this.comment = response.data.id;
