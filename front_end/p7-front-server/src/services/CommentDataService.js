@@ -7,21 +7,12 @@ let config = {
 }
 let baseUrl = "http://localhost:3000/api"
 
-// let article_id = req.query.article_id
-
-
-
 class CommentDataService {
     getAll(article_id) {
 
 
         // getAll() {
         return axios.get(`${baseUrl}/comments/?article_id=${article_id}`);
-
-        // return axios.get(`${baseUrl}/comments/${article_id}`);
-
-
-        // return axios.get(`${baseUrl}/comments/`, { params: { comments: "article_id" } });
 
     }
 

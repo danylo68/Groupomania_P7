@@ -1,14 +1,36 @@
+let multer = require('multer');
+const DIR = './images/';
+const db = require("../models");
+const Article = db.article;
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "/Users/mac/Documents/GitHub/GroupomaniaP7/back-end/app/ressources/static/assets/upload/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-groupomania-${file.originalname}`);
+  },
+});
+
+
+var upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error('File type not accepted (.png, .jpg, .jpeg)'));
+    }
+  }
+});
 
 
 module.exports = app => {
   const express = require('express');
   const { authJwt } = require("../middleware");
   const router = require("express").Router();
-  const multer = require('../middleware/multer.config');
   const articleCtrl = require("../controllers/article.controller.js");
-
-
 
   // Create a new Articles   
   router.post("/", [authJwt.verifyToken, multer], articleCtrl.create);
@@ -31,34 +53,39 @@ module.exports = app => {
   // Delete all Articles
   router.delete("/", articleCtrl.deleteAll);
 
+  router.post('/new', upload.array('image', 8), (req, res, next) => {
+
+
+    const reqFiles = [];
+    for (var i = 0; i < req.files.length; i++) {
+      reqFiles.push('/Users/mac/Documents/GitHub/GroupomaniaP7/back-end/app/ressources/static/assets/upload/' + req.files[i].filename)
+    }
+    console.log("title", req.body.title)
+    console.log("description", req.body.description)
+
+    const article = {
+      title: req.body.title,
+      description: req.body.description,
+      image: reqFiles[0]
+    }
+
+
+    Article.create(article)
+      .then(article => {
+        res.send(article);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Article."
+        });
+      });
+
+  })
+
   app.use('/api/articles', router);
 
 };
 
 
 
-
-
-
-// module.exports = app => {
-//   app.use(function (req, res, next) {
-//     res.header(
-//       'Access-Control-Allow-Headers',
-//       'x-access-token, Origin, Content-Type, Accept'
-//     );
-//     next();
-//   });
-
-//   // Posts
-//   app.get('/api/articles', articleCtrl.all);
-
-//   app.get('/api/articles-get/:id', [authJwt.verifyToken], articleCtrl.findone);
-
-//   app.get('/api/articles-my/:id', [authJwt.verifyToken], articleCtrl.myPosts);
-//   // app.get('/api/articles-friends', [authJwt.verifyToken], articleCtrl.friendsPosts);
-//   app.post('/api/articles-create', [authJwt.verifyToken], multer, articleCtrl.create);
-
-//   app.put('/api/articles-update', [authJwt.verifyToken], articleCtrl.update);
-
-//   app.delete('/api/articles-delete/:id', [authJwt.verifyToken], articleCtrl.delete);
-// };

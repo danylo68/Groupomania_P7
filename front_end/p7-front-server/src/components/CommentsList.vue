@@ -89,26 +89,12 @@ export default {
     }
   },
 
-  //  computed:{
-  //   filteredComments() {
-  //     if (this.article_id !== 'All') {
-  //       this.comments = this.comments.filter(comment => {
-  //         return this.comments.article_id === this.articles.article_id
-  //       })
-  //     };
-  // }
-  //  },
-
   methods: {
     retrieveComments () {
-//     const data = { content: this.formComment, article_id: this.actualArticle };
-// console.log(data)
 
-    
       // Il faut changer cette méthode pour qu'elle envoit article_id à l'API pour pouvoir filtrer
       CommentDataService.getAll(this.article_id)
-      // this.$route.params.article_id
-
+   
         .then(response => {
           this.comments = response.data
         })

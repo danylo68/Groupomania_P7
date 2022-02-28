@@ -4,7 +4,7 @@
       <div class="col-8">
         <label class="btn btn-default p-0">
           <input
-            type="file"  
+            type="file"
             accept="image/*"
             ref="file"
             @change="selectImage"
@@ -16,8 +16,7 @@
         <button
           class="btn btn-success btn-sm float-right"
           :disabled="!currentImage"
-          @click="upload"
-        >
+          @click="upload">
           Upload
         </button>
       </div>
@@ -61,52 +60,51 @@
   </div>
 </template>
 
-
 <script>
-import UploadService from "../services/UploadFilesService";
-
+import UploadService from '../services/UploadFilesService'
 export default {
-  name: "upload-image",
-  data() {
+  name: 'upload-image',
+  data () {
     return {
       currentImage: undefined,
       previewImage: undefined,
       progress: 0,
-      message: "",
-      imageInfos: [],
-    };
+      message: '',
+      imageInfos: []
+    }
   },
   methods: {
-    selectImage() {
-      this.currentImage = this.$refs.file.files.item(0);
-      this.previewImage = URL.createObjectURL(this.currentImage);
-      this.progress = 0;
-      this.message = "";
+    selectImage () {
+      this.currentImage = this.$refs.file.files.item(0)
+      this.previewImage = URL.createObjectURL(this.currentImage)
+      this.progress = 0
+      this.message = ''
     },
-    upload() {
-      this.progress = 0;
-      UploadService.upload(this.currentImage, (event) => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
+    upload () {
+      this.progress = 0
+      UploadService.upload(this.currentImage, event => {
+        this.progress = Math.round((100 * event.loaded) / event.total)
       })
-        .then((response) => {
-        console.log(response)
-          this.message = "Photo Post";
+        .then(response => {
+          this.message = response.data.message
+          return UploadService.getFiles()
         })
-        
-        .catch((err) => {
-          this.progress = 0;
-          this.message = "Could not upload the image! " + err;
-          this.currentImage = undefined;
-        });
-    },
+        .then(images => {
+          this.imageInfos = images.data
+        })
+        .catch(err => {
+          this.progress = 0
+          this.message = 'Could not upload the image! ' + err
+          this.currentImage = undefined
+        })
+    }
   },
-  mounted() {
-    UploadService.getFiles().then((response) => {
-     console.log(response)
-      this.imageInfos = response.data;
-    });
-  },
-};
+  mounted () {
+    UploadService.getFiles().then(response => {
+      this.imageInfos = response.data
+    })
+  }
+}
 </script>
 
 <style scoped>

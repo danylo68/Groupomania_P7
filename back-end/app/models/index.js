@@ -1,25 +1,20 @@
-const config = require("../config/db.config.js");
+const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(
-  config.DB,
-  config.USER,
-  config.PASSWORD,
-  {
-    host: config.HOST,
-    dialect: config.dialect,
-    // operatorsAliases: evite erreur dans nodeJS attention à false,
-    operatorsAliases: 0,
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
+  operatorsAliases: 0,
 
-
-    pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire,
-      idle: config.pool.idle
-    }
+  pool: {
+    max: dbConfig.pool.max,
+    min: dbConfig.pool.min,
+    acquire: dbConfig.pool.acquire,
+    idle: dbConfig.pool.idle
   }
-);
+});
+
+
 
 const db = {};
 
@@ -30,7 +25,7 @@ db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.article = require("../models/article.model.js")(sequelize, Sequelize);
 db.comment = require("../models/comment.model.js")(sequelize, Sequelize);
-db.images = require("./image.model.js")(sequelize, Sequelize);
+// db.images = require("./image.model.js")(sequelize, Sequelize);
 
 
 
@@ -56,57 +51,6 @@ db.comment.belongsTo(db.user, { foreignKey: "user_id" });
 
 // liaison Article_Comment  ::::::::::::::::::::
 db.comment.belongsTo(db.article, { foreignKey: 'article_id' });
-
-
-
-
-
-
-// db.user.belongsToMany(db.article, {
-//   through: "user_article",
-//   as: "articles",
-//   foreignKey: "user_id",
-//   // otherKey: "article_id"
-// });
-// db.article.belongsToMany(db.user, {
-//   through: "user_article",
-//   as: "users",
-//   foreignKey: "article_id",
-//   // otherKey: "user_id"
-// });
-
-
-
-
-
-
-// db.comment.belongsToMany(db.user, {
-//   through: "user_comment",
-//   as: "users",
-//   foreignKey: "comment_id",
-//   // otherKey: "userId"
-// });
-// db.user.belongsToMany(db.comment, {
-//   through: "user_comment",
-//   as: "comments",
-//   foreignKey: "user_id",
-//   // otherKey: "commentId"
-// });
-
-// liaison Comment_Article    ::::::::::::::::
-// db.article.belongsToMany(db.comment, {
-//   through: "comment_article",
-//   as: "comments",
-//   foreignKey: "article_id",
-//   otherKey: "comment_id"
-// });
-// db.comment.belongsToMany(db.article, {
-//   through: "comment_article",
-//   as: "articles",
-//   foreignKey: "comment_id",
-//   otherKey: "article_id"
-// });
-
 
 
 

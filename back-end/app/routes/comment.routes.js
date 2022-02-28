@@ -4,7 +4,8 @@
 module.exports = app => {
     const { authJwt } = require("../middleware");
     const router = require("express").Router();
-    const multer = require('../middleware/multer.config');
+    const multer = require('../middleware/multer-config');
+
     const commentCtrl = require("../controllers/comment.controller.js");
 
     // Create a new Comments

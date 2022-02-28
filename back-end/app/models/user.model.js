@@ -30,31 +30,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(100),
             // allowNull: false,
         },
-        // birth_date: {
-        //     type: Sequelize.DATEONLY,
-        //     // allowNull: true
-        // },
 
-        // phone: {
-        //     type: Sequelize.STRING(50),
-        //     validate: {
-        //         not: ['[a-z]', 'i']
-        //     }
-        // },
-
-        // organization: {
-        //     type: Sequelize.STRING(255),
-        //     // allowNull: false,
-        // },
-
-        // designation: {
-        //     type: Sequelize.STRING(255),
-        //     // allowNull: false,
-        // },
 
         division: {
             type: Sequelize.STRING(255),
-            // allowNull: false,
+
         },
 
         img: {

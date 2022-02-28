@@ -7,8 +7,6 @@ const User = db.user;
 const jwt = require("jsonwebtoken");
 const { article } = require('../models');
 
-
-
 // Create and Save a new comment :::::::::::::::::::::::::::::::::
 exports.create = (req, res) => {
 
@@ -89,8 +87,6 @@ exports.findOne = (req, res) => {
             }
         });
 };
-
-
 
 // // Update a comment by the id in the request   ::::::::::::::::::::::::::::
 

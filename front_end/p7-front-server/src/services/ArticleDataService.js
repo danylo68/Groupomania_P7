@@ -23,7 +23,7 @@ class ArticleDataService {
     }
 
     create(data) {
-        return axios.post(`${baseUrl}/articles`, data, config);
+        return axios.post(`${baseUrl}/articles/new`, data, config);
     }
 
     update(id, data) {

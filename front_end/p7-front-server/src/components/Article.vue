@@ -14,11 +14,20 @@
           v-model="currentArticle.description"
         />
       </div>
+      
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="text" class="form-control" id="image"
+          v-model="currentArticle.image"
+        />
+      </div>
+
 
       <div class="form-group">
         <label><strong>Status:</strong></label>
         {{ currentArticle.published ? "Published" : "Pending" }}
       </div>
+      
     </form>
 
     <button class="badge badge-primary mr-2"
@@ -85,6 +94,8 @@ export default {
         id: this.currentArticle.id,
         title: this.currentArticle.title,
         description: this.currentArticle.description,
+        image: this.currentArticle.image,
+
         published: status
       };
 

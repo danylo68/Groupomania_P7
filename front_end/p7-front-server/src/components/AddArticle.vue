@@ -21,10 +21,6 @@ justify-content: center;
 width: 300px;
 }
 
-.img {
-height: 50px;
-width: auto;
-}
 .btn-success{
 margin-left: 10px;
 }
@@ -35,12 +31,8 @@ justify-content: center;
 }
 .post_article{
 display: flex;
-
-
 }
-
 </style>
-
 
 
 <template>
@@ -75,6 +67,19 @@ display: flex;
         />
       </div>
       
+    
+
+ 
+  
+      <input type="file" accept="image/*" name="imagesArray" @change="onChange" />
+      <div id="preview">
+    <img v-if="article.imageUrl" :src="article.imageUrl" />
+    </div>
+
+      
+ 
+
+      
       <button @click="saveArticle" class="btn btn-success">Submit</button>
     </b-form-group>
 
@@ -83,56 +88,72 @@ display: flex;
       <button p-3 class="btn btn-success" @click="newArticle">Add</button>
     </b-form>
     </b-container>
+    
   </div>
-  
-  <!-- </div> -->
   
 </template>
 
 
 <script>
+
+
+
 import ArticleDataService from "../services/ArticleDataService";
 
-export default {
+
+  export default {
   name: "add-article",
+  
   data() {
     return {
-      article: {
-        id: null,
-        title: "",
-        description: "",
-        published: false
-      },
-      submitted: false
+   
+    submitted: false,
+
+    article: {
+      id: null,
+      title: "",       
+      image: null,
+      imageUrl: null,
+      description: "",    
+      published: false,
+      imagesArray: null,
+    },  
     };
   },
   
-
   methods: {
-    saveArticle() {
-      var data = {
-        title: this.article.title,
-        description: this.article.description
-      };
-      console.log("toto")
-      ArticleDataService.create(data)
+      onChange (event) {
+        this.imagesArray = event.target.files[0]
+      },
+
+  saveArticle() {
+    
+    const formData = new FormData();
+  
+    formData.append('image', this.imagesArray)
+    formData.append('title', this.article.title)
+    formData.append('description', this.article.description)
+        
+      
+      ArticleDataService.create(formData)
         .then(response => {
-          this.article.id = response.data.id;
-          // Upload image
-          // url/artciles/ this.article.id  / uploa
-          console.log(response.data);
-          this.submitted = true;
+        console.log(response)
+        // this.article.id = response.data.id;
+        // this.image = response.data.image
+
+        // console.log(response.data);
+        // this.submitted = true;
         })
         .catch(e => {
           console.log(e);
         });
+
     },
-    
     newArticle() {
       this.submitted = false;
       this.article = {};
     }
   }
-};
+  };
 </script>
 
