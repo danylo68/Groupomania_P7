@@ -7,7 +7,7 @@ let config = {
     headers: authHeader()
 
 }
-let baseUrl = "http://localhost:3000/api"
+let baseUrl = "http:///192.168.1.26:3000/api"
 
 
 class ArticleDataService {
@@ -23,7 +23,7 @@ class ArticleDataService {
     }
 
     create(data) {
-        return axios.post(`${baseUrl}/articles`, data, config);
+        return axios.post(`${baseUrl}/articles/new`, data, config);
     }
 
     update(id, data) {

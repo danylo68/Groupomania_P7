@@ -77,7 +77,7 @@ import axios from 'axios';
 
 import authHeader from "../services/auth-header";
 
-const apiUrl = "http://localhost:3000/api";
+const apiUrl = "http://192.168.1.26:3000/api";
 
 let config = {
 headers: authHeader()

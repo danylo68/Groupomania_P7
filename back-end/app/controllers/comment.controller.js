@@ -5,21 +5,19 @@ const Article = db.article;
 const Comment = db.comment;
 const User = db.user;
 const jwt = require("jsonwebtoken");
-
-
+const { article } = require('../models');
 
 // Create and Save a new comment :::::::::::::::::::::::::::::::::
 exports.create = (req, res) => {
-    // Validate request
 
     const token = req.headers['x-access-token'];
     const decoded = jwt.decode(token);
     console.log(req.userId)
     const comment = {
-
         content: req.body.content,
         user_id: decoded.id,
-        article_id: req.body.article_id
+        article_id: req.body.article_id,
+        // image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     };
     // Save Comment in the database
     Comment.create(comment)
@@ -35,19 +33,26 @@ exports.create = (req, res) => {
 };
 
 // // Retrieve all comments from the database.::::::::::::::::::::::::::::::::::::::
+// { article_id: req.query.article_id },
 exports.findAll = (req, res) => {
-    const content = req.query.content;
-    const condition = content ? { content: { [Op.like]: `%${content}%` } } : null;
+
+    const article_id = req.query.article_id;
+    // const condition = article_id
+    // const article_id = req.param.article_id;
 
     return Comment.findAll({
-        where: condition,
-        include: {
-            model: User,
-            model: Article,
-            attributes: ["article_id"],
-            attributes: ["user_id", "username"],
-        }
+
+        where: { article_id: article_id },
+        include: [
+
+            {
+                model: User,
+                attributes: ["user_id", "username"],
+
+            },
+        ]
     })
+        // .then(comment => res.status(200).json(comment))
         .then((comment) => {
             if (comment) {
                 res.send(comment);
@@ -62,7 +67,7 @@ exports.findAll = (req, res) => {
 
 // // Find a single comment with an id ::::::::::::::::::::::::::::::::::::::::
 exports.findOne = (req, res) => {
-    const comment_id = req.params.id;
+    const comment_id = req.query.comment_id;
     Comment.findByPk(comment_id, {
         include: [
             {
@@ -77,13 +82,11 @@ exports.findOne = (req, res) => {
             } else {
                 res.status(500).send({
                     message:
-                        err.message || "Une erreur s'est produite lors de la récupération des commentaire :id.",
+                        err.message || "Une erreur s'est produite lors de la récupération des commentaire_id.",
                 });
             }
         });
 };
-
-
 
 // // Update a comment by the id in the request   ::::::::::::::::::::::::::::
 
@@ -91,7 +94,7 @@ exports.update = async (req, res) => {
     const id = req.params.id;
 
     Comment.update(req.body, {
-        where: { id: id },
+        where: { id: comment_id },
     })
         .then((num) => {
             if (num == 1) {

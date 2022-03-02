@@ -1,35 +1,47 @@
-const config = require('../config/auth.config');
+
+const express = require("express");
+const app = express();
+ const config = require('../config/auth.config');
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const Article = db.article;
 const Comment = db.comment;
 const User = db.user;
 const jwt = require("jsonwebtoken");
-
+const fileUpload = require('express-fileupload');
+const fs = require("fs")
+const path = require('path');
+app.use(fileUpload());
 
 
 // Create and Save a new Article  ::::::::::::::::::::::::::::
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Autre champs exigé !",
-    });
-    return;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(401).send('No files were uploaded.');
   }
+
+  const imageFile = `${req.protocol}://${req.get('host')}/ressources/${req.file.filename}`;
+
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);
-  console.log(req.userId)
+  console.log(imageFile)
+
   const article = {
     title: req.body.title,
     description: req.body.description,
     user_id: decoded.id,
+    image: imageFile
+
   };
   // Save Article in the database
   Article.create(article)
     .then(data => {
       res.send(data);
     })
+    // .then(article => {
+    //   res.send(article);
+    // })
     .catch(err => {
       res.status(500).send({
         message:
@@ -48,6 +60,7 @@ exports.findAll = (req, res) => {
     include: {
       model: User,
       attributes: ["user_id", "username", "last_name"],
+
     }
   })
     .then((article) => {
@@ -64,7 +77,7 @@ exports.findAll = (req, res) => {
 //// Find a single comment with an id  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 exports.findOne = (req, res) => {
-  const article_id = req.params.id
+  const article_id = req.params.article_id
   Article.findByPk(article_id, {
     include: [
       {
@@ -190,3 +203,5 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+
+

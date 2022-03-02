@@ -1,37 +1,42 @@
+<style scoped>
+.list-group-item {
+  width: 800px;
+  height: 161px;
+}
+
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
+</style>
+
 <template>
   <div class="list row">
-   
     <div class="col-md-6">
-     
       <ul class="list-group">
-        <li class="list-group-item"
-        
-          :class="{ active: index == currentIndex }"
-          v-for="(comment, index) in comments"
-          :key="index"
-          @click="setActiveComment(comment, index)">
-        
-         <span>{{ comment.user.username }}: </span>
-            <h5>{{ comment.content }}</h5>
-            <p>{{ comment.comment_id }}</p>
-           
-            
-            <button class="m-3 btn btn-sm btn-danger" @click="removeAllComments">
-            
-        Remove
-      </button>
+        <li
+          class="list-group-item"
+          v-for="comment in comments"
+          :key="comment.id"
+          
+        >
+          <span>{{ article.title }}: </span>
+          <span>{{ comment.user.username }}: </span>
+          <h5>{{ comment.content }}</h5>
+          <p>{{ comment.comment_id }}</p>
+          <p>id article: {{ comment.article_id }}</p>
+          <button class="m-3 btn btn-sm btn-danger" @click="removeAllComments">
+            Remove
+          </button>
         </li>
       </ul>
       <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeComments">
         Remove
       </button> -->
     </div>
-    
-    
-    
-   
-   
-       <!-- <b-card bg-variant="light" header="Light" class="text-center">
+
+    <!-- <b-card bg-variant="light" header="Light" class="text-center">
         <h4>Comment</h4>
     
        <b-card-text>
@@ -53,81 +58,88 @@
 </template>
 
 <script>
-import CommentDataService from "../services/CommentDataService";
+import CommentDataService from '../services/CommentDataService'
 
 export default {
-  name: "comments-list",
+  name: 'comments-list',
   props: {
-    article_id: Number,
+    article_id: {
+      type: Number,
+      default: null
+    },
+    comment_id: {
+      type: Number,
+      default: null
+    }
+   
   },
-  data() {
+  
+  data () {
     return {
       comments: [],
+      articles: [],
       currentComment: null,
       currentIndex: -1,
-     
-    };
-  },
-  methods: {
-    retrieveComments() {
-    
-    // Il faut changer cette méthode pour qu'elle envoit articl_id à l'API pour pouvoir filtrer
-     CommentDataService.getAll()
-        .then(response => {
-          this.comments = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    refreshList() {
-      this.retrieveComments();
-      this.currentComment = null;
-      this.currentIndex = -1;
-    },
-
-    setActiveComment(comment, index) {
-      this.currentComment = comment;
-      this.currentIndex = index;
-    },
-
-    removeAllComments() {
-     CommentDataService.deleteAll()
-        .then(response => {
-          console.log(response.data);
-          this.refreshList();
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    
-    searchTitle() {
-      CommentDataService.findByTitle(this.title)
-        .then(response => {
-          this.comments = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      index: '',
+      comment: '',
+      article: '',
+      filterData: '',
+      parameters: '',
+      data: ''
     }
   },
-  mounted() {
-    this.retrieveComments();
-    console.log("COMMENTS")
+
+  methods: {
+    retrieveComments () {
+
+      // Il faut changer cette méthode pour qu'elle envoit article_id à l'API pour pouvoir filtrer
+      CommentDataService.getAll(this.article_id)
+   
+        .then(response => {
+          this.comments = response.data
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+
+    refreshList () {
+      this.retrieveComments()
+      this.currentComment = null
+      this.currentIndex = -1
+    },
+
+    setActiveComment (comment, index) {
+      this.currentComment = comment
+      this.currentIndex = index
+    },
+
+    removeAllComments () {
+      CommentDataService.deleteAll()
+        .then(response => {
+          console.log(response.data)
+          this.refreshList()
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+
+    searchTitle () {
+      CommentDataService.findByTitle(this.title)
+        .then(response => {
+          this.comments = response.data
+          console.log(response.data)
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  },
+  mounted () {
+    this.retrieveComments()
+    console.log('COMMENTS')
     console.log(this.article_id)
   }
-};
-</script>
-
-<style>
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
 }
-
-</style>
+</script>

@@ -10,6 +10,12 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
+    image: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    // data: {
+    //   type: DataTypes.BLOB("long"),
 
     title: {
       type: Sequelize.STRING(255),
@@ -35,13 +41,8 @@ module.exports = (sequelize, Sequelize) => {
 
 
     });
-  // Article.hasMany(User);
 
   return Article;
 };
 
 
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log('Drop and Resync Database with { force: true }');
-//   initial();
-// });

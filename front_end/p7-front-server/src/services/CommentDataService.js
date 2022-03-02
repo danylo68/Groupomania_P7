@@ -4,17 +4,16 @@ import authHeader from './auth-header';
 
 let config = {
     headers: authHeader()
-
 }
-let baseUrl = "http://localhost:3000/api"
-
+let baseUrl = "http:///192.168.1.26:3000/api"
 
 class CommentDataService {
-    getAll() {
-        return axios.get(`${baseUrl}/comments`)
-            .catch(function (error) {
-                console.log(error.toJSON());
-            });
+    getAll(article_id) {
+
+
+        // getAll() {
+        return axios.get(`${baseUrl}/comments/?article_id=${article_id}`);
+
     }
 
     get(id) {
@@ -22,7 +21,7 @@ class CommentDataService {
     }
 
     create(data) {
-        return axios.post(`${baseUrl}/comments`, data, config);
+        return axios.post(`${baseUrl}/comments/:article_id`, data, config);
     }
 
     update(id, data) {

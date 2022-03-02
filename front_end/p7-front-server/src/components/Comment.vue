@@ -27,13 +27,15 @@
     >
       Publish
     </button>
-
+<!-- ::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::: -->
     <button class="badge badge-danger mr-2"
       @click="deleteComment"
     >
       Delete
     </button>
-
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::: -->
     <button type="submit" class="badge badge-success"
       @click="updateComment"
     >
@@ -56,7 +58,8 @@ export default {
   data() {
     return {
       currentComment: null,
-      message: ''
+      message: '',
+      article_id: "",
     };
   },
   methods: {
@@ -99,7 +102,8 @@ export default {
           console.log(e);
         });
     },
-
+// // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
     deleteComment() {
       CommentDataService.delete(this.currentComment.id)
         .then(response => {
@@ -110,6 +114,8 @@ export default {
           console.log(e);
         });
     }
+// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   },
   mounted() {
     this.message = '';
