@@ -77,19 +77,15 @@
               id article:{{ article.article_id }}
               
               <b-card
-                img-src="https://picsum.photos/id/948/1200/200"
+                :img-src="article.image"
+                class="imageUrl
+"
                 rounded
                 alt="Rounded image"
-                img-top
-              >
-              <div v-if="article.image">
-              <!-- <b-card :img-src="article.image" class="article"></b-card>:: -->
-              <!-- <img :src="article.image" class="imageUrl">:: -->
-              <img :src="imageUrl" class="imageUrl">
-              
-
-                  <!-- {{article.image}} -->
-            </div>      
+                img-top>
+           
+        
+   
                 <b-card-text>
                 
          
@@ -98,9 +94,6 @@
                   <hr />
                   {{ article.description }}
                   
-                  
-                  
-              
                 </b-card-text>
               </b-card>
 
@@ -165,16 +158,12 @@ export default {
   name: 'articles-list',
 
   props: {
-  
-
     articles: {
       article_id:"",
       // default: () => [],
       // required: true,
       // type: Number,
       image:"",
-
-
     }
   },
 
@@ -185,7 +174,7 @@ export default {
 
   data () {
     return {
-      image:"",
+    
       profile: "",   
       article_id:"",
       actualArticle:"",
@@ -197,36 +186,25 @@ export default {
       content: "",
 
     }
+    
+    
+    
   },
-  computed: {
-imageUrl() {
-return `/ressources/static/assets/upload/${this.article.image}`
-
-
-}
-
-  },
-
   // ::::::::::::::::::::::::::::::::::::::::
   // ::::::::::::::::::::::::::::::::::::::::
 
   methods: {
-   selectImage () {
-      this.urlImage = URL.createObjectURL(this.image)
-      // const urlImage = window.URL.createObjectURL(new Blob([response.data]))
-      // console.log(urlImage)
-    },
   
   
     retrieveArticles () {
-      ArticleDataService.getAll()
-        .then(response => {
-          this.articles = response.data
-        
-          console.log(this.articles)
+    ArticleDataService.getAll()
+    .then(response => {
+    this.articles = response.data  
+    this.image = response.data
+    console.log(this.articles)
         })
-        .catch(e => {
-          console.log(e)
+    .catch(e => {
+    console.log(e)
         })
     },
 

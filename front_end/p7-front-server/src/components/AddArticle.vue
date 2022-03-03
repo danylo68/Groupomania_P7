@@ -37,7 +37,7 @@ display: flex;
 
 <template>
  <div class="col-md-12"> 
- <!-- <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img> --> 
+
   <!-- <div class="submit-form rounded "> -->
   <b-container class="post_article" >
   <h4>Post d'Article</h4>
@@ -67,18 +67,10 @@ display: flex;
         />
       </div>
       
-    
-
- 
-  
       <input type="file" accept="image/*" name="imagesArray" @change="onChange" />
       <div id="preview">
-    <img v-if="article.imageUrl" :src="article.imageUrl" />
+   
     </div>
-
-      
- 
-
       
       <button @click="saveArticle" class="btn btn-success">Submit</button>
     </b-form-group>
@@ -112,8 +104,8 @@ import ArticleDataService from "../services/ArticleDataService";
     article: {
       id: null,
       title: "",       
-      image: null,
-      imageUrl: null,
+      image: String,
+     
       description: "",    
       published: false,
       imagesArray: null,

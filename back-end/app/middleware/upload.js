@@ -10,7 +10,8 @@ const imageFilter = (req, file, cb) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "/Users/mac/Documents/GitHub/GroupomaniaP7/back-end/app" + "/ressources/static/assets/uploads/");
+
+        cb(null, __basedir + "/resources/static/assets/uploads/");
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-groupomania-${file.originalname}`);

@@ -1,11 +1,12 @@
-let multer = require('multer');
-const DIR = './images/';
+const multer = require('multer');
 const db = require("../models");
 const Article = db.article;
+// const fs = require("fs");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/Users/mac/Documents/GitHub/GroupomaniaP7/back-end/app/ressources/static/assets/upload/");
+
+    cb(null, './ressources/static/assets/uploads/');
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-groupomania-${file.originalname}`);
@@ -13,7 +14,8 @@ const storage = multer.diskStorage({
 });
 
 
-var upload = multer({
+const upload = multer({
+  dest: './ressources/static/assets/uploads/',
   storage: storage,
   fileFilter: (req, file, cb) => {
     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
@@ -55,10 +57,13 @@ module.exports = app => {
 
   router.post('/new', upload.array('image', 8), (req, res, next) => {
 
-
     const reqFiles = [];
     for (var i = 0; i < req.files.length; i++) {
-      reqFiles.push('/Users/mac/Documents/GitHub/GroupomaniaP7/back-end/app/ressources/static/assets/upload/' + req.files[i].filename)
+
+
+      const imgUrl = 'http://localhost:3000/static/assets/uploads/'
+
+      reqFiles.push(imgUrl + req.files[i].filename)
     }
     console.log("title", req.body.title)
     console.log("description", req.body.description)
@@ -68,8 +73,6 @@ module.exports = app => {
       description: req.body.description,
       image: reqFiles[0]
     }
-
-
     Article.create(article)
       .then(article => {
         res.send(article);

@@ -11,7 +11,7 @@ const MIME_TYPES = {
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         console.log("IJJJ");
-        callback(null, '/app/images');
+        callback(null, "" + 'ressources/static/assets/uploads');
     },
 
 

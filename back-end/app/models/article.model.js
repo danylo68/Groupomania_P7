@@ -10,12 +10,11 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
+
     image: {
       type: Sequelize.STRING,
       allowNull: true
     },
-    // data: {
-    //   type: DataTypes.BLOB("long"),
 
     title: {
       type: Sequelize.STRING(255),

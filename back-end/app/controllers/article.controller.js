@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     return res.status(401).send('No files were uploaded.');
   }
 
-  const imageFile = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+  const imageFile = `${req.protocol}://${req.get('host')}/ressources/${req.file.filename}`
 
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);
@@ -32,6 +32,7 @@ exports.create = (req, res) => {
     description: req.body.description,
     user_id: decoded.id,
     image: imageFile
+
 
   };
   // Save Article in the database
@@ -60,7 +61,6 @@ exports.findAll = (req, res) => {
     include: {
       model: User,
       attributes: ["user_id", "username", "last_name"],
-
     }
   })
     .then((article) => {

@@ -16,7 +16,8 @@
         <button
           class="btn btn-success btn-sm float-right"
           :disabled="!currentImage"
-          @click="upload">
+          @click="upload"
+        >
           Upload
         </button>
       </div>

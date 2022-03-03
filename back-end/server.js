@@ -5,10 +5,11 @@ const cors = require("cors");
 const db = require("./app/models");
 const Role = db.role;
 const path = require('path');
-// const config = require("./app/config/db.config.js");
-const initRoutes = require("./app/routes/web");
+const fs = require('fs');
+const config = require("./app/config/db.config.js");
+// const initRoutes = require("./app/routes/web");
 
-// global.__basedir = __dirname;
+global.__basedir = __dirname;
 // initRoutes(app);
 const corsOptions = {
   origin: "http://localhost:8081"
@@ -26,8 +27,8 @@ app.use(bodyParser.json());
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-app.use('/images', express.static(path.join(__dirname, 'images')));
-
+// app.use('/static', express.static(path.join(__dirname, 'ressources')));
+app.use('/', express.static(path.join(__dirname, 'ressources')));
 // database
 
 // db.sequelize.sync();
