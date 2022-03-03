@@ -1,7 +1,11 @@
 
 const express = require("express");
 const app = express();
+<<<<<<< HEAD
  const config = require('../config/auth.config');
+=======
+// const config = require('../config/auth.config');
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const Article = db.article;
@@ -21,7 +25,11 @@ exports.create = (req, res) => {
     return res.status(401).send('No files were uploaded.');
   }
 
+<<<<<<< HEAD
   const imageFile = `${req.protocol}://${req.get('host')}/ressources/${req.file.filename}`;
+=======
+  const imageFile = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);

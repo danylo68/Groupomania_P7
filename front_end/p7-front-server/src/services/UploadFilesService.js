@@ -1,7 +1,11 @@
 
 import axios from "axios";
 // import authHeader from './auth-header';
+<<<<<<< HEAD
 const baseUrl = "http:///192.168.1.26:3000/api";
+=======
+const baseUrl = "http://localhost:3000/api";
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 
 class UploadFilesService {
     upload(file, onUploadProgress) {

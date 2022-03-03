@@ -5,19 +5,28 @@ const cors = require("cors");
 const db = require("./app/models");
 const Role = db.role;
 const path = require('path');
+<<<<<<< HEAD
  const config = require("./app/config/db.config.js");
 // const initRoutes = require("./app/routes/web");
 const fs = require('fs');
+=======
+// const config = require("./app/config/db.config.js");
+const initRoutes = require("./app/routes/web");
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 
 // global.__basedir = __dirname;
 // initRoutes(app);
 const corsOptions = {
+<<<<<<< HEAD
   // origin: "http://localhost:8081",
 
 
   // adresse cors pour vm
   origin: "http://192.168.1.26:8081",
 
+=======
+  origin: "http://localhost:8081"
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 };
 
 app.use(cors(corsOptions));
@@ -32,7 +41,11 @@ app.use(bodyParser.json());
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+<<<<<<< HEAD
 app.use('/', express.static(path.join(__dirname, '/ressources')));
+=======
+app.use('/images', express.static(path.join(__dirname, 'images')));
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 
 // database
 

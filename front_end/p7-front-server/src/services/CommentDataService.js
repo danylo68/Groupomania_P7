@@ -5,7 +5,11 @@ import authHeader from './auth-header';
 let config = {
     headers: authHeader()
 }
+<<<<<<< HEAD
 let baseUrl = "http:///192.168.1.26:3000/api"
+=======
+let baseUrl = "http://localhost:3000/api"
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 
 class CommentDataService {
     getAll(article_id) {

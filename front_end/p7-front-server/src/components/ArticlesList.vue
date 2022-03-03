@@ -77,10 +77,15 @@
               id article:{{ article.article_id }}
               
               <b-card
+<<<<<<< HEAD
+=======
+                img-src="https://picsum.photos/id/948/1200/200"
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
                 rounded
                 alt="Rounded image"
                 img-top
               >
+<<<<<<< HEAD
             
             <b-card :img-src="article.image" class="imageUrl"></b-card>
             
@@ -99,6 +104,27 @@
       Delete
     </button>
 
+=======
+              <div v-if="article.image">
+              <!-- <b-card :img-src="article.image" class="article"></b-card>:: -->
+              <!-- <img :src="article.image" class="imageUrl">:: -->
+              <img :src="imageUrl" class="imageUrl">
+              
+
+                  <!-- {{article.image}} -->
+            </div>      
+                <b-card-text>
+                
+         
+                  <h5>{{ article.title }}:</h5>
+
+                  <hr />
+                  {{ article.description }}
+                  
+                  
+                  
+              
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
                 </b-card-text>
               </b-card>
 
@@ -114,7 +140,11 @@
               <CommentsList :article_id="article.article_id" />
             </b-card-group>
           </b-container>
+<<<<<<< HEAD
          
+=======
+          <!-- ------------------------- -->
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 
           <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllArticles">
         Remove All
@@ -154,7 +184,11 @@ import authHeader from '../services/auth-header'
 
 
 
+<<<<<<< HEAD
 const apiUrl = 'http://192.168.1.26:3000/api'
+=======
+const apiUrl = 'http://localhost:3000/api'
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 const config = {
   headers: authHeader()
 }
@@ -163,6 +197,11 @@ export default {
   name: 'articles-list',
 
   props: {
+<<<<<<< HEAD
+=======
+  
+
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
     articles: {
       article_id:"",
       // default: () => [],
@@ -181,7 +220,11 @@ export default {
 
   data () {
     return {
+<<<<<<< HEAD
       imageUrl:"",
+=======
+      image:"",
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
       profile: "",   
       article_id:"",
       actualArticle:"",
@@ -191,15 +234,30 @@ export default {
       user:"",
       index:"",
       content: "",
+<<<<<<< HEAD
       button:"",
     }
   },
   
+=======
+
+    }
+  },
+  computed: {
+imageUrl() {
+return `/ressources/static/assets/upload/${this.article.image}`
+
+
+}
+
+  },
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
 
   // ::::::::::::::::::::::::::::::::::::::::
   // ::::::::::::::::::::::::::::::::::::::::
 
   methods: {
+<<<<<<< HEAD
 
  myUrlImage: function () {	
 		this.imageUrl =`http://192.168.1.26:3000/static/assets/uploads/${this.article.image}`;
@@ -212,6 +270,21 @@ export default {
         .then(response => {
         this.articles = response.data
         console.log(this.articles)
+=======
+   selectImage () {
+      this.urlImage = URL.createObjectURL(this.image)
+      // const urlImage = window.URL.createObjectURL(new Blob([response.data]))
+      // console.log(urlImage)
+    },
+  
+  
+    retrieveArticles () {
+      ArticleDataService.getAll()
+        .then(response => {
+          this.articles = response.data
+        
+          console.log(this.articles)
+>>>>>>> 6c47a207b85b0f8230ba3a3fdc41e0cfdfb1d586
         })
         .catch(e => {
           console.log(e)
