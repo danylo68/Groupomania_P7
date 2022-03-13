@@ -38,14 +38,13 @@ width: 300px;
 
 
 <template>
- <div class="col-md-12">
- <!-- <b-img :src="require(`@/assets/icon-left-black.png`)" alt="Responsive image"></b-img> -->
-  <!-- <div class="submit-form rounded ">
-  <b-container class="p-3" > -->
+ <div class="col-md-8">
+ 
+  <b-container class="p-3" > 
   <h4>Create Comment</h4>
     <b-form-group 
       @submit="saveComments">
-      <div class="form-group p-3">
+      <b-form class="form-group p-3">
         <label for="content">Content</label>
         <b-form-input p-3
           class="form-control"
@@ -53,7 +52,7 @@ width: 300px;
           required
           v-model="comment.content"
           name="content"/>
-      </div>
+      </b-form>
       
       <button @click="saveComment" class="btn btn-success">Submit</button>
     </b-form-group>
@@ -62,11 +61,10 @@ width: 300px;
       <h4>You submitted successfully!</h4>
       <button p-3 class="btn btn-success" @click="newComment">Add</button>
     </b-form> -->
-    <!-- </b-container> -->
+     </b-container>
   <!-- </div> -->
   
-  </div>
-  
+  </div> 
 </template>
 
 

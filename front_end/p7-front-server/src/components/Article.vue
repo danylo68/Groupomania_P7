@@ -22,13 +22,14 @@
         />
       </div>
 
-
       <div class="form-group">
         <label><strong>Status:</strong></label>
         {{ currentArticle.published ? "Published" : "Pending" }}
       </div>
       
     </form>
+    
+    <!-- ::::::::::::::::::::::::::::::::: -->
 
     <button class="badge badge-primary mr-2"
       v-if="currentArticle.published"
@@ -41,13 +42,14 @@
     >
       Publish
     </button>
+    <!-- :::::::::::::::::::::::::::::::: -->
 
     <button class="badge badge-danger mr-2"
       @click="deleteArticle"
     >
       Delete
     </button>
-
+<!-- ::::::::::::::::::::::::::::::::::::::::: -->
     <button type="submit" class="badge badge-success"
       @click="updateArticle"
     >
@@ -55,12 +57,11 @@
     </button>
     <p>{{ message }}</p>
   </div>
-
+<!-- ::::::::::::::::::::::::::::::::::::::::: -->
   <div v-else>
     <br />
     <p>Please click on a Article...</p>
   </div>
-  
   
 </template>
 
@@ -95,7 +96,6 @@ export default {
         title: this.currentArticle.title,
         description: this.currentArticle.description,
         image: this.currentArticle.image,
-
         published: status
       };
 
@@ -110,7 +110,9 @@ export default {
     },
 
     updateArticle() {
-      ArticleDataService.update(this.currentArticle.id, this.currentArticle)
+      ArticleDataService.update(
+      this.currentArticle.id, 
+      this.currentArticle)
         .then(response => {
           console.log(response.data);
           this.message = 'The Article was updated successfully!';

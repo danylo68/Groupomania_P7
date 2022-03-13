@@ -2,16 +2,40 @@
 
 #app
 {
-background-color:rgba(245, 245, 245, 0.993);
-height: 100%;
-
+/* background-color:#bcc1ca9c; */
+background-color:#f0f3ee;
 }
+
 .content-vue
 {
-height: 100%;
-    margin-top: 4em;
-    display: flex;
+height: auto;
+max-width: 2250px;
+margin-top: 0em;
+    /* display: flex; */
 }
+.img-profile
+{
+height: 100%;
+max-width: 100%;
+}
+
+#nav1_top
+{
+opacity: 0.9;
+color: white!important
+}
+.footer-jumbo
+{
+opacity: 0.5;
+margin-top: 3rem;
+}
+img
+{
+width: 8rem;
+height: 7rem;
+}
+
+
 </style>
 
 
@@ -19,17 +43,30 @@ height: 100%;
 
   <div id='app'>
   
-  <b-navbar class="Regular shadow" fixed="top" toggleable="lg" type="dark" variant="secondary" >
-  <!-- <b-img :src="require(`@/assets/icon-left.png`)" alt="Responsive image"></b-img> -->
-    <b-navbar-brand href="#">Groupomania</b-navbar-brand>
+ <!-- <b-img :src="require(`@/assets/Groupomania.jpg`)" class="img-profile" ></b-img> -->
+  
+  <b-navbar class="Regular shadow" 
+  id="nav1_top"
+  fixed="top" 
+  toggleable="lg" 
+  type="dark"
+  variant="dark"
+  text-variant="white">
+  
+  
+  
+    <b-navbar-brand href="#">Groupomania 
+
+    </b-navbar-brand>
+    <!-- <img :src="require(`@/assets/icon-left-font-monochrome-white.png`)" /> -->
+
     
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
     
      <b-navbar-nav>
-       <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home"/></router-link>
+     
       </b-navbar-nav>
     
       <!-- Right aligned nav items -->
@@ -41,11 +78,9 @@ height: 100%;
           <router-link to="/articles" class="nav-link">Articles</router-link>
         </b-nav-item> 
         
-        
-        
-       <b-nav-item class="nav-item">
-          <!-- <router-link to="/add" class="nav-link">add</router-link> -->
-        </b-nav-item>
+       <!-- <b-nav-item class="nav-item">
+          <router-link to="/add" class="nav-link">add</router-link>
+        </b-nav-item> -->
         </b-navbar-nav>
         
    <!-- </b-navbar> -->
@@ -89,31 +124,27 @@ height: 100%;
             <font-awesome-icon icon="sign-out-alt" />LogOut
           </a>
        </b-nav-item>
-    
       </b-navbar-nav>
 
      </b-navbar-nav>
-      
     </b-collapse>
-    
   </b-navbar>
-  <b-container class="content-vue">
   
-  <!-- <div class="img-nav"> -->
-  <!-- <b-img src="https://picsum.photos/1824/300/?image=318" fluid alt="Responsive image"></b-img> -->
-  <!-- <b-img src="https://picsum.photos/1824/300/?image=378"  class="shadow" fluid alt="Responsive image"></b-img> -->
-<!-- </div> -->
-
-
-<!-- <b-container class="upload" style="width:600px">
-      <div class="my-4">
-      </div>
-      <upload-image></upload-image>
-    </b-container>
-   -->
+  
+  <b-container class="content-vue" >
   
 <router-view />
 </b-container>
+
+
+<div>
+  <b-jumbotron class="footer-jumbo" bg-variant="dark" text-variant="dark" style="background-image: url(https://picsum.photos/1750/400/?image=532
+); margin-bottom:0">
+   <p>Footer</p>
+  </b-jumbotron>
+</div>
+
+
   </div>
 </template>
 

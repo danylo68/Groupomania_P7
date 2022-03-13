@@ -13,36 +13,28 @@ const fs = require("fs")
 const path = require('path');
 app.use(fileUpload());
 
-
 // Create and Save a new Article  ::::::::::::::::::::::::::::
 exports.create = (req, res) => {
 
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(401).send('No files were uploaded.');
   }
-
   const imageFile = `${req.protocol}://${req.get('host')}/ressources/${req.file.filename}`
-
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);
   console.log(imageFile)
-
   const article = {
     title: req.body.title,
     description: req.body.description,
+    username: req.body.username,
     user_id: decoded.id,
     image: imageFile
-
-
   };
   // Save Article in the database
   Article.create(article)
     .then(data => {
       res.send(data);
     })
-    // .then(article => {
-    //   res.send(article);
-    // })
     .catch(err => {
       res.status(500).send({
         message:
@@ -50,18 +42,19 @@ exports.create = (req, res) => {
       });
     });
 };
-
-// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// ::::::::::   Retrieve all Articles from the database  :::::::::::::::::::::::::::::::::::
 exports.findAll = (req, res) => {
   const title = req.query.title;
   const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   return Article.findAll({
     where: condition,
-    include: {
-      model: User,
-      attributes: ["user_id", "username", "last_name"],
-    }
+    include: [
+      {
+        model: User,
+        attributes: ["user_id", "username"],
+      }
+    ]
   })
     .then((article) => {
       if (article) {
@@ -82,7 +75,7 @@ exports.findOne = (req, res) => {
     include: [
       {
         model: User,
-        attributes: ["user_id", "username", "last_name"],
+        attributes: ["user_id", "username",],
 
       },
     ],
@@ -101,10 +94,10 @@ exports.findOne = (req, res) => {
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const article_id = req.params.id;
 
   Article.update(req.body, {
-    where: { id: id },
+    where: { article_id: article_id },
   })
     .then((num) => {
       if (num == 1) {
@@ -113,13 +106,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Article with id=${id}. Maybe Article was not found or req.body is empty!`,
+          message: `Cannot update Article with id=${article_id}. Maybe Article was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Article with id=" + id,
+        message: "Error updating Article with id=" + article_id,
       });
     });
 };
@@ -150,10 +143,10 @@ exports.addArticle = (userId, articleId) => {
 
 // Delete a Article with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const article_id = req.params.id;
 
   Article.destroy({
-    where: { id: id },
+    where: { article_id: article_id },
   })
     .then((num) => {
       if (num == 1) {
@@ -162,13 +155,13 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete Article with id=${id}. Maybe Article was not found!`,
+          message: `Cannot delete Article with id=${article_id}. Maybe Article was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Article with id=" + id,
+        message: "Could not delete Article with id=" + article_id,
       });
     });
 };

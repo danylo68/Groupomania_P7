@@ -12,12 +12,12 @@ exports.create = (req, res) => {
 
     const token = req.headers['x-access-token'];
     const decoded = jwt.decode(token);
-    console.log(req.userId)
+
     const comment = {
         content: req.body.content,
         user_id: decoded.id,
         article_id: req.body.article_id,
-        // image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+
     };
     // Save Comment in the database
     Comment.create(comment)
@@ -32,19 +32,13 @@ exports.create = (req, res) => {
         });
 };
 
-// // Retrieve all comments from the database.::::::::::::::::::::::::::::::::::::::
-// { article_id: req.query.article_id },
+//::::::::::   Retrieve all comments from the database  ::::::::::::::::::::::::::::::::::::::
 exports.findAll = (req, res) => {
-
     const article_id = req.query.article_id;
-    // const condition = article_id
-    // const article_id = req.param.article_id;
 
     return Comment.findAll({
-
         where: { article_id: article_id },
         include: [
-
             {
                 model: User,
                 attributes: ["user_id", "username"],
@@ -52,7 +46,7 @@ exports.findAll = (req, res) => {
             },
         ]
     })
-        // .then(comment => res.status(200).json(comment))
+        // .then(comment => res.status(200).json(comment))  => {
         .then((comment) => {
             if (comment) {
                 res.send(comment);
@@ -116,13 +110,13 @@ exports.update = async (req, res) => {
 
 // Delete a comment with the specified id in the request :::::::::::::::::::::::::::::
 exports.delete = (req, res) => {
-    const id = req.params.id;
+    const comment_id = req.params.id;
     // const token = req.headers['x-access-token'];
     // const decoded = jwt.decode(token);
     // console.log(req.userId)
 
     Comment.destroy({
-        where: { id: id },
+        where: { coment_id: comment_id },
     })
         .then((num) => {
             if (num == 1) {
@@ -137,7 +131,7 @@ exports.delete = (req, res) => {
         })
         .catch((err) => {
             res.status(500).send({
-                message: "Could not delete Comment with id=" + id,
+                message: "Could not delete Comment with id=" + comment_id,
             });
         });
 };

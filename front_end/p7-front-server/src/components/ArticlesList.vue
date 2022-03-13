@@ -1,140 +1,202 @@
 <style scoped>
-.post-container {
-  max-width: 1440px;
-  height: 100%;
-  background-color: rgb(245, 245, 245);
-  display: flex;
-  justify-content: center;
+#listArticles-container
+{ 
+height: 60%;
+
+margin-top: 16rem;
+/* background-color: #bcc1ca9c; */
+max-width: 1250px;
+
+
 }
 .list-group-item {
   background-color: white;
-  /* display: flex; */
-  border-radius: 10px;
-  margin-top: 144px;
+  /* position: relative; */
+  display: flex;
+  flex-direction:column;
+  padding: 0px;
+  margin-top: 30px;
   height: auto;
-  /* padding: 1rem 1rem; */
-  max-width: 1250px;
+  border-radius: 12px 12px 12px 12px;
+  box-shadow: 2px 3px 10px 2px lightgrey;
+
+  height: auto;
 }
 
-.contain-cards {
-  max-width: 900px;
-  /* padding: 70px; */
-}
-.sec-nav {
-  height: 180px;
-  background-color: white;
-  margin-left: 0;
-  position: relative;
-  margin-top: 34px;
-  color: black;
-  display: flex;
-  justify-content: center;
-}
 
 .imageUrl
 {
-  width:auto
+  width:auto;
+  height: 30rem;
 }
 .footer-card {
-  height: 50px;
+  height: auto;
   display: flex;
-
   align-content: center;
-  justify-content: flex-start;
-  padding: 10px;
+  justify-content: space-between
+;
+ 
+  padding: 15px;
+  
 }
 .nav-post {
-  margin-top: 45px;
+  margin-top: 5rem;
   background-color: white;
   display: flex;
-
-  box-shadow: 0px 2px 11px 1px grey;
+  justify-content: center;
+ 
+  box-shadow: 0px 2px 7px 1px lightgrey;
+  border-radius: 12px 12px 12px 12px;
+  max-width: 768px;
 }
+.jumbo-head {
+position:absolute;
+max-width: 100%;
+background-position: center center;
+background-repeat: no-repeat;
+background-size: cover;
+left:0; 
+right:0;
+top:0; 
+bottom:0;
+}
+.article-comment
+{
+display: flex;
+flex-direction: column-reverse;
+
+}
+
+
+.articleId
+{
+font-size: 12px;
+}
+
 </style>
 
+
 <template>
-  <div class="post-container">
-    <b-container class="contain-cards mx-md ">
-      <b-nav class="nav-post" fixed="top w-500" border="shadow">
-        <!-- :::::::::::::::::::::::::::::::::: -->
 
-        <AddArticle></AddArticle>
-
-        <!--:::::::::::::::::::::::::::::::::::::  -->
-      </b-nav>
-      <b-row class="row mx-md p-1">
-        <b-col class="mt-2 p-0 rounded ">
-          <!--   Card Article  ---------------------------->
-          <b-container class="card-content">
-            <b-card-group
+  <div cols="12" > 
+  
+ 
+  
+  <b-container fluid="lg" class="jumbo-head" >
+  <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
+   style="background-image: url(https://picsum.photos/1750/400/?image=532);">
+  <!-- <b-img src="https://picsum.photos/1024/400/?image=1033" fluid alt="Responsive image"></b-img> -->
+  </b-jumbotron>
+</b-container>
+    <!-- :::::::::::::::::::::::::::::::::: -->
+       
+    <!--:::::::::::::::::::::::::::::::::::::  -->
+      <!-- <b-container class="bv-example-row bv-example-row-flex-cols"> -->
+      <b-row  id="listArticles-container"  align-v="center" class="mx-auto  mx-md">
+      <!-- <b-col md="4" class="rounded">
+        
+        </b-col> -->
+      
+       <b-col align-self="center" md="8" offset-md="2" mt>
+       
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        <b-container class="nav-post" border="shadow">
+        <AddArticle></AddArticle> 
+        </b-container>
+        
+  <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        <b-container>
+        <Article></Article>
+         <!-- <Article :article_id="article.article_id" /> -->
+           </b-container>
+ <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        
+        <b-container class="article-comment" border="shadow">      
+          <b-card-group
               class="list-group-item"
               id="myCard"
               ref="myCard"
-              v-for="(article, index) in articles"
-              :key="article.id">
-              from index: {{ index }},
-              <!-- <br />{{ article.user.username }} <br /> -->
-              id article:{{ article.article_id }}
+              v-for="article in articles"
               
+              :key="article.id">
+              
+              <b-card-header>
+              <h4>{{ article.title }}:</h4>
+              </b-card-header>
               <b-card
+              
                 :img-src="article.image"
-                class="imageUrl
-"
+                class="imageUrl"
+                style="height: 350px;"
+
                 rounded
                 alt="Rounded image"
                 img-top>
-           
-        
-   
                 <b-card-text>
-                
-         
-                  <h5>{{ article.title }}:</h5>
-
-                  <hr />
-                  {{ article.description }}
-                  
+                 <h5> {{ article.description }} </h5>
+                  <p class="articleId">article Id: {{ article.article_id }}</p>
                 </b-card-text>
-              </b-card>
-
-              <b-card-footer class="footer-card">
-                <b-button id="show-btn" @click="showModal(article.article_id)">
-                  <b-icon icon="chat-right-quote" aria-hidden="true"></b-icon>
-                  Comment
+              </b-card>  
+              <!-- :::::::::::::  BTN MODAL  :::::::::::::::::: -->
+              <b-card-footer class="footer-card"> 
+              
+   <!-- <b-list-group class="btn-footer"> -->
+     <div>
+                <b-button  pill variant="light" size="sm" id="show-btn" @click="showModal(article.article_id)">
+                  <b-icon icon="chat-right-text" aria-hidden="true"></b-icon>
+                  Commentaire
                 </b-button>
+     </div>
+              
+          <div>
+              <b-button pill variant="outline-secondary" size="sm" @click="updateArticle(article.article_id)">
+              <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
+               </b-button>
+        
+                 <b-button pill variant="outline-danger" size="sm" @click.prevent="deleteArticle(article.article_id)">
+                 <b-icon icon="trash" aria-hidden="true"></b-icon>
+               </b-button>
+           </div>
+           <!-- </b-list-group> -->
+      
               </b-card-footer>
-              <hr />
-              <b> reply: </b>
-
+              
               <CommentsList :article_id="article.article_id" />
-            </b-card-group>
-          </b-container>
-          <!-- ------------------------- -->
-
-          <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllArticles">
-        Remove All
-      </button>  -->
+          
+              </b-card-group>
+              </b-container>
+       
+              
+              
         </b-col>
       </b-row>
-    </b-container>
+    <!-- </b-container> -->
 
     <!-- :::::::::  Modal  :::::::::::::::::::::::::::::::::::::::: -->
-    <b-modal ref="my-modal" title="Post-Comment">
+    <b-modal 
+    ref="myModal" 
+    title="Ajout du Commentaire">
+    
       <b-form v-on:submit="saveComments">
-        <b-form-group id="reply-comment" label-for="input-comment">
+        <b-form-group
+        id="reply-comment" 
+        label-for="input-comment">
+        
           <b-form-input
             id="input-comment"
             v-model="formComment"
             type="text"
-            placeholder="Enter comment"
+            placeholder="Entrer vos commentaire"
             required
           ></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
-        {{ article.article_id }}
+        <b-button type="submit" value="Submit" variant="primary" size="sm">Envoyer</b-button>
+        <!-- {{ article.article_id }} -->
       </b-form>
+      
     </b-modal>
     <!-- :::::::::  Modal  :::::::::::::::::::::::::::::::::::::::: -->
   </div>
@@ -142,12 +204,12 @@
 
 <script>
 import ArticleDataService from '../services/ArticleDataService'
+import Article from '../components/AddArticle.vue'
 import AddArticle from '../components/AddArticle.vue'
 import CommentsList from '../components/CommentsList.vue'
 import axios from 'axios'
 import authHeader from '../services/auth-header'
-
-
+// import Profile from '../views/Profile.vue'
 
 const apiUrl = 'http://localhost:3000/api'
 const config = {
@@ -157,45 +219,47 @@ const config = {
 export default {
   name: 'articles-list',
 
-  props: {
-    articles: {
-      article_id:"",
-      // default: () => [],
-      // required: true,
-      // type: Number,
-      image:"",
-    }
-  },
+  // props: {
+  //   articles: {
+  //     article_id:"",
+  //     image:"",
+  //     default: () => [],
+  //     required: true,
+  //     type: Number,
+    
+  //   }
+  // },
 
   components: {
     AddArticle,
-    CommentsList
+    CommentsList,
+    Article
+    // Profile
   },
 
   data () {
     return {
-    
+    image:"",
       profile: "",   
       article_id:"",
       actualArticle:"",
-      article:"",
+      articles:"",
       formComment: "",  
       comment: "",
       user:"",
       index:"",
+      article: "",
       content: "",
+     myModal: "",
 
     }
-    
-    
     
   },
   // ::::::::::::::::::::::::::::::::::::::::
   // ::::::::::::::::::::::::::::::::::::::::
 
   methods: {
-  
-  
+
     retrieveArticles () {
     ArticleDataService.getAll()
     .then(response => {
@@ -219,40 +283,70 @@ export default {
       this.currentIndex = index
     },
 
-    removeAllArticles () {
-      ArticleDataService.deleteAll()
+    
+
+
+  
+
+
+  // updatePublished(status) {
+  //    const data = {
+  //       article_id: this.article_id,
+  //       title: this.article.title,
+  //       description: this.article.description,
+  //       image: this.article.image,
+
+  //       published: status
+  //     };
+
+  //     ArticleDataService.update(this.article.article_id, data)
+  //       .then(response => {
+  //         this.article.published = status;
+  //         console.log(response.data);
+  //       })
+  //       .catch(e => {
+  //         console.log(e);
+  //       });
+  //   },
+    
+    
+     updateArticle(article_id, article) {
+     console.log(article_id)
+     console.log(article)
+
+      //  const data = {
+      //   article_id: this.article.article_id,
+      //   title: this.article.title,
+      //   description: this.article.description,
+      //   image: this.article.image,
+      //   published: status
+      // }; 
+      // console.log(data)
+
+      ArticleDataService.update(
+      this.article_id,
+      this.article)
         .then(response => {
-          console.log(response.data)
-          this.refreshList()
+          console.log(response.data);
+          this.message = 'The Article was updated successfully!';
         })
         .catch(e => {
-          console.log(e)
-        })
+          console.log(e);
+        });
     },
 
-    searchTitle () {
-      ArticleDataService.findByTitle(this.title)
-        .then(response => {
-          this.articles = response.data
-          console.log(response.data)
-        })
-        .catch(e => {
-          console.log(e)
-        })
-    },
 
     submit: function () {
       this.$refs.form.$el.submit()
     },
 
     showModal (articleId) {
-      this.$refs['my-modal'].show()
+      this.$refs['myModal'].show()
       this.actualArticle = articleId
     },
 
     saveComments (event) {
       event.preventDefault()
-
       const data = {
         content: this.formComment,
         article_id: this.actualArticle
@@ -261,25 +355,50 @@ export default {
 
       axios
         .post(`${apiUrl}/comments/:article_id`, data, config)
-
         .then(response => {
           this.comment = response.data.id
-          // Upload image
-          // url/artciles/ this.comment.id  / uploa
+        
           console.log(response.data)
           this.submitted = true
+          this.$refs['myModal'].hide()
+          // this.$refs.myModal.value = null
+          this.formComment = null
+
         })
         .catch(e => {
           console.log(e)
         })
     },
     newComment () {
-      this.submitted = false
-      this.comment = {}
-    }
+      this.submitted = false;
+      this.comment = {};
+     
+    },
+    
+    
+    deleteArticle(article_id) {
+
+      ArticleDataService.delete(article_id)
+      
+        .then(response => {
+          console.log(response.data);
+          this.$router.push({ name: "articles" });
+          this.refreshList()
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    
+    
   },
   mounted () {
+    this.message = '';
     this.retrieveArticles()
+    this.retrieveArticles(this.$route.params.id);
+
+     
+   
   }
 }
 </script>

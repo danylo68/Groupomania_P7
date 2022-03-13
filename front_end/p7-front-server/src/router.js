@@ -5,8 +5,8 @@ import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import ArticlesList from './components/ArticlesList.vue';
 
-Vue.use(Router);
 
+Vue.use(Router);
 
 
 export const router = new Router({

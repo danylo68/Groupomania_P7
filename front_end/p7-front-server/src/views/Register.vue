@@ -13,10 +13,11 @@ margin-top: 21px;
 }
 
 .card-container.card {
-z-index: 10;
-    bottom: 50em;
-  max-width: 373px !important;
-  padding: 35px 35px;
+top: 15em;
+max-width: 373px
+!important;
+padding: 35px 35px;
+opacity: 0.9;
 
 }
 
@@ -24,7 +25,8 @@ z-index: 10;
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
-  
+  /* opacity: 0.8; */
+
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 18px;
@@ -33,15 +35,21 @@ z-index: 10;
   box-shadow: 0px 13px 34px rgba(0, 0, 0, 0.3);
 }
 
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+
+.jumbo-head {
+position:fixed;
+left:0; 
+right:0;
+top:0; 
+bottom:0;
 }
+
+.login-block
+{ 
+height: 670px;
+}
+
+
 </style>
 
 
@@ -49,9 +57,28 @@ z-index: 10;
 
 <template>
   <div class="col-md-12">
-   <b-img :src="require(`@/assets/icon-left-black.png`)"></b-img>
+  
+  <b-container class="login-block">
+  
+  <b-container-fluid class="jumbo-head">
+  <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
+  
+   style="background-image: url(https://picsum.photos/1750/400/?image=1033);">
+
+  
+  
+  
+  
+  <!-- <b-img src="https://picsum.photos/1024/400/?image=1033" fluid alt="Responsive image"></b-img> -->
+    
+  </b-jumbotron>
+</b-container-fluid>
+
+  
+  
+    <!-- <b-img :src="require(`@/assets/icon-left-black.png`)"></b-img> -->
     <div class="card card-container">
-     <h4>Sign Up</h4>
+      <h4>Sign Up</h4>
       <!-- <img
         id="profile-img"
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -71,7 +98,9 @@ z-index: 10;
             <div
               v-if="submitted && errors.has('username')"
               class="alert-danger"
-            >{{errors.first('username')}}</div>
+            >
+              {{ errors.first('username') }}
+            </div>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
@@ -82,10 +111,9 @@ z-index: 10;
               class="form-control"
               name="email"
             />
-            <div
-              v-if="submitted && errors.has('email')"
-              class="alert-danger"
-            >{{errors.first('email')}}</div>
+            <div v-if="submitted && errors.has('email')" class="alert-danger">
+              {{ errors.first('email') }}
+            </div>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -99,7 +127,9 @@ z-index: 10;
             <div
               v-if="submitted && errors.has('password')"
               class="alert-danger"
-            >{{errors.first('password')}}</div>
+            >
+              {{ errors.first('password') }}
+            </div>
           </div>
           <div class="form-group">
             <button class="btn btn-primary btn-block">Sign Up</button>
@@ -111,10 +141,16 @@ z-index: 10;
         v-if="message"
         class="alert"
         :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
+      >
+        {{ message }}
+      </div>
     </div>
+    
+    
+    </b-container>
   </div>
 </template>
+
 
 
 <script>

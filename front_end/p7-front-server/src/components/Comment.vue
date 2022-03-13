@@ -29,11 +29,11 @@
     </button>
 <!-- ::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::: -->
-    <button class="badge badge-danger mr-2"
+    <!-- <button class="badge badge-danger mr-2"
       @click="deleteComment"
     >
       Delete
-    </button>
+    </button> -->
 <!-- :::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::: -->
     <button type="submit" class="badge badge-success"
