@@ -53,14 +53,9 @@ height: 7rem;
   variant="dark"
   text-variant="white">
   
-  
-  
     <b-navbar-brand href="#">Groupomania 
-
     </b-navbar-brand>
     <!-- <img :src="require(`@/assets/icon-left-font-monochrome-white.png`)" /> -->
-
-    
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>

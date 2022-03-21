@@ -73,9 +73,6 @@ bottom:0;
       </b-card>
   </b-card-group>
   
-  
-  
-  
     <!-- <header class="jumbotron">
       <h3>
         <strong>{{currentUser.username}}</strong> Profile

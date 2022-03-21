@@ -142,8 +142,7 @@ import ArticleDataService from "../services/ArticleDataService";
     article: {
       id: null,
       title: "",       
-      image: String,
-     
+      image: String,   
       description: "",    
       published: false,
       imagesArray: null,

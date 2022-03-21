@@ -37,8 +37,6 @@ module.exports = (sequelize, Sequelize) => {
       underscrored: true,
       createdAt: "created_at",
       updatedAt: "updated_at"
-
-
     });
 
   return Article;

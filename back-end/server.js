@@ -9,10 +9,14 @@ const fs = require('fs');
 const config = require("./app/config/db.config.js");
 // const initRoutes = require("./app/routes/web");
 
+
 global.__basedir = __dirname;
 // initRoutes(app);
 const corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8081",
+  // adresse cors pour vm :::
+  // origin: "http://192.168.1.26:8081",
+
 };
 
 app.use(cors(corsOptions));
@@ -27,8 +31,13 @@ app.use(bodyParser.json());
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
 // app.use('/static', express.static(path.join(__dirname, 'ressources')));
 app.use('/', express.static(path.join(__dirname, 'ressources')));
+
+app.use('/', express.static(path.join(__dirname, '/ressources')));
+
+
 // database
 
 // db.sequelize.sync();

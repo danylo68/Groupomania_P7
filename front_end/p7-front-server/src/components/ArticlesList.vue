@@ -2,12 +2,9 @@
 #listArticles-container
 { 
 height: 60%;
-
 margin-top: 16rem;
 /* background-color: #bcc1ca9c; */
 max-width: 1250px;
-
-
 }
 .list-group-item {
   background-color: white;
@@ -19,10 +16,8 @@ max-width: 1250px;
   height: auto;
   border-radius: 12px 12px 12px 12px;
   box-shadow: 2px 3px 10px 2px lightgrey;
-
   height: auto;
 }
-
 
 .imageUrl
 {
@@ -33,11 +28,8 @@ max-width: 1250px;
   height: auto;
   display: flex;
   align-content: center;
-  justify-content: space-between
-;
- 
+  justify-content: space-between;
   padding: 15px;
-  
 }
 .nav-post {
   margin-top: 5rem;
@@ -64,41 +56,30 @@ bottom:0;
 {
 display: flex;
 flex-direction: column-reverse;
-
 }
-
 
 .articleId
 {
 font-size: 12px;
 }
-
 </style>
 
 
 <template>
-
   <div cols="12" > 
-  
- 
   
   <b-container fluid="lg" class="jumbo-head" >
   <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
    style="background-image: url(https://picsum.photos/1750/400/?image=532);">
   <!-- <b-img src="https://picsum.photos/1024/400/?image=1033" fluid alt="Responsive image"></b-img> -->
   </b-jumbotron>
-</b-container>
-    <!-- :::::::::::::::::::::::::::::::::: -->
-       
+  </b-container> 
     <!--:::::::::::::::::::::::::::::::::::::  -->
       <!-- <b-container class="bv-example-row bv-example-row-flex-cols"> -->
       <b-row  id="listArticles-container"  align-v="center" class="mx-auto  mx-md">
-      <!-- <b-col md="4" class="rounded">
-        
-        </b-col> -->
-      
-       <b-col align-self="center" md="8" offset-md="2" mt>
-       
+      <!-- <b-col md="4" class="rounded"> 
+        </b-col> --> 
+       <b-col align-self="center" md="8" offset-md="2" mt>   
 <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
         <b-container class="nav-post" border="shadow">
         <AddArticle></AddArticle> 
@@ -107,7 +88,7 @@ font-size: 12px;
   <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
   <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
         <b-container>
-        <Article></Article>
+        <!-- <Article></Article> -->
          <!-- <Article :article_id="article.article_id" /> -->
            </b-container>
  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
@@ -119,39 +100,35 @@ font-size: 12px;
               id="myCard"
               ref="myCard"
               v-for="article in articles"
-              
               :key="article.id">
               
               <b-card-header>
               <h4>{{ article.title }}:</h4>
               </b-card-header>
               <b-card
-              
-                :img-src="article.image"
-                class="imageUrl"
-                style="height: 350px;"
-
                 rounded
                 alt="Rounded image"
-                img-top>
-                <b-card-text>
-                 <h5> {{ article.description }} </h5>
+                img-top>    
+            <b-card :img-src="article.image" class="imageUrl"></b-card>     
+                
+              <b> {{ article.description }}</b> 
+                        
+                <b-card-text>            
                   <p class="articleId">article Id: {{ article.article_id }}</p>
                 </b-card-text>
               </b-card>  
               <!-- :::::::::::::  BTN MODAL  :::::::::::::::::: -->
-              <b-card-footer class="footer-card"> 
-              
+              <b-card-footer class="footer-card">  
    <!-- <b-list-group class="btn-footer"> -->
      <div>
                 <b-button  pill variant="light" size="sm" id="show-btn" @click="showModal(article.article_id)">
                   <b-icon icon="chat-right-text" aria-hidden="true"></b-icon>
                   Commentaire
                 </b-button>
-     </div>
-              
+     </div>      
           <div>
-              <b-button pill variant="outline-secondary" size="sm" @click="updateArticle(article.article_id)">
+           <b-button pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)">
+              <!-- <b-button pill variant="outline-secondary" size="sm" @click="updateArticle(article.article_id)"> -->
               <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
                </b-button>
         
@@ -161,29 +138,25 @@ font-size: 12px;
            </div>
            <!-- </b-list-group> -->
       
-              </b-card-footer>
-              
+              </b-card-footer>      
               <CommentsList :article_id="article.article_id" />
+
           
               </b-card-group>
               </b-container>
-       
-              
-              
+      
         </b-col>
       </b-row>
     <!-- </b-container> -->
 
-    <!-- :::::::::  Modal  :::::::::::::::::::::::::::::::::::::::: -->
+    <!-- :::::::::  Modal Commentaire :::::::::::::::::::::::::::::::::::::::: -->
     <b-modal 
     ref="myModal" 
     title="Ajout du Commentaire">
-    
       <b-form v-on:submit="saveComments">
         <b-form-group
         id="reply-comment" 
-        label-for="input-comment">
-        
+        label-for="input-comment">    
           <b-form-input
             id="input-comment"
             v-model="formComment"
@@ -192,26 +165,55 @@ font-size: 12px;
             required
           ></b-form-input>
         </b-form-group>
-
         <b-button type="submit" value="Submit" variant="primary" size="sm">Envoyer</b-button>
         <!-- {{ article.article_id }} -->
-      </b-form>
-      
+      </b-form> 
     </b-modal>
-    <!-- :::::::::  Modal  :::::::::::::::::::::::::::::::::::::::: -->
+    <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+    <!-- :::::::::  Modal Update :::::::::::::::::::::::::::::::::::::::: -->
+     <b-modal 
+     ref="modalArticle" 
+    title="Update Article">
+      <b-form v-on:submit="modifyArticle">
+        <b-form-group
+        id="reply-comment" 
+        label-for="input-article">    
+          <b-form-input
+            id="input-article"
+            v-model="formArticle"
+            type="text"
+            placeholder="Title"
+            required
+          ></b-form-input>
+          <b-form-input
+            id="input-article"
+            v-model="formArticle"
+            type="text"
+            placeholder="Description"
+            required
+          ></b-form-input>
+        </b-form-group>
+        <b-button type="submit" value="Submit" variant="primary" size="sm">Update</b-button>
+        <!-- {{ article.article_id }} -->
+      </b-form> 
+    </b-modal>
+    
+    
   </div>
 </template>
 
 <script>
+
 import ArticleDataService from '../services/ArticleDataService'
-import Article from '../components/AddArticle.vue'
+// import Article from '../components/Article.vue'
 import AddArticle from '../components/AddArticle.vue'
 import CommentsList from '../components/CommentsList.vue'
 import axios from 'axios'
 import authHeader from '../services/auth-header'
 // import Profile from '../views/Profile.vue'
-
+// const apiUrl = 'http://192.168.1.26:3000/api'
 const apiUrl = 'http://localhost:3000/api'
+
 const config = {
   headers: authHeader()
 }
@@ -219,53 +221,65 @@ const config = {
 export default {
   name: 'articles-list',
 
+
+  props: {
+    article: {
+      // default: () => [],
+      // required: true,
+      // type: Number,
+    
+    }
+  },
+
   // props: {
   //   articles: {
   //     article_id:"",
+  //     // default: () => [],
+  //     // required: true,
+  //     // type: Number,
   //     image:"",
-  //     default: () => [],
-  //     required: true,
-  //     type: Number,
-    
+
+
   //   }
   // },
 
   components: {
     AddArticle,
     CommentsList,
-    Article
-    // Profile
+    // Article
+    
   },
 
   data () {
     return {
-    image:"",
+      image:"",
+      imageUrl:"",
       profile: "",   
       article_id:"",
       actualArticle:"",
       articles:"",
       formComment: "",  
+      formArticle:"",
       comment: "",
       user:"",
       index:"",
-      article: "",
+      // article: "",
       content: "",
-     myModal: "",
-
+      myModal: "",
+      modalArticle:"",
+      button:"",
     }
-    
   },
-  // ::::::::::::::::::::::::::::::::::::::::
-  // ::::::::::::::::::::::::::::::::::::::::
+  
 
   methods: {
-
     retrieveArticles () {
     ArticleDataService.getAll()
     .then(response => {
     this.articles = response.data  
     this.image = response.data
     console.log(this.articles)
+
         })
     .catch(e => {
     console.log(e)
@@ -282,11 +296,38 @@ export default {
       this.currentArticle = article
       this.currentIndex = index
     },
-
     
+    
+    // :::::::::::::::::::::::
+    // ::::::::::::::::::::::
+    modalUpdate (articleId) {
+      this.$refs['modalArticle'].show()
+      this.actualArticle = articleId
+    },
+    
+    modifyArticle (event){
+       event.preventDefault()
+      const data = {
+        title: this.formArticle,
+        description: this.formArticle,
+        article_id: this.actualArticle
+      }
+      console.log(data)
 
-
-  
+      axios
+        .post(`${apiUrl}/comments/:article_id`, data, config)
+        .then(response => {
+          this.comment = response.data.id
+          console.log(response.data)
+          this.submitted = true
+          this.$refs['myModal'].hide()
+          // this.$refs.myModal.value = null
+          this.formArticle = null
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
 
 
   // updatePublished(status) {
@@ -308,32 +349,32 @@ export default {
   //         console.log(e);
   //       });
   //   },
-    
-    
-     updateArticle(article_id, article) {
-     console.log(article_id)
-     console.log(article)
+     
+    //  updateArticle(article_id, article) {
+    //  console.log(article_id)
+    //  console.log(article)
 
-      //  const data = {
-      //   article_id: this.article.article_id,
-      //   title: this.article.title,
-      //   description: this.article.description,
-      //   image: this.article.image,
-      //   published: status
-      // }; 
-      // console.log(data)
+    //    const data = {
+    //     article_id: this.article.article_id,
+    //     title: this.article.title,
+    //     description: this.article.description,
+    //     image: this.article.image,
+    //     published: status
+    //   }; 
+    //   console.log(data)
 
-      ArticleDataService.update(
-      this.article_id,
-      this.article)
-        .then(response => {
-          console.log(response.data);
-          this.message = 'The Article was updated successfully!';
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
+    //   ArticleDataService.update(
+    //   this.article_id,
+    //   this.article)
+    //     .then(response => {
+    //       console.log(response.data);
+    //       this.message = 'The Article was updated successfully!';
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    // },
+    
 
 
     submit: function () {
@@ -344,6 +385,11 @@ export default {
       this.$refs['myModal'].show()
       this.actualArticle = articleId
     },
+    // :::::::::::::::::::::::::::
+    // ::::::::::::::::::::::::::::
+  
+    // :::::::::::::::::::::::::
+    // :::::::::::::::::::::::::
 
     saveComments (event) {
       event.preventDefault()
@@ -357,13 +403,11 @@ export default {
         .post(`${apiUrl}/comments/:article_id`, data, config)
         .then(response => {
           this.comment = response.data.id
-        
           console.log(response.data)
           this.submitted = true
           this.$refs['myModal'].hide()
           // this.$refs.myModal.value = null
           this.formComment = null
-
         })
         .catch(e => {
           console.log(e)
@@ -371,15 +415,12 @@ export default {
     },
     newComment () {
       this.submitted = false;
-      this.comment = {};
-     
+      this.comment = {};   
     },
     
     
     deleteArticle(article_id) {
-
-      ArticleDataService.delete(article_id)
-      
+      ArticleDataService.delete(article_id)   
         .then(response => {
           console.log(response.data);
           this.$router.push({ name: "articles" });

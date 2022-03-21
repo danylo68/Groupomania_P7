@@ -1,5 +1,6 @@
 <template>
-  <div v-if="currentArticle" class="edit-form">
+  <!-- <div v-if="currentArticle" class="edit-form"> -->
+  <div class="edit-form"> 
     <h4>Article</h4>
     <form>
       <div class="form-group">
@@ -22,10 +23,10 @@
         />
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label><strong>Status:</strong></label>
         {{ currentArticle.published ? "Published" : "Pending" }}
-      </div>
+      </div> -->
       
     </form>
     
@@ -33,35 +34,32 @@
 
     <button class="badge badge-primary mr-2"
       v-if="currentArticle.published"
-      @click="updatePublished(false)"
-    >
+      @click="updatePublished(false)">
       UnPublish
     </button>
-    <button v-else class="badge badge-primary mr-2"
-      @click="updatePublished(true)"
-    >
+    <button class="badge badge-primary mr-2"
+      @click="updatePublished(true)">
       Publish
     </button>
     <!-- :::::::::::::::::::::::::::::::: -->
 
-    <button class="badge badge-danger mr-2"
+    <!-- <button class="badge badge-danger mr-2"
       @click="deleteArticle"
     >
       Delete
-    </button>
+    </button> -->
 <!-- ::::::::::::::::::::::::::::::::::::::::: -->
     <button type="submit" class="badge badge-success"
-      @click="updateArticle"
-    >
+      @click="updateArticle">
       Update
     </button>
     <p>{{ message }}</p>
   </div>
 <!-- ::::::::::::::::::::::::::::::::::::::::: -->
-  <div v-else>
+  <!-- <div v-else>
     <br />
     <p>Please click on a Article...</p>
-  </div>
+  </div> -->
   
 </template>
 
@@ -77,6 +75,7 @@ export default {
     };
   },
   methods: {
+  
     getArticle(id) {
       ArticleDataService.get(id)
        console.log("toto")
@@ -122,16 +121,16 @@ export default {
         });
     },
 
-    deleteArticle() {
-      ArticleDataService.delete(this.currentArticle.id)
-        .then(response => {
-          console.log(response.data);
-          this.$router.push({ name: "articles" });
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
+    // deleteArticle() {
+    //   ArticleDataService.delete(this.currentArticle.id)
+    //     .then(response => {
+    //       console.log(response.data);
+    //       this.$router.push({ name: "articles" });
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    // }
   },
   mounted() {
     this.message = '';
@@ -140,9 +139,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .edit-form {
   max-width: 300px;
   margin: auto;
+  height: auto;
 }
 </style>

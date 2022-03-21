@@ -1,7 +1,7 @@
 
 const express = require("express");
 const app = express();
-// const config = require('../config/auth.config');
+const config = require('../config/auth.config');
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const Article = db.article;
@@ -19,7 +19,9 @@ exports.create = (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(401).send('No files were uploaded.');
   }
-  const imageFile = `${req.protocol}://${req.get('host')}/ressources/${req.file.filename}`
+
+  const imageFile = `${req.protocol}://${req.get('host')}/ressources/${req.file.filename}`;
+
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);
   console.log(imageFile)
