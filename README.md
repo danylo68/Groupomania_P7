@@ -24,6 +24,7 @@
 ## Installation back-end
 -  folder back-end 
 -  Port 3000
+-  npm install ou yarn
 
 ## Installation 
 -  folder front_end
