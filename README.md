@@ -2,8 +2,9 @@
 
 # Réseau social d'entreprise
 
+# Installation Backend and Frontend 
 
-Backend and Frontend folder Groupomania_P7
+# Folder Groupomania_P7
 
 1 Back-end:
 - NodeJS, Mysql, Express, Sequelize.
@@ -17,13 +18,12 @@ https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoC
 https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
 
-Pré-requis:
-
-Sign-up, création de profils.
-Log-in, enregistrement de profils.
-Ajout, Suppression et affichages des Posts.
-Ajout de commentaires par d'autre Users.
-Accès Role User et Admin.
+# Pré-requis:
+- Sign-up, création de profils.
+- Log-in, enregistrement de profils.
+- Ajout, Suppression et affichages des Posts.
+- Ajout de commentaires par d'autre Users.
+- Accès Role User et Admin.
 
 Installation back-end
 
