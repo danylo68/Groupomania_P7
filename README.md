@@ -11,7 +11,7 @@
 [![forthebadge](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)](https://forthebadge.com)
 
 
- Installation Backend and Frontend 
+ Installation Back-end and Front_end 
 
 ## Folder Groupomania_P7
 
