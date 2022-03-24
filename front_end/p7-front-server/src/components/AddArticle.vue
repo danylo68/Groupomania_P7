@@ -162,7 +162,6 @@ import ArticleDataService from "../services/ArticleDataService";
     formData.append('title', this.article.title)
     formData.append('description', this.article.description)
     
-      
       ArticleDataService.create(formData)
         .then(response => {
         console.log(response)

@@ -10,7 +10,6 @@ const uploadFiles = async (req, res) => {
         if (req.file == undefined) {
             return res.send(`You must select a file.`);
         }
-
         Image.create({
             type: req.file.mimetype,
             name: req.file.originalname,

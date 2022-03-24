@@ -21,7 +21,6 @@ exports.adminBoard = async (req, res) => {
 exports.userDelete = async (req, res) => {
   const user_id = req.params.id;
   // if (Number.isNaN(user_id)) return res.status(400).end();
-
   await User.findByPk(user_id);
   User.destroy(
     {

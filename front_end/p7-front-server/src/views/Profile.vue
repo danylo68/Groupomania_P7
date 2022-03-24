@@ -124,7 +124,7 @@ export default {
         console.log(user)
         console.log(response.data);
         localStorage.removeItem('user');
-        location.reload();
+        window.location.reload();
         // this.$router.push('/register'); 
          })
         .catch(e => {
@@ -144,21 +144,3 @@ export default {
 };
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// return new Promise((resolve, reject) => {
-// axios.delete(process.env.VUE_APP_BASE_URL + 'api/users/' + userId + '/',
-// config).then(response => { resolve(response) }).catch(error => { reject(error)
-// }) }) }
