@@ -28,8 +28,9 @@
 
 ## Installation 
 -  folder: front_end
+-  folder projet vue: p7-front-server
 - port 8081
-- -  npm install ou yarn
+-  npm install ou yarn
 
 ## Fonction:
 - Sign-up, création de profils.
