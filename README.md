@@ -22,13 +22,14 @@
 - VueJS, Axios, BootstrappVue.
 
 ## Installation back-end
--  folder back-end 
+-  folder: back-end 
 -  Port 3000
 -  npm install ou yarn
 
 ## Installation 
--  folder front_end
+-  folder: front_end
 - port 8081
+- -  npm install ou yarn
 
 ## Fonction:
 - Sign-up, création de profils.
