@@ -35,6 +35,7 @@
 ## Fonction:
 - Sign-up, création de profils.
 - Log-in, enregistrement de profils.
+- Delete-account, supression de profils
 - Ajout, Suppression et affichages des Posts.
 - Ajout de commentaires par d'autre Users.
 - Accès Role User et Admin.
