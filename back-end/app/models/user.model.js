@@ -9,6 +9,10 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        username: {
+            type: Sequelize.STRING(100),
+            allowNull: false,
+        },
 
         email: {
             type: Sequelize.STRING(255),
@@ -19,22 +23,6 @@ module.exports = (sequelize, Sequelize) => {
         password: {
             type: Sequelize.STRING(100),
             allowNull: false,
-        },
-
-        username: {
-            type: Sequelize.STRING(100),
-            allowNull: false,
-        },
-
-        last_name: {
-            type: Sequelize.STRING(100),
-            // allowNull: false,
-        },
-
-
-        division: {
-            type: Sequelize.STRING(255),
-
         },
 
         img: {

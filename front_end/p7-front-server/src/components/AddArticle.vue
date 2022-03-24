@@ -175,6 +175,7 @@ import ArticleDataService from "../services/ArticleDataService";
 
         })
         .catch(e => {
+        
           console.log(e);
         });
 

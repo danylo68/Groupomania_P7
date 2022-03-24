@@ -9,15 +9,12 @@ const { article } = require('../models');
 
 // Create and Save a new comment :::::::::::::::::::::::::::::::::
 exports.create = (req, res) => {
-
     const token = req.headers['x-access-token'];
     const decoded = jwt.decode(token);
-
     const comment = {
         content: req.body.content,
         user_id: decoded.id,
         article_id: req.body.article_id,
-
     };
     // Save Comment in the database
     Comment.create(comment)
@@ -42,7 +39,6 @@ exports.findAll = (req, res) => {
             {
                 model: User,
                 attributes: ["user_id", "username"],
-
             },
         ]
     })

@@ -5,7 +5,6 @@ import authHeader from './auth-header';
 
 let config = {
     headers: authHeader()
-
 }
 // const baseUrl = "http:///192.168.1.26:3000/api"
 const baseUrl = "http://localhost:3000/api"

@@ -4,6 +4,17 @@
 {
 /* background-color:#bcc1ca9c; */
 background-color:#f0f3ee;
+
+/* @font-face {
+    font-family: 'aileronregular';
+    src: url('aileron-regular-webfont.eot');
+    src: url('aileron-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('aileron-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+} */
+
 }
 
 .content-vue
@@ -125,7 +136,6 @@ height: 7rem;
     </b-collapse>
   </b-navbar>
   
-  
   <b-container class="content-vue" >
   
 <router-view />
@@ -133,8 +143,10 @@ height: 7rem;
 
 
 <div>
-  <b-jumbotron class="footer-jumbo" bg-variant="dark" text-variant="dark" style="background-image: url(https://picsum.photos/1750/400/?image=532
-); margin-bottom:0">
+  <b-jumbotron class="footer-jumbo"
+  bg-variant="dark"
+  text-variant="dark"
+  style="background-image: url(https://picsum.photos/1750/400/?image=532); margin-bottom:0">
    <p>Footer</p>
   </b-jumbotron>
 </div>
@@ -154,7 +166,7 @@ data() {
     return {
       logo: '/assets/icon.png'
     }
-    
+   
   },
 
   computed: {

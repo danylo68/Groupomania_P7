@@ -109,12 +109,15 @@ font-size: 12px;
                 rounded
                 alt="Rounded image"
                 img-top>    
-            <b-card :img-src="article.image" class="imageUrl"></b-card>     
-                
+            <b-card :img-src="article.image" class="imageUrl" ></b-card>     
+                <hr>
               <b> {{ article.description }}</b> 
                         
                 <b-card-text>            
-                  <p class="articleId">article Id: {{ article.article_id }}</p>
+                  <p class="articleId">article Id: {{ article.article_id }}
+                  
+
+                  </p>
                 </b-card-text>
               </b-card>  
               <!-- :::::::::::::  BTN MODAL  :::::::::::::::::: -->
@@ -214,8 +217,7 @@ import authHeader from '../services/auth-header'
 // const apiUrl = 'http://192.168.1.26:3000/api'
 const apiUrl = 'http://localhost:3000/api'
 
-const config = {
-  headers: authHeader()
+const config = {headers: authHeader()
 }
 
 export default {
@@ -304,7 +306,7 @@ export default {
       this.$refs['modalArticle'].show()
       this.actualArticle = articleId
     },
-    
+    // ::::::::::: update Article ready for Agile Method  ::::::::::::::
     modifyArticle (event){
        event.preventDefault()
       const data = {
@@ -328,8 +330,6 @@ export default {
           console.log(e)
         })
     },
-
-
   // updatePublished(status) {
   //    const data = {
   //       article_id: this.article_id,
@@ -374,7 +374,7 @@ export default {
     //       console.log(e);
     //     });
     // },
-    
+
 
 
     submit: function () {
@@ -388,9 +388,8 @@ export default {
     // :::::::::::::::::::::::::::
     // ::::::::::::::::::::::::::::
   
-    // :::::::::::::::::::::::::
-    // :::::::::::::::::::::::::
-
+   
+// :::::::::::: Post Comment via Modal  :::::::::::::::
     saveComments (event) {
       event.preventDefault()
       const data = {
@@ -398,7 +397,6 @@ export default {
         article_id: this.actualArticle
       }
       console.log(data)
-
       axios
         .post(`${apiUrl}/comments/:article_id`, data, config)
         .then(response => {
@@ -408,6 +406,7 @@ export default {
           this.$refs['myModal'].hide()
           // this.$refs.myModal.value = null
           this.formComment = null
+          this.refreshList()
         })
         .catch(e => {
           console.log(e)

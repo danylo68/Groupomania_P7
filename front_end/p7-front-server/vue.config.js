@@ -3,8 +3,6 @@ module.exports = {
         proxy: 'http://192.168.1.26:8081'
     }
 };
-
-
 // for show image on app.vue
 module.exports = {
     chainWebpack: config => {
@@ -25,7 +23,6 @@ module.exports = {
                     'b-carousel-slide': 'img-src',
                     'b-embed': 'src'
                 }
-
                 return options
             })
     }

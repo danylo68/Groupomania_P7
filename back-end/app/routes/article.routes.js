@@ -21,7 +21,6 @@ const storage = multer.diskStorage({
   },
 });
 
-
 // cb(null, __basedir + "/resources/static/assets/uploads/");
 
 const upload = multer({
@@ -65,14 +64,17 @@ module.exports = app => {
   // Delete all Articles
   router.delete("/", articleCtrl.deleteAll);
 
-  router.post('/new', upload.array('image', 8), (req, res, next) => {
 
+
+
+
+
+  router.post('/new', authJwt.verifyToken, upload.array('image', 8), (req, res, next) => {
 
     const reqFiles = [];
     for (var i = 0; i < req.files.length; i++) {
       const imgUrl = 'http://localhost:3000/static/assets/uploads/'
       reqFiles.push(imgUrl + req.files[i].filename)
-
     }
     console.log("title", req.body.title)
     console.log("description", req.body.description)

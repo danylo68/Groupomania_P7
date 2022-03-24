@@ -44,7 +44,7 @@ font-size: 12px;
           v-for="comment in comments"
           :key="comment.id">
           <b-card-header>
-          <p class="user-comment">from: {{ comment.user.username }}: </p>
+          <!-- <p class="user-comment">from: {{ comment.user.username }}: </p> -->
 
           </b-card-header>
         

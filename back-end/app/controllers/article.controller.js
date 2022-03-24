@@ -21,7 +21,6 @@ exports.create = (req, res) => {
   }
 
   const imageFile = `${req.protocol}://${req.get('host')}/ressources/${req.file.filename}`;
-
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);
   console.log(imageFile)
@@ -72,13 +71,12 @@ exports.findAll = (req, res) => {
 //// Find a single comment with an id  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 exports.findOne = (req, res) => {
-  const article_id = req.params.article_id
+  const article_id = req.params.id
   Article.findByPk(article_id, {
     include: [
       {
         model: User,
         attributes: ["user_id", "username",],
-
       },
     ],
   })
@@ -126,16 +124,16 @@ exports.addArticle = (userId, articleId) => {
         console.log("User not found!");
         return null;
       }
-      return Article.findByPk(articleId).then((article) => {
-        if (!article) {
-          console.log("Article not found!");
-          return null;
-        }
-
-        user.addArticle(article);
-        console.log(`>> added Article id=${article.id} to User id=${user.id}`);
-        return user;
-      });
+      return Article.findByPk(articleId)
+        .then((article) => {
+          if (!article) {
+            console.log("Article not found!");
+            return null;
+          }
+          user.addArticle(article);
+          console.log(`>> added Article id=${article.id} to User id=${user.id}`);
+          return user;
+        });
     })
     .catch((err) => {
       console.log(">> Error while adding Article to User: ", err);
@@ -143,7 +141,7 @@ exports.addArticle = (userId, articleId) => {
 };
 
 
-// Delete a Article with the specified id in the request
+//:::::::::::   Delete an Article with id :::::::::::::
 exports.delete = (req, res) => {
   const article_id = req.params.id;
 

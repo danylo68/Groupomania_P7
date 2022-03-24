@@ -6,7 +6,6 @@ margin-top: 1em;
 height: 100%;
 display: flex;
 justify-content: center;
-
 }
 /* .head-img
 {
@@ -14,14 +13,11 @@ border-radius: 25px;
 display: flex;
 } */
 
-
-
 .contain-cards
 {
 background-color: rgb(236, 235, 232);
 max-width: 1000px;
 padding: 70px;
-
 }
 
 .sec-nav{
@@ -47,7 +43,6 @@ justify-content: center;
 
 <template>
 
-
  <div>
   
          <b-container class="contain-cards mx-md ">     
@@ -68,10 +63,8 @@ justify-content: center;
          </b-row> 
        
             
-    <b-row class="row mx-md p-4">
-            
-     <b-col  class="mt-0 p-0 rounded shadow">
-     
+    <b-row class="row mx-md p-4">       
+     <b-col  class="mt-0 p-0 rounded shadow">  
      <b-card header>Title</b-card>
      <b-card
       title="Card title that wraps to a new line"

@@ -36,16 +36,12 @@ bottom:0;
   <!-- <b-img src="https://picsum.photos/1024/400/?image=1033" fluid alt="Responsive image"></b-img> -->
   </b-jumbotron>
 </b-container>
-
-
-<div class="col-md-10">
-
-
+<div class="col-md-12">
   <b-container class="profile-container">
   
    
     <b-card-group deck class="card-profile">
-      <b-card border-variant="dark" header="About Profile:" align="center">
+      <b-card border-variant="dark" header="Votre Profile:" align="center">
        <h3>
         <strong>{{currentUser.username}}</strong>
       </h3>
@@ -56,7 +52,7 @@ bottom:0;
     </p>
     <p>
       <strong>Id:</strong>
-      {{currentUser.user_id}}
+      {{currentUser.id}}
     </p>
     <hr>
     <p>
@@ -65,49 +61,81 @@ bottom:0;
     </p>
     
     <strong>Authorities:</strong>
-    <ul>
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-    </ul>
-      <hr>
-        <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+    
+      <p v-for="(role,index) in currentUser.roles" :key="index">{{role}}</p>
+    
+        <b-card-footer>
+        <p>Supprimer le Profile</p>
+        <span>
+          <b-button pill variant="outline-danger" size="sm" @click="deleteUser(currentUser.id)">
+                 <b-icon icon="trash" aria-hidden="true"></b-icon>
+               </b-button>
+        </span>
+        </b-card-footer>
       </b-card>
   </b-card-group>
   
-    <!-- <header class="jumbotron">
-      <h3>
-        <strong>{{currentUser.username}}</strong> Profile
-      </h3>
-    </header>
-    <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
-    <p>
-      <strong>Id:</strong>
-      {{currentUser.id}}
-    </p>
-    <p>
-      <strong>Email:</strong>
-      {{currentUser.email}}
-    </p>
-    <strong>Authorities:</strong>
-    <ul>
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-    </ul> --> 
+    
   </b-container>
   </div>
-  
   </div>
 </template>
 
 <script>
+
+// import AuthService from '../services/auth.service';
+import axios from 'axios'
+import authHeader from '../services/auth-header'
+const apiUrl = 'http://localhost:3000/api/user'
+const config = { headers: authHeader() }
+
+
 export default {
   name: 'Profile',
+  
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     }
   },
+  
+ data () {
+    return {
+      profile: "", 
+      user_id: "",
+      user: "",
+      //  userId: localStorage.getItem('user_id'),
+       token: "",
+    }
+  }, 
+ methods: {
+ 
+    deleteUser(id) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const user_id = id;
+    console.log(user)
+    console.log(user_id) 
+
+        axios.delete(`${apiUrl}/${user_id}`,config)
+        
+        .then(response => 
+        { 
+        alert('user supprimé');
+        console.log(user)
+        console.log(response.data);
+        localStorage.removeItem('user');
+        location.reload();
+        // this.$router.push('/register'); 
+         })
+        .catch(e => {
+        console.log(e);
+        })    
+    }
+    
+    // },
+ 
+ 
+ }, 
   mounted() {
     if (!this.currentUser) {
       this.$router.push('/login');
@@ -115,3 +143,22 @@ export default {
   }
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// return new Promise((resolve, reject) => {
+// axios.delete(process.env.VUE_APP_BASE_URL + 'api/users/' + userId + '/',
+// config).then(response => { resolve(response) }).catch(error => { reject(error)
+// }) }) }

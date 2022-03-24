@@ -57,5 +57,6 @@ export const auth = {
         registerFailure(state) {
             state.status.loggedIn = false;
         }
+
     }
 };
