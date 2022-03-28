@@ -18,6 +18,12 @@ max-width: 1250px;
   box-shadow: 2px 3px 10px 2px lightgrey;
   height: auto;
 }
+.content_img
+{
+height: 20%;
+
+}
+
 
 .imageUrl
 {
@@ -74,51 +80,44 @@ font-size: 12px;
   <!-- <b-img src="https://picsum.photos/1024/400/?image=1033" fluid alt="Responsive image"></b-img> -->
   </b-jumbotron>
   </b-container> 
-    <!--:::::::::::::::::::::::::::::::::::::  -->
       <!-- <b-container class="bv-example-row bv-example-row-flex-cols"> -->
       <b-row  id="listArticles-container"  align-v="center" class="mx-auto  mx-md">
       <!-- <b-col md="4" class="rounded"> 
         </b-col> --> 
        <b-col align-self="center" md="8" offset-md="2" mt>   
-<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+
         <b-container class="nav-post" border="shadow">
         <AddArticle></AddArticle> 
         </b-container>
         
-  <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
-  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
-        <b-container>
-        <!-- <Article></Article> -->
-         <!-- <Article :article_id="article.article_id" /> -->
-           </b-container>
- <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
-<!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
-        
         <b-container class="article-comment" border="shadow">      
-          <b-card-group
+          <b-card
               class="list-group-item"
               id="myCard"
               ref="myCard"
+              :img-src="article.image"  alt="Responsive image"
+
               v-for="article in articles"
               :key="article.id">
-              
               <b-card-header>
               <h4>{{ article.title }}:</h4>
               </b-card-header>
+              
               <b-card
-                rounded
-                alt="Rounded image"
+                fluid
+                class="content_img"
                 img-top>    
-            <b-card :img-src="article.image" class="imageUrl" ></b-card>     
-                <hr>
-              <b> {{ article.description }}</b> 
-                        
-                <b-card-text>            
-                  <p class="articleId">article Id: {{ article.article_id }}
-                  
+            <!-- <b-card :img-src="article.image" class="imageUrl" alt="Responsive image"></b-card>      -->
+                                     
+                <b-card-text>    
+                <h5> {{ article.description }}</h5>
 
-                  </p>
+                  <!-- <p class="articleId">article Id: {{ article.article_id }}
+                  </p> -->
                 </b-card-text>
+                <p class="articleId">article Id: {{ article.article_id }}
+                  </p>
+
               </b-card>  
               <!-- :::::::::::::  BTN MODAL  :::::::::::::::::: -->
               <b-card-footer class="footer-card">  
@@ -130,22 +129,25 @@ font-size: 12px;
                 </b-button>
      </div>      
           <div>
-           <b-button pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)">
+          
+           <!-- <b-button pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)"> -->
               <!-- <b-button pill variant="outline-secondary" size="sm" @click="updateArticle(article.article_id)"> -->
-              <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
+              <!-- <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
                </b-button>
-        
+         -->
                  <b-button pill variant="outline-danger" size="sm" @click.prevent="deleteArticle(article.article_id)">
                  <b-icon icon="trash" aria-hidden="true"></b-icon>
                </b-button>
            </div>
            <!-- </b-list-group> -->
       
-              </b-card-footer>      
+              </b-card-footer>    
+              
               <CommentsList :article_id="article.article_id" />
 
           
-              </b-card-group>
+              </b-card>
+              
               </b-container>
       
         </b-col>
@@ -212,13 +214,12 @@ import ArticleDataService from '../services/ArticleDataService'
 import AddArticle from '../components/AddArticle.vue'
 import CommentsList from '../components/CommentsList.vue'
 import axios from 'axios'
-import authHeader from '../services/auth-header'
+import authHeader from '../services/auth-header.js'
 // import Profile from '../views/Profile.vue'
 // const apiUrl = 'http://192.168.1.26:3000/api'
 const apiUrl = 'http://localhost:3000/api'
-
-const config = {headers: authHeader()
-}
+// const config = { headers: authHeader()
+// }
 
 export default {
   name: 'articles-list',
@@ -265,7 +266,6 @@ export default {
       comment: "",
       user:"",
       index:"",
-      // article: "",
       content: "",
       myModal: "",
       modalArticle:"",
@@ -281,7 +281,6 @@ export default {
     this.articles = response.data  
     this.image = response.data
     console.log(this.articles)
-
         })
     .catch(e => {
     console.log(e)
@@ -298,9 +297,7 @@ export default {
       this.currentArticle = article
       this.currentIndex = index
     },
-    
-    
-    // :::::::::::::::::::::::
+
     // ::::::::::::::::::::::
     modalUpdate (articleId) {
       this.$refs['modalArticle'].show()
@@ -315,9 +312,8 @@ export default {
         article_id: this.actualArticle
       }
       console.log(data)
-
       axios
-        .post(`${apiUrl}/comments/:article_id`, data, config)
+        .post(`${apiUrl}/comments/:article_id`, data,  { headers: authHeader() })
         .then(response => {
           this.comment = response.data.id
           console.log(response.data)
@@ -374,9 +370,6 @@ export default {
     //       console.log(e);
     //     });
     // },
-
-
-
     submit: function () {
       this.$refs.form.$el.submit()
     },
@@ -385,9 +378,6 @@ export default {
       this.$refs['myModal'].show()
       this.actualArticle = articleId
     },
-    // :::::::::::::::::::::::::::
-    // ::::::::::::::::::::::::::::
-  
    
 // :::::::::::: Post Comment via Modal  :::::::::::::::
     saveComments (event) {
@@ -397,11 +387,11 @@ export default {
         article_id: this.actualArticle
       }
       console.log(data)
-      axios
-        .post(`${apiUrl}/comments/:article_id`, data, config)
+    axios.post(`${apiUrl}/comments/:article_id`, data,  { headers: authHeader() })
         .then(response => {
           this.comment = response.data.id
           console.log(response.data)
+
           this.submitted = true
           this.$refs['myModal'].hide()
           // this.$refs.myModal.value = null
@@ -410,6 +400,8 @@ export default {
         })
         .catch(e => {
           console.log(e)
+          // console.log(window.alert("Veuillez vous Enregistrez!!"))
+
         })
     },
     newComment () {
@@ -418,20 +410,33 @@ export default {
     },
     
     
+    
     deleteArticle(article_id) {
-      ArticleDataService.delete(article_id)   
+   const user = this.user.param
+    console.log(article_id);
+    console.log(user);
+
+      ArticleDataService.delete(article_id, user)   
+     
+
         .then(response => {
           console.log(response.data);
+          console.log(response.config);
+
+          // localStorage.setItem('user', JSON.stringify(response.data));
+
           this.$router.push({ name: "articles" });
           this.refreshList()
         })
         .catch(e => {
           console.log(e);
+          console.log(e.window.alert("Vous ne pouvez pas supprimer cet Article!!"));
         });
-    },
-    
-    
+    }, 
   },
+  
+  
+  
   mounted () {
     this.message = '';
     this.retrieveArticles()

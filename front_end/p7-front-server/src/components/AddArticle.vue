@@ -56,6 +56,8 @@ height: 6rem;
           type="text"    
            placeholder="Title"         
           class="form-control"
+          ref="article_title"
+
           id="title"        
           required
           v-model="article.title"
@@ -64,8 +66,6 @@ height: 6rem;
         
       </b-input-group>
       
-      
-
     <b-input-group class="form-group p-3">
       
 <b-input-group-prepend is-text>
@@ -84,6 +84,7 @@ height: 6rem;
         <b-form-input
          type="text" 
           class="form-control"
+          ref="article_description"
           id="description"
           placeholder="Description"
           required
@@ -101,6 +102,8 @@ height: 6rem;
     
       <b-form-file
       placeholder="Upload your file"
+      class="form-control"
+      ref="article_image"
       type="file"
       accept="image/*"
       name="imagesArray" 
@@ -127,9 +130,11 @@ height: 6rem;
 </template>
 
 <script>
+const apiUrl = 'http://localhost:3000/api'
+import authHeader from '../services/auth-header.js'
+import axios from 'axios'
 
-import ArticleDataService from "../services/ArticleDataService";
-
+// import ArticleDataService from "../services/ArticleDataService";
 
   export default {
   name: "add-article",
@@ -146,6 +151,7 @@ import ArticleDataService from "../services/ArticleDataService";
       description: "",    
       published: false,
       imagesArray: null,
+      user_id:"",
     },  
     };
   },
@@ -154,34 +160,38 @@ import ArticleDataService from "../services/ArticleDataService";
       onChange (event) {
         this.imagesArray = event.target.files[0]
       },
-
+    //   fortmatResponse(res) {
+    //   return JSON.stringify(res, null, 2);
+    // },
   saveArticle() {
-    const formData = new FormData();
+  const formData = new FormData();
   
-    formData.append('image', this.imagesArray)
-    formData.append('title', this.article.title)
-    formData.append('description', this.article.description)
-    
-      ArticleDataService.create(formData)
+  formData.append('image', this.imagesArray)
+  formData.append('title', this.article.title)
+  formData.append('description', this.article.description)
+  console.log(formData)
+  
+  
+
+axios.post(`${apiUrl}/articles/`, formData, { headers: authHeader() })
+
+      // ArticleDataService.create(formData)
         .then(response => {
         console.log(response)
-        // this.article.id = response.data.id;
-        // this.image = response.data.image
-
-        // console.log(response.data);
+        this.article = response.data.id
         this.submitted = true;
         // this.$refs['formData'].resetFields();
-
         })
         .catch(e => {
-        
-          console.log(e);
+        console.log(e);
+        // console.log(e.window.alert("Veuillez vous Enregistrez!!"))
+          // console.log(e);
         });
-
     },
     newArticle() {
       this.submitted = false;
       this.article = {};
+      
     }
   }
   };

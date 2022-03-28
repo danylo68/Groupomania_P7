@@ -29,9 +29,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-// app.use('/static', express.static(path.join(__dirname, 'ressources')));
 app.use('/', express.static(path.join(__dirname, 'ressources')));
-
 //::::::::::::::::::::::::::  ATTENTION  :::::::::::::::::::::::::::::::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //force: true will drop the table if it already exists   ::::::::::::::
@@ -44,7 +42,6 @@ app.use('/', express.static(path.join(__dirname, 'ressources')));
 // });
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Grouomania Project." });

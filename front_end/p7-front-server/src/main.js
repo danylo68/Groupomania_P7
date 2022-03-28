@@ -1,6 +1,13 @@
 import Vue from 'vue';
 import App from './App.vue';
 import { router } from './router';
+
+//  Evite l 'erreur redondante sur router push
+import Router from 'vue-router'
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error => error)
+};
 import store from './store';
 import { BootstrapVue, IconsPlugin, LayoutPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'

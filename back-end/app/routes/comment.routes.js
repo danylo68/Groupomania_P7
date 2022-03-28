@@ -10,7 +10,7 @@ module.exports = app => {
 
     // Create a new Comments
 
-    router.post("/:article_id", [authJwt.verifyToken, multer], commentCtrl.create);
+    router.post("/:article_id", [authJwt.verifyToken,], commentCtrl.create);
 
     // Retrieve all Comments
     router.get("/", commentCtrl.findAll);
@@ -22,13 +22,13 @@ module.exports = app => {
     router.get("/:comment_id", commentCtrl.findOne);
 
     // Update a Comment with id
-    router.put("/:comment_id", [authJwt.verifyToken, multer], commentCtrl.update);
+    router.put("/:comment_id", [authJwt.verifyToken], commentCtrl.update);
 
     // Delete a Comment with id
-    router.delete("/:comment_id", [authJwt.verifyToken, multer], commentCtrl.delete);
+    router.delete("/:comment_id", [authJwt.verifyToken], commentCtrl.delete);
 
     // Delete all Comment
-    router.delete("/", commentCtrl.deleteAll);
+    router.delete("/", [authJwt.verifyToken], commentCtrl.deleteAll);
 
     app.use('/api/comments', router);
 

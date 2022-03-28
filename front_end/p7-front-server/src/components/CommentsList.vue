@@ -39,38 +39,36 @@ font-size: 12px;
     <div class="col-md-12">
     
     
-      <b-card-group 
+      <b-card
           class="list-group-item"
           v-for="comment in comments"
           :key="comment.id">
+          
           <b-card-header>
           <!-- <p class="user-comment">from: {{ comment.user.username }}: </p> -->
-
-          </b-card-header>
-        
+          </b-card-header>  
+          
+          
           <b-card-body>
-          <h3>{{ comment.content }}</h3>
+          <h6>{{ comment.content }}</h6>
           </b-card-body>
           
           <b-card-footer  class="footer-card">
          
           <p> comment id {{ comment.comment_id }}
           / article id: {{ comment.article_id }}</p>
+<!--           
       <b-button pill variant="outline-danger" size="sm"
-
-      @click="deleteComment(comment.comment_id)"
-    >
+      @click="deleteComment(comment.comment_id)" >
     <b-icon icon="trash" aria-hidden="true"></b-icon>
-      
-    </b-button>
+    </b-button> -->
          </b-card-footer>
          
-      </b-card-group>
+      </b-card>
       <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeComments">
         Remove
       </button> -->
     </div>
-
     <!-- <b-card bg-variant="light" header="Light" class="text-center">
         <h4>Comment</h4>
     
@@ -177,8 +175,6 @@ export default {
   },
   mounted () {
     this.retrieveComments()
-    console.log('COMMENTS')
-    console.log(this.article_id)
   }
 }
 </script>

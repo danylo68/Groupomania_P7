@@ -2,15 +2,14 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
-const Op = db.Sequelize.Op;
 
 
 
-exports.allAccess = (req, res) => {
+exports.allAccess = async (req, res) => {
   res.status(200).send("Public Content.");
 };
 
-exports.userBoard = (req, res) => {
+exports.userBoard = async (req, res) => {
   res.status(200).send("User Content.");
 };
 
@@ -33,7 +32,7 @@ exports.userDelete = async (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete User with id=${user_id}. Maybe User was not found or req.body is empty!`,
+          message: `Ne peut etre supprimé avec cet id=${user_id}. Peut etre que l'utilisateur n'existe pas ou le corps est vide!`,
         });
       }
     })

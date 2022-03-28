@@ -26,13 +26,13 @@ exports.signup = (req, res) => {
         })
           .then(roles => {
             user.setRoles(roles).then(() => {
-              res.send({ message: "I,  ${req.body.email} registered successfully!" });
+              res.send({ message: "I,  ${req.body.email}  Enregistré avec Succès!" });
             });
           });
       } else {
         // user role = 1
         user.setRoles([1]).then(() => {
-          res.send({ message: "User registered successfully!" });
+          res.send({ message: "Utilisateur Enregistré avec Succès!" });
         });
       }
     })
@@ -51,7 +51,7 @@ exports.signin = (req, res) => {
   })
     .then(user => {
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "Utilisateur non trouvé." });
       }
       var passwordIsValid = bcrypt.compareSync(
         req.body.password,
@@ -60,7 +60,7 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!"
+          message: "Mot de passe invalide!"
         });
       }
       var token = jwt.sign({
@@ -87,33 +87,4 @@ exports.signin = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
-
-
-
-// ::::::::::::::::::::::::::::::::::: Delete User ::::::::::::::
-// exports.userDelete = (req, res) => {
-//   const user_id = parseInt(req.params.id, 10);
-//   if (Number.isNaN(id)) return res.status(400).end();
-
-//   User.destroy(req.body, {
-//     where: { user_id: user_id },
-//   })
-//     .then((num) => {
-//       if (num == 1) {
-//         res.send({
-//           message: "Utilisateur supprimé avec succès!",
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot delete User with id=${user_id}. Maybe User was not found or req.body is empty!`,
-//         });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: "l'utilisateur ne peut etre supprimé avec l'id=" + user_id,
-//       });
-//     });
-// };
-
 

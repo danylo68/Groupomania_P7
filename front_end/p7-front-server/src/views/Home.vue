@@ -50,14 +50,14 @@ justify-content: center;
 
             <b-nav fixed="top" >
             
-    <!-- <b-nav-item active>Active</b-nav-item> -->
+    <b-nav-item active>Active</b-nav-item>
     <b-nav-item>
-    <!-- <b-button pill variant="outline-secondary"><router-link to="/add" class="nav-link"><h6>Post Article</h6></router-link></b-button> -->
+    <b-button pill variant="outline-secondary"><router-link to="/add" class="nav-link"><h6>Post Article</h6></router-link></b-button>
     </b-nav-item>
     <b-nav-item>
-    <!-- <b-button pill variant="outline-secondary"><router-link to="/article" class="nav-link"><h6>Article</h6></router-link></b-button> -->
+    <b-button pill variant="outline-secondary"><router-link to="/article" class="nav-link"><h6>Article</h6></router-link></b-button>
     </b-nav-item>
-    <!-- <b-nav-item disabled>Disabled</b-nav-item> -->
+    <b-nav-item disabled>Disabled</b-nav-item>
   </b-nav>
        
          </b-row> 

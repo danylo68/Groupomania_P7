@@ -10,20 +10,28 @@ verifyToken = (req, res, next) => {
 
   if (!token) {
     return res.status(403).send({
-      message: "No token provided!"
+      message: "Token Manquant!"
     });
   }
-
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({
-        message: "Unauthorized!"
-      });
+      if (err.name === 'TokenExpiredError') {
+        res.status(511).json({
+          message: 'Session expiré!'
+        });
+      } else {
+        res.status(401).json({
+          message: 'Non autorisé!'
+        });
+      }
     }
-    req.userId = decoded.id;
+    if (decoded !== undefined) {
+      req.userId = decoded.id;
+    }
     next();
   });
 };
+
 
 isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
@@ -34,6 +42,35 @@ isAdmin = (req, res, next) => {
           return;
         }
       }
+
+      isModerator = (req, res, next) => {
+        User.findByPk(req.userId).then((user) => {
+          user.getRoles().then((roles) => {
+            for (let i = 0; i < roles.length; i++) {
+              if (roles[i].name === 'moderator') {
+                next();
+                return;
+              }
+            }
+
+            res.status(403).json({
+              message: 'Require Moderator Role!'
+            });
+          });
+        });
+      };
+
+
+
+
+
+
+
+
+
+
+
+
 
       res.status(403).send({
         message: "Require Admin Role!"

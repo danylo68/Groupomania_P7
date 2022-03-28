@@ -24,7 +24,7 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Comment."
+                    err.message || "Une erreur s'est produite lors de la creation de cet Commentaire."
             });
         });
 };
@@ -81,7 +81,7 @@ exports.findOne = (req, res) => {
 // // Update a comment by the id in the request   ::::::::::::::::::::::::::::
 
 exports.update = async (req, res) => {
-    const id = req.params.id;
+    const comment_id = req.params.id;
 
     Comment.update(req.body, {
         where: { id: comment_id },

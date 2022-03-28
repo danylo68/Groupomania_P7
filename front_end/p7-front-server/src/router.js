@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 // import Home from './views/Home.vue';
+
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import ArticlesList from './components/ArticlesList.vue';
@@ -54,6 +55,7 @@ export const router = new Router({
             path: "/",
             alias: "/articles",
             name: "articles",
+            meta: { requiresAuth: true }, // Meta Field , you can name it ,
             component: ArticlesList
         },
         {
@@ -88,3 +90,16 @@ export const router = new Router({
 
 });
 
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/login', '/register', '/home', '/articleList'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('user');
+
+    // trying to access a restricted page + not logged in
+    // redirect to login page
+    if (authRequired && !loggedIn) {
+        next('/login');
+    } else {
+        next();
+    }
+});
