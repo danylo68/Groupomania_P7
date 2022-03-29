@@ -10,11 +10,7 @@ const baseUrl = "http://localhost:3000/api"
 
 class CommentDataService {
     getAll(article_id) {
-
-
-        // getAll() {
         return axios.get(`${baseUrl}/comments/?article_id=${article_id}`);
-
     }
 
     get(id) {

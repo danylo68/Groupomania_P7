@@ -95,20 +95,10 @@ import CommentDataService from '../services/CommentDataService'
 
 export default {
   name: 'comments-list',
-  props: {
-    article_id: {
-      type: Number,
-      default: null
-    },
-    comment_id: {
-      type: Number,
-      default: null
-    }
-   
-  },
-  
+ 
   data () {
     return {
+  
       comments: [],
       articles: [],
       currentComment: null,
@@ -118,16 +108,15 @@ export default {
       article: '',
       filterData: '',
       parameters: '',
-      data: ''
+      data: '',
+      article_id: "",
+      user_id: "",
     }
   },
 
   methods: {
     retrieveComments () {
-
-      // Il faut changer cette méthode pour qu'elle envoit article_id à l'API pour pouvoir filtrer
       CommentDataService.getAll(this.article_id)
-   
         .then(response => {
           this.comments = response.data
         })
@@ -147,10 +136,9 @@ export default {
       this.currentIndex = index
     },
 
-     deleteComment(comment_id) {
+      deleteComment(comment_id) {
      this.comment_id = this.comment.comment_id
      console.log(comment_id)
-
       CommentDataService.delete(comment_id)
         .then(response => {
           console.log(response.data);
@@ -161,6 +149,8 @@ export default {
           console.log(e);
         });
     },
+    
+    
     
     searchTitle () {
       CommentDataService.findByTitle(this.title)
@@ -175,6 +165,8 @@ export default {
   },
   mounted () {
     this.retrieveComments()
+     console.log('COMMENTS')
+    console.log(this.article_id)
   }
 }
 </script>

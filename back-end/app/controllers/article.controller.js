@@ -1,7 +1,6 @@
 
 const express = require("express");
 const app = express();
-// const config = require('../config/auth.config');
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const Article = db.article;
@@ -26,7 +25,6 @@ exports.create = async (req, res) => {
     image: imageFile
 
   };
-  // Save Article in the database
   Article.create(article)
     .then(data => {
       res.send(data);

@@ -227,25 +227,12 @@ export default {
 
   props: {
     article: {
-      // default: () => [],
-      // required: true,
-      // type: Number,
-    
+      default: () => [],
+      required: true,
+      type: Number,
     }
   },
-
-  // props: {
-  //   articles: {
-  //     article_id:"",
-  //     // default: () => [],
-  //     // required: true,
-  //     // type: Number,
-  //     image:"",
-
-
-  //   }
-  // },
-
+  
   components: {
     AddArticle,
     CommentsList,
@@ -280,7 +267,7 @@ export default {
     .then(response => {
     this.articles = response.data  
     this.image = response.data
-    console.log(this.articles)
+    
         })
     .catch(e => {
     console.log(e)
@@ -391,7 +378,6 @@ export default {
         .then(response => {
           this.comment = response.data.id
           console.log(response.data)
-
           this.submitted = true
           this.$refs['myModal'].hide()
           // this.$refs.myModal.value = null
@@ -415,28 +401,18 @@ export default {
    const user = this.user.param
     console.log(article_id);
     console.log(user);
-
       ArticleDataService.delete(article_id, user)   
-     
-
         .then(response => {
           console.log(response.data);
-          console.log(response.config);
-
-          // localStorage.setItem('user', JSON.stringify(response.data));
-
           this.$router.push({ name: "articles" });
           this.refreshList()
         })
         .catch(e => {
           console.log(e);
-          console.log(e.window.alert("Vous ne pouvez pas supprimer cet Article!!"));
         });
     }, 
   },
-  
-  
-  
+    
   mounted () {
     this.message = '';
     this.retrieveArticles()

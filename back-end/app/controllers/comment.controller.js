@@ -1,22 +1,22 @@
-const config = require('../config/auth.config');
+const express = require("express");
+const app = express();
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const Article = db.article;
 const Comment = db.comment;
 const User = db.user;
 const jwt = require("jsonwebtoken");
-const { article } = require('../models');
+
 
 // Create and Save a new comment :::::::::::::::::::::::::::::::::
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     const token = req.headers['x-access-token'];
-    const decoded = jwt.decode(token);
+    const decoded = await jwt.decode(token);
     const comment = {
         content: req.body.content,
         user_id: decoded.id,
         article_id: req.body.article_id,
     };
-    // Save Comment in the database
     Comment.create(comment)
         .then(data => {
             res.send(data);
@@ -106,31 +106,57 @@ exports.update = async (req, res) => {
 
 // Delete a comment with the specified id in the request :::::::::::::::::::::::::::::
 exports.delete = (req, res) => {
-    const comment_id = req.params.id;
-    // const token = req.headers['x-access-token'];
-    // const decoded = jwt.decode(token);
-    // console.log(req.userId)
 
-    Comment.destroy({
-        where: { coment_id: comment_id },
-    })
-        .then((num) => {
-            if (num == 1) {
-                res.send({
-                    message: "Comment was deleted successfully!",
-                });
-            } else {
-                res.send({
-                    message: `Cannot delete Comment with id=${id}. Maybe comment was not found!`,
-                });
-            }
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: "Could not delete Comment with id=" + comment_id,
+    const token = req.headers['x-access-token'];
+    const decoded = jwt.decode(token);
+    const comment_id = req.params.id;
+
+    User.findByPk(decoded.id)
+        .then((user) => {
+            let currentUserRole = null;
+            user.getRoles().then(roles => {
+                for (let i = 0; i < roles.length; i++) {
+                    if (roles[i].name === "admin") {
+                        currentUserRole = roles[i].name
+                    }
+                }
+                Comment.findByPk(req.params.id)
+                    .then((article) => {
+                        if (!comment) {
+                            console.log("Comment not found!");
+                            return null;
+                        }
+                        if (comment.user_id === decoded.id || currentUserRole === "admin") {
+                            Comment.destroy({
+                                where: { commment_id: comment_id },
+                            })
+                                .then((num) => {
+                                    if (num == 1) {
+                                        res.send({
+                                            message: "Commment was deleted successfully!",
+                                        });
+                                    } else {
+                                        res.send({
+                                            message: `Cannot delete Comment with id=${comment_id}. Maybe Comment was not found!`,
+                                        });
+                                    }
+                                })
+                                .catch((err) => {
+                                    res.status(500).send({
+                                        message: "Could not delete comment with id=" + comment_id,
+                                    });
+                                });
+                        }
+                        else {
+                            res.status(403).send({
+                                message: "You don't have permission to perform this action",
+                            });
+                        }
+                    });
             });
-        });
+        })
 };
+
 
 // Delete all comments from the database. ::::::::::::::::::::::::::::::::::::::::::
 exports.deleteAll = (req, res) => {
