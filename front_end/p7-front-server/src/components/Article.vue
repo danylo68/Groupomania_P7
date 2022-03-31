@@ -1,6 +1,7 @@
 <template>
-  <!-- <div v-if="currentArticle" class="edit-form"> -->
+ 
   <div class="edit-form"> 
+  
     <h4>Article</h4>
     <form>
       <div class="form-group">
@@ -23,14 +24,14 @@
         />
       </div>
 
-      <!-- <div class="form-group">
+    <div class="form-group">
         <label><strong>Status:</strong></label>
         {{ currentArticle.published ? "Published" : "Pending" }}
-      </div> -->
+      </div> 
       
     </form>
     
-    <!-- ::::::::::::::::::::::::::::::::: -->
+  
 
     <button class="badge badge-primary mr-2"
       v-if="currentArticle.published"
@@ -41,26 +42,22 @@
       @click="updatePublished(true)">
       Publish
     </button>
-    <!-- :::::::::::::::::::::::::::::::: -->
+  
 
-    <!-- <button class="badge badge-danger mr-2"
+  <button class="badge badge-danger mr-2"
       @click="deleteArticle"
     >
       Delete
-    </button> -->
-<!-- ::::::::::::::::::::::::::::::::::::::::: -->
+    </button>
+
     <button type="submit" class="badge badge-success"
       @click="updateArticle">
       Update
     </button>
     <p>{{ message }}</p>
   </div>
-<!-- ::::::::::::::::::::::::::::::::::::::::: -->
-  <!-- <div v-else>
-    <br />
-    <p>Please click on a Article...</p>
-  </div> -->
-  
+
+ 
 </template>
 
 <script>
@@ -78,10 +75,8 @@ export default {
   
     getArticle(id) {
       ArticleDataService.get(id)
-       console.log("toto")
         .then(response => {
-          this.currentArticle = response.data;
-          
+          this.currentArticle = response.data;  
           console.log(response.data);
         })
         .catch(e => {
@@ -121,16 +116,16 @@ export default {
         });
     },
 
-    // deleteArticle() {
-    //   ArticleDataService.delete(this.currentArticle.id)
-    //     .then(response => {
-    //       console.log(response.data);
-    //       this.$router.push({ name: "articles" });
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // }
+    deleteArticle() {
+      ArticleDataService.delete(this.currentArticle.id)
+        .then(response => {
+          console.log(response.data);
+          this.$router.push({ name: "articles" });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   },
   mounted() {
     this.message = '';

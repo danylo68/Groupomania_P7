@@ -3,7 +3,6 @@
 .form-control
 {
 /* display: flex; */
-
 width: 300px;
 }
 
@@ -16,7 +15,8 @@ max-width:500px;
 display: flex;
 justify-content: center;
 margin-right: 0rem;
-
+margin-bottom: 1rem;
+    margin-top: 1rem;
 
 }
 b-form-input
@@ -34,8 +34,7 @@ height: 6rem;
 
 <template>
  <div class="col-md-8"> 
-  <!-- <b-container class="add_article" > -->
-  <!-- <h4>Postez votre article</h4> -->
+
     <div v-if="!submitted">
     
       <b-input-group class="form-group p-3">  
@@ -57,7 +56,6 @@ height: 6rem;
            placeholder="Title"         
           class="form-control"
           ref="article_title"
-
           id="title"        
           required
           v-model="article.title"
@@ -91,13 +89,11 @@ height: 6rem;
           v-model="article.description"
           name="description"
         ></b-form-input>
-        
       </b-input-group>
       
     <b-input-group class="form-group p-3">
-    
     <b-input-group-prepend>
-   <!-- <span class="input-group-file" id="upload-file">Photo</span> -->
+
     </b-input-group-prepend>
     
       <b-form-file
@@ -110,12 +106,10 @@ height: 6rem;
       @change="onChange" ></b-form-file>
       <!-- <div id="preview"> -->
    
-   
    <b-input-group-append>
      <b-button @click="saveArticle" variant="success"  p-3>Submit </b-button>
    </b-input-group-append>
-    <!-- </div> -->
-      <!-- <b-button>Button</b-button> -->
+ 
 </b-input-group>
     </div>
 
@@ -123,27 +117,24 @@ height: 6rem;
       <h4>You submitted successfully!</h4>
       <button p-3 class="btn btn-success" @click="newArticle">Add</button>
     </b-form>
-    <!-- </b-container> -->
+   
     
   </div>
   
 </template>
 
 <script>
-const apiUrl = 'http://localhost:3000/api'
-import authHeader from '../services/auth-header.js'
-import axios from 'axios'
 
-// import ArticleDataService from "../services/ArticleDataService";
+
+
+import ArticleDataService from "../services/ArticleDataService";
 
   export default {
   name: "add-article",
   
   data() {
     return {
-   
     submitted: false,
-
     article: {
       id: null,
       title: "",       
@@ -160,32 +151,27 @@ import axios from 'axios'
       onChange (event) {
         this.imagesArray = event.target.files[0]
       },
-    //   fortmatResponse(res) {
-    //   return JSON.stringify(res, null, 2);
-    // },
+      fortmatResponse(res) {
+      return JSON.stringify(res, null, 2);
+    },
+    
   saveArticle() {
   const formData = new FormData();
-  
   formData.append('image', this.imagesArray)
   formData.append('title', this.article.title)
   formData.append('description', this.article.description)
-  console.log(formData)
-  
-  
+  console.log(this.imagesArray)
 
-axios.post(`${apiUrl}/articles/`, formData, { headers: authHeader() })
-
-      // ArticleDataService.create(formData)
+      ArticleDataService.create(formData)
         .then(response => {
         console.log(response)
         this.article = response.data.id
         this.submitted = true;
-        // this.$refs['formData'].resetFields();
+      
         })
         .catch(e => {
         console.log(e);
-        // console.log(e.window.alert("Veuillez vous Enregistrez!!"))
-          // console.log(e);
+         
         });
     },
     newArticle() {

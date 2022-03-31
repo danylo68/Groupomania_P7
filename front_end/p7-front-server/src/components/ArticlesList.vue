@@ -21,15 +21,8 @@ max-width: 1250px;
 .content_img
 {
 height: 20%;
-
 }
 
-
-.imageUrl
-{
-  width:auto;
-  height: 30rem;
-}
 .footer-card {
   height: auto;
   display: flex;
@@ -42,7 +35,6 @@ height: 20%;
   background-color: white;
   display: flex;
   justify-content: center;
- 
   box-shadow: 0px 2px 7px 1px lightgrey;
   border-radius: 12px 12px 12px 12px;
   max-width: 768px;
@@ -106,13 +98,13 @@ font-size: 12px;
               <b-card
                 fluid
                 class="content_img"
-                img-top>    
-            <!-- <b-card :img-src="article.image" class="imageUrl" alt="Responsive image"></b-card>      -->
+                img-top>      
                                      
                 <b-card-text>    
                 <h5> {{ article.description }}</h5>
-
                   <!-- <p class="articleId">article Id: {{ article.article_id }}
+                  <p class="user-article">from: {{ article.user.username }} </p>
+
                   </p> -->
                 </b-card-text>
                 <p class="articleId">article Id: {{ article.article_id }}
@@ -121,38 +113,30 @@ font-size: 12px;
               </b-card>  
               <!-- :::::::::::::  BTN MODAL  :::::::::::::::::: -->
               <b-card-footer class="footer-card">  
-   <!-- <b-list-group class="btn-footer"> -->
-     <div>
+ 
+            <div>
                 <b-button  pill variant="light" size="sm" id="show-btn" @click="showModal(article.article_id)">
                   <b-icon icon="chat-right-text" aria-hidden="true"></b-icon>
                   Commentaire
                 </b-button>
-     </div>      
+        </div>      
           <div>
-          
-           <!-- <b-button pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)"> -->
-              <!-- <b-button pill variant="outline-secondary" size="sm" @click="updateArticle(article.article_id)"> -->
-              <!-- <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
+           <b-button pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)">
+            
+              <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
                </b-button>
-         -->
+        
                  <b-button pill variant="outline-danger" size="sm" @click.prevent="deleteArticle(article.article_id)">
                  <b-icon icon="trash" aria-hidden="true"></b-icon>
                </b-button>
            </div>
-           <!-- </b-list-group> -->
-      
-              </b-card-footer>    
-              
+        
+              </b-card-footer>         
               <CommentsList :article_id="article.article_id" />
-
-          
-              </b-card>
-              
+              </b-card>      
               </b-container>
-      
         </b-col>
       </b-row>
-    <!-- </b-container> -->
 
     <!-- :::::::::  Modal Commentaire :::::::::::::::::::::::::::::::::::::::: -->
     <b-modal 
@@ -174,32 +158,51 @@ font-size: 12px;
         <!-- {{ article.article_id }} -->
       </b-form> 
     </b-modal>
-    <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+  
     <!-- :::::::::  Modal Update :::::::::::::::::::::::::::::::::::::::: -->
      <b-modal 
      ref="modalArticle" 
-    title="Update Article">
-      <b-form v-on:submit="modifyArticle">
+    title="Modifier Article">
+      <b-form v-on:submit.prevent="modifyArticle()">
+      
         <b-form-group
-        id="reply-comment" 
+        id="input-group-1"       
+        label-for="input-title">        
+          <b-form-input
+            id="input-title"
+            v-model="article.title"
+            type="text"
+            placeholder="Changer Titre"
+            required
+          ></b-form-input></b-form-group>
+          
+       <b-form-group
+        id="input-group-2" 
         label-for="input-article">    
           <b-form-input
-            id="input-article"
-            v-model="formArticle"
+            id="input-description"
+            v-model="article.description"
             type="text"
-            placeholder="Title"
+            placeholder="Changer Description"
+       
             required
-          ></b-form-input>
+          ></b-form-input></b-form-group>
+          
+         <b-form-group id="input-group-3" 
+         label-for="input-image">     
           <b-form-input
-            id="input-article"
-            v-model="formArticle"
+            id="input-image"
+            v-model="article.image"
             type="text"
-            placeholder="Description"
+            accept="image/*" 
+            enctype="multipart/form-data"
+            name="imagesArray"
+            @change="onChange"
+            placeholder="file"
             required
-          ></b-form-input>
-        </b-form-group>
-        <b-button type="submit" value="Submit" variant="primary" size="sm">Update</b-button>
-        <!-- {{ article.article_id }} -->
+          ></b-form-input></b-form-group>
+ 
+        <b-button type="submit" value="Submit" variant="primary" size="sm">Envoyer Modification</b-button>
       </b-form> 
     </b-modal>
     
@@ -210,41 +213,51 @@ font-size: 12px;
 <script>
 
 import ArticleDataService from '../services/ArticleDataService'
-// import Article from '../components/Article.vue'
 import AddArticle from '../components/AddArticle.vue'
 import CommentsList from '../components/CommentsList.vue'
 import axios from 'axios'
 import authHeader from '../services/auth-header.js'
-// import Profile from '../views/Profile.vue'
+
 // const apiUrl = 'http://192.168.1.26:3000/api'
 const apiUrl = 'http://localhost:3000/api'
-// const config = { headers: authHeader()
-// }
+
+
 
 export default {
   name: 'articles-list',
 
-
-  props: {
-    article: {
-      default: () => [],
-      required: true,
-      type: Number,
-    }
-  },
+  // props: {
+  //   article: {
+  //   }
+  // },
   
   components: {
     AddArticle,
     CommentsList,
-    // Article
-    
   },
 
   data () {
     return {
-      image:"",
-      imageUrl:"",
-      profile: "",   
+    formArticle_title:"",
+    formArticle_description:"",
+    form:{
+    title:"",
+    description:"",
+    image: "",
+    },
+    
+    
+    type: [Number,Array, String, Object],
+     article: {
+      id: null,
+      title: "",       
+      image: String,   
+      description: "",    
+      published: false,
+      imagesArray: null,
+      user_id:"",
+    },  
+      profile: "",  
       article_id:"",
       actualArticle:"",
       articles:"",
@@ -257,17 +270,18 @@ export default {
       myModal: "",
       modalArticle:"",
       button:"",
+      fileUpload: "",
     }
   },
   
-
   methods: {
     retrieveArticles () {
     ArticleDataService.getAll()
     .then(response => {
     this.articles = response.data  
     this.image = response.data
-    
+    console.log(this.articles)
+
         })
     .catch(e => {
     console.log(e)
@@ -279,84 +293,60 @@ export default {
       this.currentArticle = null
       this.currentIndex = -1
     },
+    
+     onChange (event) {
+        this.imagesArray = event.target.files[0];
+      },
 
     setActiveArticle (article, index) {
       this.currentArticle = article
       this.currentIndex = index
     },
 
-    // ::::::::::::::::::::::
-    modalUpdate (articleId) {
-      this.$refs['modalArticle'].show()
-      this.actualArticle = articleId
-    },
-    // ::::::::::: update Article ready for Agile Method  ::::::::::::::
-    modifyArticle (event){
-       event.preventDefault()
-      const data = {
-        title: this.formArticle,
-        description: this.formArticle,
-        article_id: this.actualArticle
-      }
-      console.log(data)
-      axios
-        .post(`${apiUrl}/comments/:article_id`, data,  { headers: authHeader() })
+    // ::::::::::: Edit Article via Modal:::::::::::
+    modalUpdate (article_id) {
+    console.log(article_id);
+      ArticleDataService.get(article_id)
+              .then((response) => {
+                this.article = response.data;
+                 this.$refs['modalArticle'].show()
+                this.loading = false;
+              })
+              .catch((err) => {
+                this.loading = false;
+                console.log(err);
+              })
+        },
+    
+    // ::::::::::: Update Article_Modal ready for Agile Method  ::::::::::::::
+    modifyArticle (){ 
+    const formData = new FormData();
+
+  formData.append('title', this.article.title)
+  formData.append('description', this.article.description)
+  formData.append('image', this.imagesArray)
+
+ console.log(this.imagesArray)
+     
+    const article_id = this.article.article_id
+      console.log(article_id);
+      
+     ArticleDataService.update(article_id, formData)
         .then(response => {
-          this.comment = response.data.id
-          console.log(response.data)
+         response = response.data,
+        
+          console.log(response)
           this.submitted = true
-          this.$refs['myModal'].hide()
-          // this.$refs.myModal.value = null
-          this.formArticle = null
+          this.$refs['modalArticle'].hide()
+          this.formData = null
+          this.refreshList()
+
         })
         .catch(e => {
           console.log(e)
         })
     },
-  // updatePublished(status) {
-  //    const data = {
-  //       article_id: this.article_id,
-  //       title: this.article.title,
-  //       description: this.article.description,
-  //       image: this.article.image,
-
-  //       published: status
-  //     };
-
-  //     ArticleDataService.update(this.article.article_id, data)
-  //       .then(response => {
-  //         this.article.published = status;
-  //         console.log(response.data);
-  //       })
-  //       .catch(e => {
-  //         console.log(e);
-  //       });
-  //   },
-     
-    //  updateArticle(article_id, article) {
-    //  console.log(article_id)
-    //  console.log(article)
-
-    //    const data = {
-    //     article_id: this.article.article_id,
-    //     title: this.article.title,
-    //     description: this.article.description,
-    //     image: this.article.image,
-    //     published: status
-    //   }; 
-    //   console.log(data)
-
-    //   ArticleDataService.update(
-    //   this.article_id,
-    //   this.article)
-    //     .then(response => {
-    //       console.log(response.data);
-    //       this.message = 'The Article was updated successfully!';
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
+    
     submit: function () {
       this.$refs.form.$el.submit()
     },
@@ -380,13 +370,12 @@ export default {
           console.log(response.data)
           this.submitted = true
           this.$refs['myModal'].hide()
-          // this.$refs.myModal.value = null
+          
           this.formComment = null
           this.refreshList()
         })
         .catch(e => {
           console.log(e)
-          // console.log(window.alert("Veuillez vous Enregistrez!!"))
 
         })
     },
@@ -394,14 +383,12 @@ export default {
       this.submitted = false;
       this.comment = {};   
     },
-    
-    
+      
     
     deleteArticle(article_id) {
-   const user = this.user.param
     console.log(article_id);
-    console.log(user);
-      ArticleDataService.delete(article_id, user)   
+    
+      ArticleDataService.delete(article_id)   
         .then(response => {
           console.log(response.data);
           this.$router.push({ name: "articles" });
@@ -417,9 +404,9 @@ export default {
     this.message = '';
     this.retrieveArticles()
     this.retrieveArticles(this.$route.params.id);
-
-     
    
   }
+  
 }
+
 </script>

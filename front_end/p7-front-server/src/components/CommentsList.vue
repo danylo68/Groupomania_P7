@@ -18,20 +18,8 @@ font-size: 12px;
 justify-content: space-between;
 border-radius: 12px 12px 12px 12px;
 margin-bottom: 3rem;
-
-}
-.user-comment
-{
-font-size: 12px;
-
-
 }
 
-/* .list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-} */
 </style>
 
 <template>
@@ -45,7 +33,7 @@ font-size: 12px;
           :key="comment.id">
           
           <b-card-header>
-          <!-- <p class="user-comment">from: {{ comment.user.username }}: </p> -->
+        
           </b-card-header>  
           
           
@@ -57,36 +45,16 @@ font-size: 12px;
          
           <p> comment id {{ comment.comment_id }}
           / article id: {{ comment.article_id }}</p>
-<!--           
+          
       <b-button pill variant="outline-danger" size="sm"
       @click="deleteComment(comment.comment_id)" >
     <b-icon icon="trash" aria-hidden="true"></b-icon>
-    </b-button> -->
+    </b-button>
          </b-card-footer>
          
       </b-card>
-      <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeComments">
-        Remove
-      </button> -->
     </div>
-    <!-- <b-card bg-variant="light" header="Light" class="text-center">
-        <h4>Comment</h4>
-    
-       <b-card-text>
-          <label><strong>Content:</strong></label> {{ currentComment.content }}
-        </b-card-text>
-        
-         <b-card>
-          <label><strong>Status:</strong></label> {{ currentComment.published ? "Published" : "Pending" }}
-         </b-card>b-card-text>
-
-        <a class="badge badge-warning"
-          :href="'/comments/' + currentComment.id"
-        >
-          Edit
-        </a>
-    </div>   
-  </b-card> -->
+   
   </div>
 </template>
 
@@ -95,10 +63,21 @@ import CommentDataService from '../services/CommentDataService'
 
 export default {
   name: 'comments-list',
+  
+   props: {
+    article_id: {
+      type: Number,
+      default: null
+    },
+    // comment_id: {
+    //   type: Number,
+    //   default: null
+    // }
+   
+  },
  
   data () {
     return {
-  
       comments: [],
       articles: [],
       currentComment: null,
@@ -109,8 +88,8 @@ export default {
       filterData: '',
       parameters: '',
       data: '',
-      article_id: "",
       user_id: "",
+      comment_id: ""
     }
   },
 
@@ -163,10 +142,12 @@ export default {
         })
     }
   },
+  
   mounted () {
     this.retrieveComments()
      console.log('COMMENTS')
     console.log(this.article_id)
   }
 }
+
 </script>

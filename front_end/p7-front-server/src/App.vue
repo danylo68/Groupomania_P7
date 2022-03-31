@@ -54,8 +54,6 @@ height: 7rem;
 
   <div id='app'>
   
- <!-- <b-img :src="require(`@/assets/Groupomania.jpg`)" class="img-profile" ></b-img> -->
-  
   <b-navbar class="Regular shadow" 
   id="nav1_top"
   fixed="top" 
@@ -66,7 +64,7 @@ height: 7rem;
   
     <b-navbar-brand href="#">Groupomania 
     </b-navbar-brand>
-    <!-- <img :src="require(`@/assets/icon-left-font-monochrome-white.png`)" /> -->
+
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
@@ -75,21 +73,17 @@ height: 7rem;
      
       </b-navbar-nav>
     
-      <!-- Right aligned nav items -->
+     
   <b-navbar-nav class="ml-auto">
-    <!-- <b-navbar class="navbar-nav mr-auto"> -->
     <b-navbar-nav>
     
    <b-nav-item class="nav-item">
           <router-link to="/articles" class="nav-link">Articles</router-link>
         </b-nav-item> 
         
-       <!-- <b-nav-item class="nav-item">
-          <router-link to="/add" class="nav-link">add</router-link>
-        </b-nav-item> -->
+      
         </b-navbar-nav>
-        
-   <!-- </b-navbar> -->
+
   
         <b-nav-item v-if="showAdminBoard">
           <router-link to="/admin" class="nav-link">Admin Board</router-link>
@@ -157,7 +151,6 @@ height: 7rem;
 
 <script>
 
-// import UploadImage from "./components/UploadImage";
 
 export default {
 name: "app",

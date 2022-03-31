@@ -56,13 +56,9 @@ width: 300px;
       
       <button @click="saveComment" class="btn btn-success">Submit</button>
     </b-form-group>
-
-    <!-- <b-form v-else>
-      <h4>You submitted successfully!</h4>
-      <button p-3 class="btn btn-success" @click="newComment">Add</button>
-    </b-form> -->
+     
      </b-container>
-  <!-- </div> -->
+
   
   </div> 
 </template>

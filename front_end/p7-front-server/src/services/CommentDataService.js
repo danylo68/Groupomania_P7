@@ -2,9 +2,6 @@ import axios from 'axios'
 import authHeader from './auth-header';
 
 
-let config = {
-    headers: authHeader()
-}
 // const baseUrl = "http:///192.168.1.26:3000/api"
 const baseUrl = "http://localhost:3000/api"
 
@@ -14,27 +11,27 @@ class CommentDataService {
     }
 
     get(id) {
-        return axios.get(`${baseUrl}/comments/${id}`, config);
+        return axios.get(`${baseUrl}/comments/${id}`, { headers: authHeader() });
     }
 
     create(data) {
-        return axios.post(`${baseUrl}/comments/:article_id`, data, config);
+        return axios.post(`${baseUrl}/comments/:article_id`, data, { headers: authHeader() });
     }
 
-    update(id, data) {
-        return axios.put(`${baseUrl}/comments/${id}`, data, config);
+    update(article_id, data) {
+        return axios.put(`${baseUrl}/comments/?article_id=${article_id}`, data, { headers: authHeader() });
     }
 
-    delete(id) {
-        return axios.delete(`${baseUrl}/comments/${id}`, config);
+    delete(article_id) {
+        return axios.delete(`${baseUrl}/comments/?article_id=${article_id}`, { headers: authHeader() });
     }
 
     deleteAll() {
-        return axios.delete(`${baseUrl}/comments/`, config);
+        return axios.delete(`${baseUrl}/comments/`, { headers: authHeader() });
     }
 
     findByTitle(title) {
-        return axios.get(`${baseUrl}/comments/?title=${title}`, config);
+        return axios.get(`${baseUrl}/comments/?title=${title}`);
     }
 }
 

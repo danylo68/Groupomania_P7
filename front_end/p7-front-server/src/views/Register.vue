@@ -59,11 +59,10 @@ height: 670px;
   <b-container-fluid class="jumbo-head">
   <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
    style="background-image: url(https://picsum.photos/1750/400/?image=1033);">
-  <!-- <b-img src="https://picsum.photos/1024/400/?image=1033" fluid alt="Responsive image"></b-img> -->
+  
   </b-jumbotron>
 </b-container-fluid>
 
-    <!-- <b-img :src="require(`@/assets/icon-left-black.png`)"></b-img> -->
     <div class="card card-container">
       <h4>Sign Up</h4>
       <!-- <img

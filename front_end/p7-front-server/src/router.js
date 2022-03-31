@@ -80,11 +80,6 @@ export const router = new Router({
             name: "comment-details",
             component: () => import("./components/Comment.vue")
         },
-        // {
-        //     path: "/add",
-        //     name: "add",
-        //     component: () => import("./components/AddComment.vue")
-        // }
 
     ]
 

@@ -6,23 +6,31 @@ const Op = db.Sequelize.Op;
 const Article = db.article;
 const User = db.user;
 const jwt = require("jsonwebtoken");
+const multer = require('multer')
 const fileUpload = require('express-fileupload');
 const fs = require("fs")
-app.use(fileUpload());
+
+
+
+
 
 // Create and Save a new Article  ::::::::::::::::::::::::::::
-exports.create = async (req, res) => {
+exports.create = (req, res) => {
 
-  const imageFile = `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`;
-  // const imageFile = req.file.filename;
   const token = req.headers['x-access-token'];
-  const decoded = await jwt.decode(token);
+  const decoded = jwt.decode(token);
+
+
+  // let imageFile;
+  // imageFile = `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`;
+
+  // console.log(imageFile);
+
   const article = {
     title: req.body.title,
     description: req.body.description,
-    username: req.body.username,
-    user_id: decoded.id,
-    image: imageFile
+    image: `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`,
+    user_id: decoded.id
 
   };
   Article.create(article)
@@ -63,7 +71,6 @@ exports.findAll = (req, res) => {
     });
 };
 //// Find a single comment with an id  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
 exports.findOne = (req, res) => {
   const article_id = req.params.id
   Article.findByPk(article_id, {
@@ -85,53 +92,79 @@ exports.findOne = (req, res) => {
       }
     });
 };
-// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-exports.update = (req, res) => {
+// :::::::::::::::: Update Article  :::::::::::::::::::::::::::::::::::::::::::::
+exports.update = async (req, res) => {
+  const token = req.headers['x-access-token'];
+  const decoded = jwt.decode(token);
   const article_id = req.params.id;
 
-  Article.update(req.body, {
-    where: { article_id: article_id },
+  // const imageFile = `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`;
+  const articleUpdate = await ({
+    title: req.body.title,
+    description: req.body.description,
+    image: `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`,
+    user_id: decoded.id
   })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Article was updated successfully.",
-        });
-      } else {
-        res.send({
-          message: `Cannot update Article with id=${article_id}. Maybe Article was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error updating Article with id=" + article_id,
-      });
-    });
-};
+  // const articleUpdate = await req.file ? {
+  //   ...req.body,
+  //   image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+  // } : {
+  //   title: req.body.title,
+  //   descrition: req.body.descrition,
+  // }
+  console.log(articleUpdate)
+  console.log('articleUpdate')
 
-exports.addArticle = (userId, articleId) => {
-  return User.findByPk(userId)
+  User.findByPk(decoded.id)
     .then((user) => {
-      if (!user) {
-        console.log("User not found!");
-        return null;
-      }
-      return Article.findByPk(articleId)
-        .then((article) => {
-          if (!article) {
-            console.log("Article not found!");
-            return null;
+      let currentUserRole = null;
+      user.getRoles().then(roles => {
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "admin") {
+            currentUserRole = roles[i].name
           }
-          user.addArticle(article);
-          console.log(`>> added Article id=${article.id} to User id=${user.id}`);
-          return user;
-        });
+        }
+        Article.findByPk(req.params.id)
+          .then((article) => {
+            if (!article) {
+              console.log("Article not found!");
+              return null;
+            }
+            if (article.user_id === decoded.id || currentUserRole === "admin") {
+
+              Article.update(
+                {
+                  where: { article_id: article_id },
+                })
+              console.log(article)
+              console.log('article')
+                .then((num) => {
+                  if (num == 1) {
+                    res.send({
+                      message: "Article was updated successfully.",
+                    });
+                  } else {
+                    res.send({
+                      message: `Cannot update Article with id=${article_id}. Maybe Article was not found or req.body is empty!`,
+                    });
+                  }
+                })
+
+                .catch((err) => {
+                  res.status(500).send({
+                    message: "Error updating Article with id=" + article_id,
+                  });
+                });
+            }
+            else {
+              res.status(403).send({
+                message: "You don't have permission to perform this action",
+              });
+            }
+          });
+      });
     })
-    .catch((err) => {
-      console.log(">> Error while adding Article to User: ", err);
-    });
 };
 
 
@@ -187,8 +220,6 @@ exports.delete = (req, res) => {
     })
 };
 
-
-
 // Delete all Articles from the database.
 exports.deleteAll = (req, res) => {
   Article.destroy({
@@ -205,4 +236,6 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
+
+
 

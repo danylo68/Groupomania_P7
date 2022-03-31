@@ -27,7 +27,6 @@ app.use((req, res, next) => {
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 app.use('/', express.static(path.join(__dirname, 'ressources')));
 //::::::::::::::::::::::::::  ATTENTION  :::::::::::::::::::::::::::::::
@@ -42,7 +41,6 @@ app.use('/', express.static(path.join(__dirname, 'ressources')));
 // });
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// simple route
 app.get("/", (req, res) => {
   res.json({ message: "Grouomania Project." });
 });
@@ -53,7 +51,6 @@ require('./app/routes/article.routes')(app);
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 
-// set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
@@ -70,6 +67,4 @@ function initial() {
     name: "admin"
   });
 
-
-  // initial()
-}
+};

@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("../models");
-const Op = db.Sequelize.Op;
-const Article = db.article;
+// const Op = db.Sequelize.Op;
 const Comment = db.comment;
 const User = db.user;
 const jwt = require("jsonwebtoken");
@@ -57,13 +56,14 @@ exports.findAll = (req, res) => {
 
 // // Find a single comment with an id ::::::::::::::::::::::::::::::::::::::::
 exports.findOne = (req, res) => {
-    const comment_id = req.query.comment_id;
-    Comment.findByPk(comment_id, {
+    const comment_id = req.param.id;
+    return Comment.findByPk(comment_id, {
+        // where: { comment_id: comment_id },
         include: [
-            {
-                model: User,
-                attributes: ["user_id", "username"],
-            },
+            // {
+            //     model: User,
+            //     attributes: ["user_id", "username"],
+            // },
         ],
     })
         .then((comments) => {
@@ -82,9 +82,16 @@ exports.findOne = (req, res) => {
 
 exports.update = async (req, res) => {
     const comment_id = req.params.id;
+    const token = req.headers['x-access-token'];
+    const decoded = await jwt.decode(token);
 
-    Comment.update(req.body, {
-        where: { id: comment_id },
+    const comment = {
+        content: req.body.content,
+        user_id: decoded.id,
+    }
+
+    Comment.update(comment, {
+        where: { comment_id: comment_id },
     })
         .then((num) => {
             if (num == 1) {
@@ -106,7 +113,6 @@ exports.update = async (req, res) => {
 
 // Delete a comment with the specified id in the request :::::::::::::::::::::::::::::
 exports.delete = (req, res) => {
-
     const token = req.headers['x-access-token'];
     const decoded = jwt.decode(token);
     const comment_id = req.params.id;
@@ -121,7 +127,7 @@ exports.delete = (req, res) => {
                     }
                 }
                 Comment.findByPk(req.params.id)
-                    .then((article) => {
+                    .then((comment) => {
                         if (!comment) {
                             console.log("Comment not found!");
                             return null;
