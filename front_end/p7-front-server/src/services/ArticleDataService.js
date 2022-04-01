@@ -20,8 +20,8 @@ class ArticleDataService {
         return axios.post(`${baseUrl}/articles/`, data, { headers: authHeader() });
     }
 
-    update(id, formData) {
-        return axios.put(`${baseUrl}/articles/${id}`, formData, { headers: authHeader() });
+    update(id, data) {
+        return axios.put(`${baseUrl}/articles/${id}`, data, { headers: authHeader() });
     }
 
     delete(id) {

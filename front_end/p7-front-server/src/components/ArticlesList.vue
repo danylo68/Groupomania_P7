@@ -163,7 +163,7 @@ font-size: 12px;
      <b-modal 
      ref="modalArticle" 
     title="Modifier Article">
-      <b-form v-on:submit.prevent="modifyArticle()">
+      <b-form v-on:submit.prevent="modifyArticle">
       
         <b-form-group
         id="input-group-1"       
@@ -190,17 +190,17 @@ font-size: 12px;
           
          <b-form-group id="input-group-3" 
          label-for="input-image">     
-          <b-form-input
+          <b-form-file
             id="input-image"
             v-model="article.image"
-            type="text"
+            type="String"
             accept="image/*" 
             enctype="multipart/form-data"
             name="imagesArray"
             @change="onChange"
             placeholder="file"
             required
-          ></b-form-input></b-form-group>
+          ></b-form-file></b-form-group>
  
         <b-button type="submit" value="Submit" variant="primary" size="sm">Envoyer Modification</b-button>
       </b-form> 
@@ -226,10 +226,13 @@ const apiUrl = 'http://localhost:3000/api'
 export default {
   name: 'articles-list',
 
-  // props: {
-  //   article: {
-  //   }
-  // },
+  props: {
+  
+   formData: {
+                type: String,
+                default: () => [],
+            },
+  },
   
   components: {
     AddArticle,
@@ -245,16 +248,18 @@ export default {
     description:"",
     image: "",
     },
+    file: null,
     
-    
-    type: [Number,Array, String, Object],
+
+
+     
      article: {
       id: null,
       title: "",       
-      image: String,   
+      image: null,   
       description: "",    
       published: false,
-      imagesArray: null,
+      imagesArray: "",
       user_id:"",
     },  
       profile: "",  
@@ -319,7 +324,7 @@ export default {
         },
     
     // ::::::::::: Update Article_Modal ready for Agile Method  ::::::::::::::
-    modifyArticle (){ 
+    modifyArticle () { 
     const formData = new FormData();
 
   formData.append('title', this.article.title)

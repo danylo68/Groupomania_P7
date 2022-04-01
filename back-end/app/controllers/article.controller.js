@@ -97,13 +97,15 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);
+
   const article_id = req.params.id;
 
-  // const imageFile = `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`;
+  let imageFile = `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`;
+
   const articleUpdate = await ({
     title: req.body.title,
     description: req.body.description,
-    image: `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`,
+    image: imageFile,
     user_id: decoded.id
   })
   // const articleUpdate = await req.file ? {
@@ -114,7 +116,7 @@ exports.update = async (req, res) => {
   //   descrition: req.body.descrition,
   // }
   console.log(articleUpdate)
-  console.log('articleUpdate')
+  console.log('ttttttt')
 
   User.findByPk(decoded.id)
     .then((user) => {
@@ -133,12 +135,12 @@ exports.update = async (req, res) => {
             }
             if (article.user_id === decoded.id || currentUserRole === "admin") {
 
-              Article.update(
+
+              Article.update(articleUpdate,
                 {
                   where: { article_id: article_id },
                 })
-              console.log(article)
-              console.log('article')
+
                 .then((num) => {
                   if (num == 1) {
                     res.send({
