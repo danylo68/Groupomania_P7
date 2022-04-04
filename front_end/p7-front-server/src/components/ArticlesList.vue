@@ -217,23 +217,12 @@ import AddArticle from '../components/AddArticle.vue'
 import CommentsList from '../components/CommentsList.vue'
 import axios from 'axios'
 import authHeader from '../services/auth-header.js'
-
 // const apiUrl = 'http://192.168.1.26:3000/api'
 const apiUrl = 'http://localhost:3000/api'
-
-
 
 export default {
   name: 'articles-list',
 
-  props: {
-  
-   formData: {
-                type: String,
-                default: () => [],
-            },
-  },
-  
   components: {
     AddArticle,
     CommentsList,
@@ -241,25 +230,29 @@ export default {
 
   data () {
     return {
-    formArticle_title:"",
-    formArticle_description:"",
+    // formArticle_title:"",
+    // formArticle_description:"",
     form:{
     title:"",
     description:"",
     image: "",
+     file: {
+     type: String,
+     default: () => []
+     },
+     formData: {
+                type: String,
+                default: () => [],
+            },
     },
-    file: null,
-    
-
-
-     
+   
      article: {
       id: null,
       title: "",       
-      image: null,   
+      image: String,   
       description: "",    
       published: false,
-      imagesArray: "",
+      imagesArray: null,
       user_id:"",
     },  
       profile: "",  
@@ -267,7 +260,7 @@ export default {
       actualArticle:"",
       articles:"",
       formComment: "",  
-      formArticle:"",
+      // formArticle:"",
       comment: "",
       user:"",
       index:"",
@@ -275,7 +268,7 @@ export default {
       myModal: "",
       modalArticle:"",
       button:"",
-      fileUpload: "",
+      // fileUpload: "",
     }
   },
   
@@ -330,11 +323,8 @@ export default {
   formData.append('title', this.article.title)
   formData.append('description', this.article.description)
   formData.append('image', this.imagesArray)
-
- console.log(this.imagesArray)
      
     const article_id = this.article.article_id
-      console.log(article_id);
       
      ArticleDataService.update(article_id, formData)
         .then(response => {

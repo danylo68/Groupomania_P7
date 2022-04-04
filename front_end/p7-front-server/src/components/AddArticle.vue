@@ -160,7 +160,7 @@ import ArticleDataService from "../services/ArticleDataService";
   formData.append('image', this.imagesArray)
   formData.append('title', this.article.title)
   formData.append('description', this.article.description)
-  console.log(this.imagesArray)
+  
 
       ArticleDataService.create(formData)
         .then(response => {
