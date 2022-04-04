@@ -13,6 +13,7 @@ global.__basedir = __dirname;
 // initRoutes(app);
 const corsOptions = {
   origin: "http://localhost:8081",
+
   // ::::::: Adresse Cors pour VM box :::::::
   // origin: "http://192.168.1.26:8081",
 };
@@ -32,7 +33,6 @@ app.use('/', express.static(path.join(__dirname, 'ressources')));
 //::::::::::::::::::::::::::  ATTENTION  :::::::::::::::::::::::::::::::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //force: true will drop the table if it already exists   ::::::::::::::
-
 // db.sequelize.sync();
 
 // db.sequelize.sync({ force: true }).then(() => {
@@ -64,6 +64,11 @@ function initial() {
 
   Role.create({
     role_id: 2,
+    name: "moderator"
+  });
+
+  Role.create({
+    id: 3,
     name: "admin"
   });
 

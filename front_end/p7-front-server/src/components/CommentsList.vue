@@ -33,7 +33,8 @@ margin-bottom: 3rem;
           :key="comment.id">
           
           <b-card-header>
-        
+        <b-icon icon="chat-right-text" aria-hidden="true"></b-icon>
+
           </b-card-header>  
           
           
@@ -46,10 +47,12 @@ margin-bottom: 3rem;
           <p> comment id {{ comment.comment_id }}
           / article id: {{ comment.article_id }}</p>
           
+          
+<!--           
       <b-button pill variant="outline-danger" size="sm"
       @click="deleteComment(comment.comment_id)" >
     <b-icon icon="trash" aria-hidden="true"></b-icon>
-    </b-button>
+    </b-button> -->
          </b-card-footer>
          
       </b-card>
@@ -145,8 +148,6 @@ export default {
   
   mounted () {
     this.retrieveComments()
-     console.log('COMMENTS')
-    console.log(this.article_id)
   }
 }
 

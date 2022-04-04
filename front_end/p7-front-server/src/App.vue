@@ -2,9 +2,7 @@
 
 #app
 {
-/* background-color:#bcc1ca9c; */
 background-color:#f0f3ee;
-
 /* @font-face {
     font-family: 'aileronregular';
     src: url('aileron-regular-webfont.eot');
@@ -12,9 +10,7 @@ background-color:#f0f3ee;
          url('aileron-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 } */
-
 }
 
 .content-vue
@@ -45,8 +41,6 @@ img
 width: 8rem;
 height: 7rem;
 }
-
-
 </style>
 
 
@@ -72,18 +66,15 @@ height: 7rem;
      <b-navbar-nav>
      
       </b-navbar-nav>
-    
-     
+      
   <b-navbar-nav class="ml-auto">
     <b-navbar-nav>
     
    <b-nav-item class="nav-item">
           <router-link to="/articles" class="nav-link">Articles</router-link>
-        </b-nav-item> 
-        
+        </b-nav-item>  
       
         </b-navbar-nav>
-
   
         <b-nav-item v-if="showAdminBoard">
           <router-link to="/admin" class="nav-link">Admin Board</router-link>

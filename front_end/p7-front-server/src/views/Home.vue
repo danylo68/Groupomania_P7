@@ -1,18 +1,5 @@
 
 <style scoped>
-.post-container{
-background-color: rgb(218, 216, 210);
-margin-top: 1em;
-height: 100%;
-display: flex;
-justify-content: center;
-}
-/* .head-img
-{
-border-radius: 25px;
-display: flex;
-} */
-
 .contain-cards
 {
 background-color: rgb(236, 235, 232);

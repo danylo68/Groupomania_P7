@@ -3,13 +3,10 @@ const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
 const Op = db.Sequelize.Op;
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
 exports.signup = (req, res) => {
-  // Save User to Database
   User.create({
     username: req.body.username,
     email: req.body.email,
@@ -40,8 +37,6 @@ exports.signup = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
-
-
 
 exports.signin = (req, res) => {
   User.findOne({

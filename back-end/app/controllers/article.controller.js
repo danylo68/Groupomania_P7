@@ -6,25 +6,15 @@ const Op = db.Sequelize.Op;
 const Article = db.article;
 const User = db.user;
 const jwt = require("jsonwebtoken");
-const multer = require('multer')
-const fileUpload = require('express-fileupload');
-const fs = require("fs")
-
-
-
-
+// const multer = require('multer')
+// const fileUpload = require('express-fileupload');
+// const fs = require("fs")
 
 // Create and Save a new Article  ::::::::::::::::::::::::::::
 exports.create = (req, res) => {
 
   const token = req.headers['x-access-token'];
   const decoded = jwt.decode(token);
-
-
-  // let imageFile;
-  // imageFile = `${req.protocol}://${req.get('host')}/static/assets/uploads/${req.file.filename}`;
-
-  // console.log(imageFile);
 
   const article = {
     title: req.body.title,
@@ -44,7 +34,6 @@ exports.create = (req, res) => {
       });
     });
 };
-
 // ::::::::::   Retrieve all Articles from the database  :::::::::::::::::::::::::::::::::::
 exports.findAll = (req, res) => {
   const title = req.query.title;
@@ -92,7 +81,6 @@ exports.findOne = (req, res) => {
       }
     });
 };
-
 // :::::::::::::::: Update Article  :::::::::::::::::::::::::::::::::::::::::::::
 exports.update = async (req, res) => {
   const token = req.headers['x-access-token'];
@@ -108,22 +96,13 @@ exports.update = async (req, res) => {
     image: imageFile,
     user_id: decoded.id
   })
-  // const articleUpdate = await req.file ? {
-  //   ...req.body,
-  //   image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-  // } : {
-  //   title: req.body.title,
-  //   descrition: req.body.descrition,
-  // }
-  console.log(articleUpdate)
-  console.log('ttttttt')
 
   User.findByPk(decoded.id)
     .then((user) => {
       let currentUserRole = null;
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
+          if (roles[i].name === "moderator") {
             currentUserRole = roles[i].name
           }
         }
@@ -133,8 +112,7 @@ exports.update = async (req, res) => {
               console.log("Article not found!");
               return null;
             }
-            if (article.user_id === decoded.id || currentUserRole === "admin") {
-
+            if (article.user_id === decoded.id || currentUserRole === "moderator") {
 
               Article.update(articleUpdate,
                 {
@@ -168,8 +146,6 @@ exports.update = async (req, res) => {
       });
     })
 };
-
-
 //:::::::::::   Delete an Article with id :::::::::::::
 exports.delete = (req, res) => {
   const token = req.headers['x-access-token'];
@@ -181,7 +157,7 @@ exports.delete = (req, res) => {
       let currentUserRole = null;
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
+          if (roles[i].name === "moderator") {
             currentUserRole = roles[i].name
           }
         }
@@ -191,7 +167,7 @@ exports.delete = (req, res) => {
               console.log("Article not found!");
               return null;
             }
-            if (article.user_id === decoded.id || currentUserRole === "admin") {
+            if (article.user_id === decoded.id || currentUserRole === "moderator") {
               Article.destroy({
                 where: { article_id: article_id },
               })

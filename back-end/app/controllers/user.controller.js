@@ -3,8 +3,6 @@ const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
 
-
-
 exports.allAccess = async (req, res) => {
   res.status(200).send("Public Content.");
 };
@@ -13,8 +11,12 @@ exports.userBoard = async (req, res) => {
   res.status(200).send("User Content.");
 };
 
-exports.adminBoard = async (req, res) => {
+exports.adminBoard = (req, res) => {
   res.status(200).send("Admin Content.");
+};
+
+exports.moderatorBoard = async (req, res) => {
+  res.status(200).send("Moderator Content.");
 };
 
 exports.userDelete = async (req, res) => {

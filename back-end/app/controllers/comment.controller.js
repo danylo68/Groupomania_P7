@@ -1,11 +1,8 @@
 const express = require("express");
-const app = express();
 const db = require("../models");
-// const Op = db.Sequelize.Op;
 const Comment = db.comment;
 const User = db.user;
 const jwt = require("jsonwebtoken");
-
 
 // Create and Save a new comment :::::::::::::::::::::::::::::::::
 exports.create = async (req, res) => {
@@ -77,9 +74,7 @@ exports.findOne = (req, res) => {
             }
         });
 };
-
 // // Update a comment by the id in the request   ::::::::::::::::::::::::::::
-
 exports.update = async (req, res) => {
     const comment_id = req.params.id;
     const token = req.headers['x-access-token'];
@@ -122,7 +117,7 @@ exports.delete = (req, res) => {
             let currentUserRole = null;
             user.getRoles().then(roles => {
                 for (let i = 0; i < roles.length; i++) {
-                    if (roles[i].name === "admin") {
+                    if (roles[i].name === "moderator") {
                         currentUserRole = roles[i].name
                     }
                 }
@@ -132,7 +127,7 @@ exports.delete = (req, res) => {
                             console.log("Comment not found!");
                             return null;
                         }
-                        if (comment.user_id === decoded.id || currentUserRole === "admin") {
+                        if (comment.user_id === decoded.id || currentUserRole === "moderator") {
                             Comment.destroy({
                                 where: { commment_id: comment_id },
                             })

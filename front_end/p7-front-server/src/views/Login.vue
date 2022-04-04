@@ -1,27 +1,12 @@
 <style scoped>
 
-/* label {
-  display: block;
-  margin-top: 10px;
-} */
-
- .btn{
-display: flex;
-justify-content: center;
-align-content: center;
-margin-top: 21px;
-
-}
-
 .card-container.card {
 /* z-index: 10; */
    top: 15em;
   max-width: 373px !important;
   padding: 35px 35px;
  opacity: 0.9;
-
 }
-
 .card {
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
@@ -35,7 +20,6 @@ margin-top: 21px;
   box-shadow: 0px 13px 34px rgba(0, 0, 0, 0.3);
 }
 
-
 .jumbo-head
 {
 position:fixed;
@@ -43,15 +27,11 @@ left:0;
 right:0;
 top:0;
 bottom:0;
-
 }
 .login-block
 {
 height: 670px;
-
-
 }
-
 
 </style>
 
@@ -59,15 +39,12 @@ height: 670px;
 
 <template>
   <div class="col-md-12">
-  
-
  <b-container class="login-block">
   
   <b-container-fluid class="jumbo-head">
   <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
   
    style="background-image: url(https://picsum.photos/1750/400/?image=1033);">
- 
     
   </b-jumbotron>
 </b-container-fluid>
@@ -121,8 +98,6 @@ height: 670px;
         </div>
       </form>
     </b-container>
-    
-    
     
     </b-container>
   </div>

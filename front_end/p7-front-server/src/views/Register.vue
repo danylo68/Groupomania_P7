@@ -26,7 +26,6 @@ opacity: 0.9;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
   /* opacity: 0.8; */
-
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 18px;

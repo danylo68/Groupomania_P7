@@ -2,17 +2,35 @@
 <style scoped>
  .profile-container{
  width: 50%;
- margin-top: 10rem;
- border-radius: 18px;
-/* box-shadow: 3px 3px 3px 0px; */
-
+ margin-top: 4rem;
+ margin-bottom: 4rem;
  } 
- .card-profile
+ .group_profile
 {
-border-radius: 18px;
 width: 100%;
+border-radius: 18px;
+box-shadow: 0px 13px
+34px rgb(0 0 0 / 30%); 
+border: none;
+}
+
+.card 
+{
+border: aliceblue;
+border-radius: 18px;
 
 }
+.card-header
+{
+border: aliceblue;
+border-radius: 18px;
+}
+.card-footer
+{
+border: aliceblue;
+border-radius: 18px;
+}
+
  .jumbo-head {
 /* position:absolute; */
 max-width: 100%;
@@ -38,10 +56,10 @@ bottom:0;
 </b-container>
 <div class="col-md-12">
   <b-container class="profile-container">
-  
    
-    <b-card-group deck class="card-profile">
-      <b-card border-variant="dark" header="Votre Profile:" align="center">
+    <b-card-group class="group_profile">
+    
+      <b-card class="card-header" border-variant="dark" rounded header="Votre Profile:" align="center">
        <h3>
         <strong>{{currentUser.username}}</strong>
       </h3>
@@ -64,7 +82,7 @@ bottom:0;
     
       <p v-for="(role,index) in currentUser.roles" :key="index">{{role}}</p>
     
-        <b-card-footer>
+        <b-card-footer class="card-footer">
         <p>Supprimer le Profile</p>
         <span>
           <b-button pill variant="outline-danger" size="sm" @click="deleteUser(currentUser.id)">

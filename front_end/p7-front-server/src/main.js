@@ -27,8 +27,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
-
-
 Vue.config.productionTip = false;
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)

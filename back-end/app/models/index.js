@@ -1,5 +1,4 @@
 const dbConfig = require("../config/db.config.js");
-
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -49,6 +48,6 @@ db.comment.belongsTo(db.user, { foreignKey: "user_id" });
 // liaison Article_Comment  ::::::::::::::::::::
 db.comment.belongsTo(db.article, { foreignKey: 'article_id' });
 
-db.ROLES = ["user", "admin"];
+db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;

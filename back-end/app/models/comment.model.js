@@ -9,7 +9,6 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true
         },
 
-
         content: {
             type: Sequelize.STRING(255),
             allowNull: false

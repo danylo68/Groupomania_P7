@@ -3,12 +3,10 @@
 { 
 height: 60%;
 margin-top: 16rem;
-/* background-color: #bcc1ca9c; */
 max-width: 1250px;
 }
 .list-group-item {
   background-color: white;
-  /* position: relative; */
   display: flex;
   flex-direction:column;
   padding: 0px;
@@ -21,6 +19,15 @@ max-width: 1250px;
 .content_img
 {
 height: 20%;
+}
+.btn-article
+{
+display: flex;
+    width: 7em;
+   
+    justify-content: space-between;
+
+
 }
 
 .footer-card {
@@ -69,13 +76,12 @@ font-size: 12px;
   <b-container fluid="lg" class="jumbo-head" >
   <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
    style="background-image: url(https://picsum.photos/1750/400/?image=532);">
-  <!-- <b-img src="https://picsum.photos/1024/400/?image=1033" fluid alt="Responsive image"></b-img> -->
+
   </b-jumbotron>
   </b-container> 
-      <!-- <b-container class="bv-example-row bv-example-row-flex-cols"> -->
+   
       <b-row  id="listArticles-container"  align-v="center" class="mx-auto  mx-md">
-      <!-- <b-col md="4" class="rounded"> 
-        </b-col> --> 
+     
        <b-col align-self="center" md="8" offset-md="2" mt>   
 
         <b-container class="nav-post" border="shadow">
@@ -119,8 +125,9 @@ font-size: 12px;
                   <b-icon icon="chat-right-text" aria-hidden="true"></b-icon>
                   Commentaire
                 </b-button>
-        </div>      
-          <div>
+        </div>  
+        
+          <div class="btn-article">
            <b-button pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)">
             
               <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
@@ -211,14 +218,11 @@ font-size: 12px;
 </template>
 
 <script>
-
+import CommentDataService from '../services/CommentDataService'
 import ArticleDataService from '../services/ArticleDataService'
 import AddArticle from '../components/AddArticle.vue'
 import CommentsList from '../components/CommentsList.vue'
-import axios from 'axios'
-import authHeader from '../services/auth-header.js'
-// const apiUrl = 'http://192.168.1.26:3000/api'
-const apiUrl = 'http://localhost:3000/api'
+
 
 export default {
   name: 'articles-list',
@@ -230,8 +234,6 @@ export default {
 
   data () {
     return {
-    // formArticle_title:"",
-    // formArticle_description:"",
     form:{
     title:"",
     description:"",
@@ -245,8 +247,7 @@ export default {
                 default: () => [],
             },
     },
-   
-     article: {
+   article: {
       id: null,
       title: "",       
       image: String,   
@@ -255,12 +256,11 @@ export default {
       imagesArray: null,
       user_id:"",
     },  
-      profile: "",  
+   profile: "",  
       article_id:"",
       actualArticle:"",
       articles:"",
       formComment: "",  
-      // formArticle:"",
       comment: "",
       user:"",
       index:"",
@@ -268,7 +268,6 @@ export default {
       myModal: "",
       modalArticle:"",
       button:"",
-      // fileUpload: "",
     }
   },
   
@@ -278,7 +277,6 @@ export default {
     .then(response => {
     this.articles = response.data  
     this.image = response.data
-    console.log(this.articles)
 
         })
     .catch(e => {
@@ -323,8 +321,11 @@ export default {
   formData.append('title', this.article.title)
   formData.append('description', this.article.description)
   formData.append('image', this.imagesArray)
+
+ console.log(this.imagesArray)
      
     const article_id = this.article.article_id
+      console.log(article_id);
       
      ArticleDataService.update(article_id, formData)
         .then(response => {
@@ -358,11 +359,9 @@ export default {
         content: this.formComment,
         article_id: this.actualArticle
       }
-      console.log(data)
-    axios.post(`${apiUrl}/comments/:article_id`, data,  { headers: authHeader() })
+    CommentDataService.create(data)
         .then(response => {
           this.comment = response.data.id
-          console.log(response.data)
           this.submitted = true
           this.$refs['myModal'].hide()
           

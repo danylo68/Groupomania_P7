@@ -4,10 +4,8 @@ const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.user;
 
-
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
-
   if (!token) {
     return res.status(403).send({
       message: "Token Manquant!"
@@ -32,7 +30,6 @@ verifyToken = (req, res, next) => {
   });
 };
 
-
 isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
@@ -42,44 +39,29 @@ isAdmin = (req, res, next) => {
           return;
         }
       }
-
-      isModerator = (req, res, next) => {
-        User.findByPk(req.userId).then((user) => {
-          user.getRoles().then((roles) => {
-            for (let i = 0; i < roles.length; i++) {
-              if (roles[i].name === 'moderator') {
-                next();
-                return;
-              }
-            }
-
-            res.status(403).json({
-              message: 'Require Moderator Role!'
-            });
-          });
-        });
-      };
-
-
-
-
-
-
-
-
-
-
-
-
-
       res.status(403).send({
-        message: "Require Admin Role!"
+        message: "Role Administrateur Recquis!"
       });
       return;
     });
   });
 };
 
+isModerator = (req, res, next) => {
+  User.findByPk(req.userId).then((user) => {
+    user.getRoles().then((roles) => {
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === 'moderator') {
+          next();
+          return;
+        }
+      }
+      res.status(403).json({
+        message: 'Role Moderateur Requis!'
+      });
+    });
+  });
+};
 
 isModeratorOrAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
@@ -89,14 +71,13 @@ isModeratorOrAdmin = (req, res, next) => {
           next();
           return;
         }
-
         if (roles[i].name === "admin") {
           next();
           return;
         }
       }
       res.status(403).send({
-        message: "Require Admin Role!"
+        message: "Role Administrateur Recquis!"
       });
     });
   });
@@ -105,6 +86,7 @@ isModeratorOrAdmin = (req, res, next) => {
 const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
+  isModerator: isModerator,
   isModeratorOrAdmin: isModeratorOrAdmin
 };
 module.exports = authJwt;
