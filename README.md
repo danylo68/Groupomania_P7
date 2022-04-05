@@ -15,10 +15,10 @@
 ## Folder Groupomania_P7
 
 1 Back-end:
-- NodeJS, Mysql, Express, Sequelize.
+- NodeJS, Mysql, Express.
 
 2 Front-end:
-- VueJS, Axios, BootstrappVue.
+- VueJS, BootstrappVue.
 
 ## Installation back-end
 -  folder: back-end 
