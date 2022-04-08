@@ -18,8 +18,7 @@
 - NodeJS, Mysql, Express.
 
 2 Front-end:
-
-- VueJS.
+- VueJS (p7-front-server)
 
 ## Installation back-end
 -  folder: back-end 
