@@ -18,26 +18,29 @@
 - NodeJS, Mysql, Express.
 
 2 Front-end:
-- VueJS, BootstrappVue.
+
+- VueJS.
 
 ## Installation back-end
 -  folder: back-end 
 -  Port 3000
--  npm install ou yarn
+-  npm install
+-  nodemon server
 
 ## Installation 
 -  folder: front_end
 -  folder projet vue: p7-front-server
 - port 8081
--  npm install ou yarn
+-  npm install 
+-  npm run server ou yarn serve
 
 ## Fonction:
 - Sign-up, création de profils.
 - Log-in, enregistrement de profils.
 - Delete-account, supression de profils
-- Ajout, Suppression et affichages des Posts.
+- Ajout, Suppression, Modification et affichages des Posts.
 - Ajout de commentaires par d'autre Users.
-- Accès Role User et Admin.
+- Profil User et Moderateur.
 
 ## Pré-requis:
 - la présentation des fonctionnalités doit être simple ;
