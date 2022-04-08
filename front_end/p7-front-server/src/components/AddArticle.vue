@@ -2,7 +2,6 @@
 
 .form-control
 {
-
 width: 300px;
 }
 
@@ -12,10 +11,9 @@ display: flex;
 justify-content: center;
 margin-right: 0rem;
 margin-bottom: 1rem;
-    margin-top: 1rem;
-
+margin-top: 1rem;
 }
-b-form-input
+.b-form-input
 {
 border-radius: 10px ;
 }
@@ -30,9 +28,7 @@ height: 6rem;
 
 <template>
  <div class="col-md-8"> 
-
-    <div v-if="!submitted">
-    
+    <div v-if="!submitted"> 
       <b-input-group class="form-group p-3">  
       
        <b-input-group-prepend  is-text>
@@ -47,6 +43,8 @@ height: 6rem;
           required
           v-model="article.title"
           name="title"
+          aria-label="post-title"
+
         ></b-form-input>
       </b-input-group>
       
@@ -64,7 +62,9 @@ height: 6rem;
           placeholder="Description"
           required
           v-model="article.description"
-          name="description"
+          name="description"   
+         aria-label="post-description"
+
         ></b-form-input>
       </b-input-group>
       
@@ -74,35 +74,32 @@ height: 6rem;
     </b-input-group-prepend>
     
       <b-form-file
-      placeholder="Upload your file"
+      placeholder="Upload your Photo"
       class="form-control"
       ref="article_image"
       type="file"
       accept="image/*"
-      name="imagesArray" 
+      name="imagesArray"
+     
       @change="onChange" ></b-form-file>
       <!-- <div id="preview"> -->
    
    <b-input-group-append>
-     <b-button @click="saveArticle" variant="success"  p-3>Submit </b-button>
+     <b-button aria-label="post-artcle" type="Submit"
+ @click="saveArticle" variant="success" p-3>Submit </b-button>
    </b-input-group-append>
- 
 </b-input-group>
     </div>
 
    <b-form class="add-succes" v-else>
       <h4>You submitted successfully!</h4>
-      <button p-3 class="btn btn-success" @click="newArticle">Add</button>
+      <button aria-label="new-artcle" type="button" p-3 class="btn btn-success" @click="newArticle">Add</button>
     </b-form>
-   
-    
   </div>
-  
 </template>
 
+
 <script>
-
-
 
 import ArticleDataService from "../services/ArticleDataService";
 
@@ -111,6 +108,7 @@ import ArticleDataService from "../services/ArticleDataService";
   
   data() {
     return {
+    articles:"",
     submitted: false,
     article: {
       id: null,
@@ -125,6 +123,27 @@ import ArticleDataService from "../services/ArticleDataService";
   },
   
   methods: {
+  
+    retrieveArticles () {
+    ArticleDataService.getAll()
+    .then(response => {
+    this.articles = response.data  
+    this.image = response.data
+
+        })
+    .catch(e => {
+    console.log(e)
+        })
+    },
+
+    refreshList () {
+      this.retrieveArticles()
+      this.currentArticle = null
+      this.currentIndex = -1
+    },
+  
+  
+  
       onChange (event) {
         this.imagesArray = event.target.files[0]
       },
@@ -144,7 +163,8 @@ import ArticleDataService from "../services/ArticleDataService";
         console.log(response)
         this.article = response.data.id
         this.submitted = true;
-      
+       this.refreshList()
+
         })
         .catch(e => {
         console.log(e);
@@ -158,5 +178,6 @@ import ArticleDataService from "../services/ArticleDataService";
     }
   }
   };
+  
 </script>
 

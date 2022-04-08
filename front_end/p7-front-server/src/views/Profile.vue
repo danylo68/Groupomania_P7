@@ -1,7 +1,7 @@
 
 <style scoped>
  .profile-container{
- width: 50%;
+ max-width: 50rem;
  margin-top: 4rem;
  margin-bottom: 4rem;
  } 
@@ -32,7 +32,6 @@ border-radius: 18px;
 }
 
  .jumbo-head {
-/* position:absolute; */
 max-width: 100%;
 background-position: center center;
 background-repeat: no-repeat;
@@ -47,14 +46,15 @@ bottom:0;
 </style>
 
 <template>
-<div class="mt-0">
-<b-container fluid="lg" class="jumbo-head">
-  <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
+<div cols="12" class="mt-0">
+<div fluid class="jumbo-head">
+  <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow" lead="Social App" alt="Fluid"
    style="background-image: url(https://picsum.photos/1750/400/?image=180);">
-  
   </b-jumbotron>
-</b-container>
-<div class="col-md-12">
+</div>
+
+  <b-col align-self="center" md="8" offset-md="2" mt>   
+
   <b-container class="profile-container">
    
     <b-card-group class="group_profile">
@@ -85,17 +85,16 @@ bottom:0;
         <b-card-footer class="card-footer">
         <p>Supprimer le Profile</p>
         <span>
-          <b-button pill variant="outline-danger" size="sm" @click="deleteUser(currentUser.id)">
+          <b-button aria-label="delete user" pill variant="outline-danger" size="sm" @click="deleteUser(currentUser.id)">
                  <b-icon icon="trash" aria-hidden="true"></b-icon>
                </b-button>
         </span>
         </b-card-footer>
       </b-card>
-  </b-card-group>
-  
-    
+  </b-card-group>  
   </b-container>
-  </div>
+  </b-col>
+  
   </div>
 </template>
 
@@ -122,7 +121,6 @@ export default {
       profile: "", 
       user_id: "",
       user: "",
-      //  userId: localStorage.getItem('user_id'),
        token: "",
     }
   }, 
@@ -131,11 +129,7 @@ export default {
     deleteUser(id) {
     const user = JSON.parse(localStorage.getItem('user'));
     const user_id = id;
-    console.log(user)
-    console.log(user_id) 
-
         axios.delete(`${apiUrl}/${user_id}`,config)
-        
         .then(response => 
         { 
         alert('user supprimé');
@@ -149,10 +143,6 @@ export default {
         console.log(e);
         })    
     }
-    
-    // },
- 
- 
  }, 
   mounted() {
     if (!this.currentUser) {

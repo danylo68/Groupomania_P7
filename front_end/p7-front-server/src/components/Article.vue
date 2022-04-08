@@ -31,8 +31,6 @@
       
     </form>
     
-  
-
     <button class="badge badge-primary mr-2"
       v-if="currentArticle.published"
       @click="updatePublished(false)">

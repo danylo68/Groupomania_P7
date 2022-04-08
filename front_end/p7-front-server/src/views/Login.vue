@@ -27,10 +27,13 @@ left:0;
 right:0;
 top:0;
 bottom:0;
+
+
+
 }
 .login-block
 {
-height: 670px;
+height: 46rem;
 }
 
 </style>
@@ -41,13 +44,11 @@ height: 670px;
   <div class="col-md-12">
  <b-container class="login-block">
   
-  <b-container-fluid class="jumbo-head">
+  <div fluid class="jumbo-head">
   <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
-  
    style="background-image: url(https://picsum.photos/1750/400/?image=1033);">
-    
   </b-jumbotron>
-</b-container-fluid>
+</div>
 
     <b-container class="card card-container">
      <h4>Sign In</h4>

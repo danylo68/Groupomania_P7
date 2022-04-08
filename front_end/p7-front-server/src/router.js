@@ -19,35 +19,66 @@ export const router = new Router({
         // },
         {
             path: '/login',
-            component: Login
+            component: Login,
+            meta: {
+
+                title: 'Login'
+
+            }
         },
         {
             path: '/register',
-            component: Register
+            component: Register,
+            meta: {
+
+                title: 'Register'
+
+            }
         },
         {
             path: '/profile',
             name: 'profile',
             // lazy-loaded
-            component: () => import('./views/Profile.vue')
+            component: () => import('./views/Profile.vue'),
+            meta: {
+
+                title: 'profile'
+
+            }
         },
         {
             path: '/admin',
             name: 'admin',
             // lazy-loaded
-            component: () => import('./views/BoardAdmin.vue')
+            component: () => import('./views/BoardAdmin.vue'),
+            meta: {
+
+                title: 'admin'
+
+            }
+
         },
         {
             path: '/mod',
             name: 'moderator',
             // lazy-loaded
-            component: () => import('./views/BoardModerator.vue')
+            component: () => import('./views/BoardModerator.vue'),
+            meta: {
+
+                title: 'moderator'
+
+            }
         },
         {
             path: '/user',
             name: 'user',
             // lazy-loaded
-            component: () => import('./views/BoardUser.vue')
+            component: () => import('./views/BoardUser.vue'),
+            meta: {
+
+                title: 'user'
+
+            }
         },
 
         //////////////////// Article /////////////////////////
@@ -55,8 +86,9 @@ export const router = new Router({
             path: "/",
             alias: "/articles",
             name: "articles",
+            component: ArticlesList,
             meta: { requiresAuth: true }, // Meta Field , you can name it ,
-            component: ArticlesList
+
         },
         {
             path: "/articles/:id",
@@ -78,7 +110,12 @@ export const router = new Router({
         {
             path: "/comments/",
             name: "comment-details",
-            component: () => import("./components/Comment.vue")
+            component: () => import("./components/Comment.vue"),
+            meta: {
+
+                title: 'comments'
+
+            }
         },
 
     ]
@@ -90,7 +127,6 @@ router.beforeEach((to, from, next) => {
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
-    // trying to access a restricted page + not logged in
     // redirect to login page
     if (authRequired && !loggedIn) {
         next('/login');

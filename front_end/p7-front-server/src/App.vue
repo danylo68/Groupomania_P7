@@ -33,8 +33,12 @@ color: white!important
 }
 .footer-jumbo
 {
-opacity: 0.5;
-margin-top: 3rem;
+opacity: 1;
+margin-top: 4rem;
+
+bottom: 0;
+/* position: fixed; */
+
 }
 img
 {
@@ -47,7 +51,7 @@ height: 7rem;
 <template>
 
   <div id='app'>
-  
+  <header>
   <b-navbar class="Regular shadow" 
   id="nav1_top"
   fixed="top" 
@@ -56,7 +60,7 @@ height: 7rem;
   variant="dark"
   text-variant="white">
   
-    <b-navbar-brand href="#">Groupomania 
+    <b-navbar-brand>Groupomania 
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -64,28 +68,27 @@ height: 7rem;
     <b-collapse id="nav-collapse" is-nav>
     
      <b-navbar-nav>
-     
       </b-navbar-nav>
       
   <b-navbar-nav class="ml-auto">
     <b-navbar-nav>
     
-   <b-nav-item class="nav-item">
+       <b-nav-item class="nav-item">
           <router-link to="/articles" class="nav-link">Articles</router-link>
         </b-nav-item>  
       
         </b-navbar-nav>
   
         <b-nav-item v-if="showAdminBoard">
-          <router-link to="/admin" class="nav-link">Admin Board</router-link>
+          <!-- <router-link to="/admin" class="nav-link">Admin Board</router-link> -->
         </b-nav-item>
         
         <b-nav-item v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Moderator Board</router-link>
+          <!-- <router-link to="/mod" class="nav-link"></router-link> -->
         </b-nav-item>
         
         <b-nav-item>
-          <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
+          <!-- <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link> -->
         </b-nav-item> 
 
       <b-navbar-nav v-if="!currentUser" class="navbar-nav ml-auto">
@@ -116,32 +119,31 @@ height: 7rem;
           </a>
        </b-nav-item>
       </b-navbar-nav>
-
      </b-navbar-nav>
     </b-collapse>
   </b-navbar>
+  </header>
+  <main>
   
   <b-container class="content-vue" >
   
 <router-view />
 </b-container>
-
-
+</main>
+<footer>
 <div>
   <b-jumbotron class="footer-jumbo"
   bg-variant="dark"
   text-variant="dark"
-  style="background-image: url(https://picsum.photos/1750/400/?image=532); margin-bottom:0">
-   <p>Footer</p>
+  style="background-image: url(https://picsum.photos/1750/400/?image=431); margin-bottom:0">
   </b-jumbotron>
 </div>
-
+</footer>
 
   </div>
 </template>
 
 <script>
-
 
 export default {
 name: "app",

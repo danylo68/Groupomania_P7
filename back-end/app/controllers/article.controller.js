@@ -8,7 +8,7 @@ const User = db.user;
 const jwt = require("jsonwebtoken");
 // const multer = require('multer')
 // const fileUpload = require('express-fileupload');
-// const fs = require("fs")
+const fs = require("fs")
 
 // Create and Save a new Article  ::::::::::::::::::::::::::::
 exports.create = (req, res) => {
@@ -163,25 +163,44 @@ exports.delete = (req, res) => {
         }
         Article.findByPk(req.params.id)
           .then((article) => {
+
+
             if (!article) {
               console.log("Article not found!");
               return null;
             }
+
+
             if (article.user_id === decoded.id || currentUserRole === "moderator") {
               Article.destroy({
                 where: { article_id: article_id },
+
+
               })
-                .then((num) => {
+                .then((num, image) => {
+
+                  if (image) {
+                    fs.unlink(`/static/assets/uploads/${image}`, (err) => {
+                      if (err) {
+                        res.status(500).json({ message: err });
+                      }
+                    });
+                  }
                   if (num == 1) {
                     res.send({
                       message: "Article was deleted successfully!",
                     });
-                  } else {
+                  }
+
+
+                  else {
                     res.send({
                       message: `Cannot delete Article with id=${article_id}. Maybe Article was not found!`,
                     });
                   }
                 })
+
+
                 .catch((err) => {
                   res.status(500).send({
                     message: "Could not delete Article with id=" + article_id,
@@ -214,6 +233,4 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
-
-
 

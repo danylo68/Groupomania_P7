@@ -37,7 +37,6 @@ margin-bottom: 3rem;
 
           </b-card-header>  
           
-          
           <b-card-body>
           <h6>{{ comment.content }}</h6>
           </b-card-body>
@@ -46,7 +45,6 @@ margin-bottom: 3rem;
          
           <p> comment id {{ comment.comment_id }}
           / article id: {{ comment.article_id }}</p>
-          
           
 <!--           
       <b-button pill variant="outline-danger" size="sm"
@@ -107,7 +105,7 @@ export default {
         })
     },
 
-    refreshList () {
+    refreshListComments () {
       this.retrieveComments()
       this.currentComment = null
       this.currentIndex = -1
@@ -125,7 +123,7 @@ export default {
         .then(response => {
           console.log(response.data);
           this.$router.push({ name: "Comments" });
-          this.refreshList()
+          this.refreshListomments ()
         })
         .catch(e => {
           console.log(e);

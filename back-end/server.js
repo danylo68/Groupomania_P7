@@ -7,6 +7,7 @@ const Role = db.role;
 const path = require('path');
 const fs = require('fs');
 const config = require("./app/config/db.config.js");
+require('dotenv').config();
 // const initRoutes = require("./app/routes/web");
 
 global.__basedir = __dirname;

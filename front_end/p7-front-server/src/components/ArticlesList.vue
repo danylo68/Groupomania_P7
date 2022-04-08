@@ -12,22 +12,23 @@ max-width: 1250px;
   padding: 0px;
   margin-top: 30px;
   height: auto;
-  border-radius: 12px 12px 12px 12px;
+  border-radius: 18px;
   box-shadow: 2px 3px 10px 2px lightgrey;
   height: auto;
 }
-.content_img
+.content_body
 {
-height: 20%;
+height: 6rem;
+display: flex;
+justify-content:space-between;
+box-shadow: 2px 3px 10px 2px lightgrey;
+
 }
 .btn-article
 {
 display: flex;
     width: 7em;
-   
     justify-content: space-between;
-
-
 }
 
 .footer-card {
@@ -56,11 +57,29 @@ left:0;
 right:0;
 top:0; 
 bottom:0;
+
 }
+
+.jumbotron
+{
+
+color: black;
+
+}
+
+
+
 .article-comment
 {
 display: flex;
 flex-direction: column-reverse;
+}
+.card-header
+{
+display: flex;
+border-radius: 18px;
+justify-content: space-between;
+box-shadow: 2px,3px,3px,3px;
 }
 
 .articleId
@@ -72,18 +91,14 @@ font-size: 12px;
 
 <template>
   <div cols="12" > 
-  
-  <b-container fluid="lg" class="jumbo-head" >
-  <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
-   style="background-image: url(https://picsum.photos/1750/400/?image=532);">
-
+  <b-container fluid="lg" class="jumbo-head">
+  <b-jumbotron header="Groupomania" class="jumbotron text-black jumbotron-image shadow" lead="Social App" alt="Fluid"
+   style="background-image: url(https://picsum.photos/1750/400/?image=464);">
   </b-jumbotron>
   </b-container> 
-   
-      <b-row  id="listArticles-container"  align-v="center" class="mx-auto  mx-md">
-     
+  
+      <b-row  id="listArticles-container"  align-v="center" class="mx-auto  mx-md"> 
        <b-col align-self="center" md="8" offset-md="2" mt>   
-
         <b-container class="nav-post" border="shadow">
         <AddArticle></AddArticle> 
         </b-container>
@@ -91,49 +106,48 @@ font-size: 12px;
         <b-container class="article-comment" border="shadow">      
           <b-card
               class="list-group-item"
-              id="myCard"
+              id="myCard"  
               ref="myCard"
-              :img-src="article.image"  alt="Responsive image"
-
+              :img-src="article.image"
+              alt="display-image" 
+              type="image" rounded
               v-for="article in articles"
-              :key="article.id">
-              <b-card-header>
-              <h4>{{ article.title }}:</h4>
+              :key="article.id">        
+              
+              <b-card-header class="card-header">
+              <h4>{{ article.title }}</h4>
+             <p class="user-article">from: <b>{{ article.user.username }}</b></p>
+
               </b-card-header>
               
-              <b-card
+              <b-card-body
                 fluid
-                class="content_img"
-                img-top>      
+                class="content_body">      
                                      
                 <b-card-text>    
-                <h5> {{ article.description }}</h5>
-                  <!-- <p class="articleId">article Id: {{ article.article_id }}
-                  <p class="user-article">from: {{ article.user.username }} </p>
-
-                  </p> -->
+                <h5>{{ article.description }}</h5>
+             <!-- <p class="articleId">article Id: {{ article.article_id }}</p> -->
                 </b-card-text>
                 <p class="articleId">article Id: {{ article.article_id }}
                   </p>
 
-              </b-card>  
+              </b-card-body>  
               <!-- :::::::::::::  BTN MODAL  :::::::::::::::::: -->
               <b-card-footer class="footer-card">  
  
             <div>
-                <b-button  pill variant="light" size="sm" id="show-btn" @click="showModal(article.article_id)">
+                <b-button aria-label="ajout-comment" type="button" pill variant="light" size="sm" id="show-btn" @click="showModal(article.article_id)">
                   <b-icon icon="chat-right-text" aria-hidden="true"></b-icon>
                   Commentaire
                 </b-button>
         </div>  
         
           <div class="btn-article">
-           <b-button pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)">
-            
+           <b-button aria-label="update-artcle" type="button" pill variant="outline-secondary" size="sm" @click="modalUpdate(article.article_id)">  
               <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>              
                </b-button>
         
-                 <b-button pill variant="outline-danger" size="sm" @click.prevent="deleteArticle(article.article_id)">
+                 <b-button aria-label="supression-artcle" type="button" pill variant="outline-danger" size="sm" @click.prevent="deleteArticle(article.article_id)">
                  <b-icon icon="trash" aria-hidden="true"></b-icon>
                </b-button>
            </div>
@@ -155,13 +169,15 @@ font-size: 12px;
         label-for="input-comment">    
           <b-form-input
             id="input-comment"
+            name="input-comment"
+            aria-label="comment"
             v-model="formComment"
             type="text"
-            placeholder="Entrer vos commentaire"
+            placeholder="Entrer votre Commentaire"
             required
           ></b-form-input>
         </b-form-group>
-        <b-button type="submit" value="Submit" variant="primary" size="sm">Envoyer</b-button>
+        <b-button aria-label="add-comment" type="submit" value="Submit" variant="primary" size="sm">Envoyer</b-button>
         <!-- {{ article.article_id }} -->
       </b-form> 
     </b-modal>
@@ -178,6 +194,8 @@ font-size: 12px;
           <b-form-input
             id="input-title"
             v-model="article.title"
+            name="input-article-update"
+            aria-label="title"
             type="text"
             placeholder="Changer Titre"
             required
@@ -189,6 +207,8 @@ font-size: 12px;
           <b-form-input
             id="input-description"
             v-model="article.description"
+            name="input-article-update"
+            aria-label="description"
             type="text"
             placeholder="Changer Description"
        
@@ -199,17 +219,18 @@ font-size: 12px;
          label-for="input-image">     
           <b-form-file
             id="input-image"
-            v-model="article.image"
-            type="String"
+          ref="article_image"
+          aria-label="image"
+            type="file"
             accept="image/*" 
             enctype="multipart/form-data"
             name="imagesArray"
             @change="onChange"
-            placeholder="file"
+            placeholder="New Image"
             required
           ></b-form-file></b-form-group>
  
-        <b-button type="submit" value="Submit" variant="primary" size="sm">Envoyer Modification</b-button>
+        <b-button aria-label="update" type="submit" value="Submit" variant="primary" size="sm">Envoyer Modification</b-button>
       </b-form> 
     </b-modal>
     
@@ -234,6 +255,8 @@ export default {
 
   data () {
     return {
+   
+  
     form:{
     title:"",
     description:"",
@@ -256,7 +279,7 @@ export default {
       imagesArray: null,
       user_id:"",
     },  
-   profile: "",  
+     profile: "",  
       article_id:"",
       actualArticle:"",
       articles:"",
@@ -317,20 +340,15 @@ export default {
     // ::::::::::: Update Article_Modal ready for Agile Method  ::::::::::::::
     modifyArticle () { 
     const formData = new FormData();
-
+    
   formData.append('title', this.article.title)
   formData.append('description', this.article.description)
   formData.append('image', this.imagesArray)
-
- console.log(this.imagesArray)
-     
+  
     const article_id = this.article.article_id
-      console.log(article_id);
-      
      ArticleDataService.update(article_id, formData)
         .then(response => {
          response = response.data,
-        
           console.log(response)
           this.submitted = true
           this.$refs['modalArticle'].hide()

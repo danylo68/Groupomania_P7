@@ -45,30 +45,24 @@ bottom:0;
 
 .login-block
 { 
-height: 670px;
+height: 46rem;
 }
 
 </style>
 
 <template>
   <div class="col-md-12">
-  
   <b-container class="login-block">
   
-  <b-container-fluid class="jumbo-head">
+  <div fluid class="jumbo-head">
   <b-jumbotron header="Groupomania" class="jumbotron text-white jumbotron-image shadow"  lead="Social App" alt="Fluid"
    style="background-image: url(https://picsum.photos/1750/400/?image=1033);">
   
   </b-jumbotron>
-</b-container-fluid>
+</div>
 
     <div class="card card-container">
       <h4>Sign Up</h4>
-      <!-- <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      /> -->
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
           <div class="form-group">
